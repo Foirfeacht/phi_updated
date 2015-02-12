@@ -1,6 +1,6 @@
 defineDynamicDirective(function() {
   return {
-    name : 'customAtomicVitals',
+    name : 'customFamilyHistories',
     directive : [
         'phiContext',
         'dynPhiDataSyncService',
@@ -18,42 +18,41 @@ defineDynamicDirective(function() {
               // Init data
               $scope.items = [];
 
-              function equalIdsPredicate(vital) {
-                return vital.id === updatedVitalId;
+              function equalIdsPredicate(hist) {
+                return hist.id === updatedHistId;
               }
 
               // Warm-up data sync service
               function applyUpdatesFn(currentValue, updates) {
                 for (var i = 0; i < updates.length; i++) {
-                  var updatedVital = updates[i].obj;
-                  var updatedVitalId = updatedVital.id;
-                  var updatedVitalIsActive = updatedVital.active;
+                  var updatedHist = updates[i].obj;
+                  var updatedHistId = updatedHist.id;
+                  var updatedHistIsActive = updatedHist.active;
 
-                  var currentVitalWithSameId = _.find(currentValue, function equalIdsPredicate(vital) {
-                    return vital.id === updatedVitalId;
+                  var currentHistWithSameId = _.find(currentValue, function equalIdsPredicate(hist) {
+                    return hist.id === updatedHistId;
                   });
-                  if (currentVitalWithSameId) {
-                    if (updatedVitalIsActive) {
-                      currentValue.splice(currentValue.indexOf(currentVitalWithSameId), 1, updatedVital);
+                  if (currentHistWithSameId) {
+                    if (updatedHistIsActive) {
+                      currentValue.splice(currentValue.indexOf(currentHistWithSameId), 1, updatedHist);
                     } else {
-                      currentValue.splice(currentValue.indexOf(currentVitalWithSameId), 1);
+                      currentValue.splice(currentValue.indexOf(currentHistWithSameId), 1);
                     }
                   } else {
-                    if (updatedVitalIsActive) {
-                      currentValue.push(updatedVital);
+                    if (updatedHistIsActive) {
+                      currentValue.push(updatedHist);
                     }
                   }
 
-                  if (updatedVitalIsActive) {
+                  if (updatedHistIsActive) {
                     // Register eager fields
-                    data.field("record/" + updatedVitalId + "/date").setStartValue(new Date()).setWatchable(true).register();
-                    data.field("record/" + updatedVitalId + "/height").setStartValue({}).setWatchable(true).register();
-                    data.field("record/" + updatedVitalId + "/weight").setStartValue({}).setWatchable(true).register();
-                    data.field("record/" + updatedVitalId + "/bpSystolic").setStartValue({}).setWatchable(true).register();
-                    data.field("record/" + updatedVitalId + "/bpDiastolic").setStartValue({}).setWatchable(true).register();
+                    data.field("record/" + updatedHistId + "/startDate").setStartValue(new Date()).setWatchable(true).register();
+                    data.field("record/" + updatedHistId + "/problemStatus").setStartValue({}).setWatchable(true).register();
+                    data.field("record/" + updatedHistId + "/relationCode").setStartValue({}).setWatchable(true).register();
+                    data.field("record/" + updatedHistId + "/description").setStartValue({}).setWatchable(true).register();
                   } else {
                     // Deregister all child fields
-                    data.deregisterAllFieldsWithPathStartsWith("record/" + updatedVitalId);
+                    data.deregisterAllFieldsWithPathStartsWith("record/" + updatedHistId);
                   }
                 }
                 // Pull newly registered fields
@@ -65,7 +64,7 @@ defineDynamicDirective(function() {
                 return undefined;
               }
 
-              var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/vitals/';
+              var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/familyHistories/';
               var data = dynPhiDataSyncService.initModel($scope, rootPath);
               data.field("records").setStartValue([]).setApplyUpdatesToModelFn(applyUpdatesFn).setExtractUpdateFromChangedModelFn(
                   extractUpdateFn).register();
@@ -78,10 +77,10 @@ defineDynamicDirective(function() {
               });
 
               // Load render template
-              var dashboardRenderTmplPath = "/store/customAtomicVitalsStoreId/phi/directives/items/customAtomicVitalsDashboardPanel.html";
+              var dashboardRenderTmplPath = "/store/customFamilyHistoryStoreId/phi/directives/items/customFamilyHistoryDashboardPanel.html";
               vault.getRaw(dashboardRenderTmplPath).then(function(dashboardRenderTmpl) {
                 // TODO: resolve dashboard rendering
-                dashboardService.addDynamicPanel('customVitalsDashboardPanel', 'Custom Vitals', dashboardRenderTmpl, $scope.data);
+                dashboardService.addDynamicPanel('customFamilyHistoryDashboardPanel', 'Custom Family Histories', dashboardRenderTmpl, $scope.data);
               });
               // END of Warm-up data sync service
 
@@ -103,112 +102,27 @@ defineDynamicDirective(function() {
                 return Promise.resolve();
               };
 
-              $scope.onItemSelect = function(selectedVital) {
-                if (selectedVital) {
-                  if (selectedVital.active) {
-                    data.field("record/" + selectedVital.id + "/heightOutOfScope").setStartValue(false).setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/weightOutOfScope").setStartValue(false).setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/bpOutOfScope").setStartValue(false).setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/bmi").setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/counseling").setStartValue({}).setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/notEntered").setStartValue(false).setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/notEnteredReason").setWatchable(true).register();
+              $scope.onItemSelect = function(selectedHist) {
+                if (selectedHist) {
+                  if (selectedHist.active) {
+                    data.field("record/" + selectedHist.id + "/endDate").setStartValue(false).setWatchable(true).register();
+                    data.field("record/" + selectedHist.id + "/problemType").setStartValue(false).setWatchable(true).register();
+                    data.field("record/" + selectedHist.id + "/problemValueSnomed").setStartValue(false).setWatchable(true).register();
                     data.pullNewlyRegisteredFields();
                   }
-                  $scope.selectedVital = data.asClassicJsObject().record[selectedVital.id];
+                  $scope.selectedHist = data.asClassicJsObject().record[selectedHist.id];
                 } else {
-                  $scope.selectedVital = null;
+                  $scope.selectedHist = null;
                 }
               };
 
-              $scope.onItemRemoved = function(deactivatedVital) {
-                if (deactivatedVital) {
-                  data.field('records').putUpdate(deactivatedVital);
+              $scope.onItemRemoved = function(deactivatedHist) {
+                if (deactivatedHist) {
+                  data.field('records').putUpdate(deactivatedHist);
                 }
               };
-              // END of List specific logic
+              // END of List specific logic           
 
-              // Vitals-specific functions
-              $scope.isRelevant = function(vital) {
-                return vital.status !== 'NotEntered';
-              };
-              $scope.notEnteredCheckboxTouched = function(vital) {
-                if (vital) {
-                  if (vital.notEntered) {
-                    if (!vital.notEnteredReason) {
-                      vital.notEnteredReason = 'NoReasonIdentified';
-                    }
-                  } else {
-                    vital.notEnteredReason = null;
-                  }
-                }
-              };
-              $scope.onHeightOutOfScopeChanged = function(vital) {
-                if (vital.heightOutOfScope) {
-                  vital.height = null;
-                  vital.bmi = null;
-                }
-              };
-              $scope.onWeightOutOfScopeChanged = function(vital) {
-                if (vital.weightOutOfScope) {
-                  vital.weight = null;
-                  vital.bmi = null;
-                }
-              };
-              $scope.initHeightUnits = function(vital) {
-                if (vital.height && vital.height.value && !vital.height.units) {
-                  vital.height.units = 'in';
-                }
-              };
-              $scope.initWeightUnits = function(vital) {
-                if (vital.weight && vital.weight.value && !vital.weight.units) {
-                  vital.weight.units = 'lbs';
-                }
-              };
-              $scope.initBpUnits = function(bp) {
-                if (bp && bp.value && !bp.units) {
-                  bp.units = "mmHg";
-                }
-              };
-              $scope.recalculateBmi = function(vital) {
-                var heightInInches = convertHeightToInches(vital.height);
-                var weightInLbs = convertWeightToLbs(vital.weight);
-                if (heightInInches && weightInLbs) {
-                  var bmi = weightInLbs * 703.0695796 / (heightInInches * heightInInches);
-                  bmi = Math.round(bmi * 100) / 100;
-                  vital.bmi = bmi;
-                } else {
-                  vital.bmi = null;
-                }
-              };
-
-              function convertHeightToInches(height) {
-                if (!height || !height.value) {
-                  return undefined;
-                }
-                switch (height.units) {
-                case 'in':
-                  return height.value;
-                case 'cm':
-                  return height.value * 0.393700787;
-                default:
-                  break;
-                }
-              }
-
-              function convertWeightToLbs(weight) {
-                if (!weight || !weight.value) {
-                  return undefined;
-                }
-                switch (weight.units) {
-                case 'lbs':
-                  return weight.value;
-                case 'kg':
-                  return weight.value * 2.20462262;
-                default:
-                  break;
-                }
-              }
 
             }
           };
