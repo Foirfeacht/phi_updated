@@ -1,0 +1,9 @@
+
+syntax: regexp
+^node_modules$
+syntax: regexp
+^app/lib_bower$
+syntax: regexp
+^dist$
+syntax: regexp
+^data_vaultq/provider$

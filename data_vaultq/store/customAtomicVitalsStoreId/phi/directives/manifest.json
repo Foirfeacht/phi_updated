@@ -1,0 +1,12 @@
+{
+	"storeId":"customAtomicVitalsStoreId",
+	"title":"Custom Vitals",
+	"navigationPriority":31,
+	"resourcesPaths":[
+		"/store/customAtomicVitalsStoreId/phi/directives/items/customAtomicVitals.js",
+		"/store/customAtomicVitalsStoreId/phi/directives/items/customAtomicVitals.config.json",
+		"/store/customAtomicVitalsStoreId/phi/directives/items/customAtomicVitals.html",
+		"/store/customAtomicVitalsStoreId/phi/directives/items/customAtomicVitalsDashboardPanel.html"
+	],
+	"replacesPhiTabs":["vitalSignsTab"]
+}

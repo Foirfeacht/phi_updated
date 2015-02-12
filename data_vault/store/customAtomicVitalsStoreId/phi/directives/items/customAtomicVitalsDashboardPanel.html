@@ -1,0 +1,17 @@
+<div> 
+  <div ng-repeat='vital in data.records' ng-if="vital.active">
+    <a ng-click="moveToItem('customAtomicVitalsStoreId', vital.id);">
+      <span>
+          <span ng-if='data.record[vital.id].date'>{{data.record[vital.id].date|date:"MM/dd/yyyy"}}</span>
+          <span ng-if='data.record[vital.id].height'>{{data.record[vital.id].height.value}}{{data.record[vital.id].height.units}}</span>
+          <span ng-if='data.record[vital.id].weight'>{{data.record[vital.id].weight.value}}{{data.record[vital.id].weight.units}}</span>
+          <span ng-if='data.record[vital.id].bpSystolic && data.record[vital.id].bpDiastolic'>{{data.record[vital.id].bpSystolic.value}}{{data.record[vital.id].bpSystolic.units}}/{{data.record[vital.id].bpDiastolic.value}}{{data.record[vital.id].bpDiastolic.units}}</span>
+      </span>
+    </a>
+  </div>
+  <div ng-if='!data.records.length'>
+    <a ng-click="moveToItem('customAtomicVitalsStoreId');">
+      No entries
+    </a>
+  </div>
+</div>

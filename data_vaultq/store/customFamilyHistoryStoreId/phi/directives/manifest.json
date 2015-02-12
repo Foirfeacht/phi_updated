@@ -1,0 +1,12 @@
+{
+	"storeId":"customFamilyHistoryStoreId",
+	"title":"Custom Family History",
+	"navigationPriority":31,
+	"resourcesPaths":[
+		"/store/customFamilyHistoryStoreId/phi/directives/items/customFamilyHistory.js",
+		"/store/customFamilyHistoryStoreId/phi/directives/items/customFamilyHistory.config.json",
+		"/store/customFamilyHistoryStoreId/phi/directives/items/customFamilyHistory.html",
+		"/store/customFamilyHistoryStoreId/phi/directives/items/customFamilyHistoryDashboardPanel.html"
+	],
+	"replacesPhiTabs":["vitalSignsTab"]
+}

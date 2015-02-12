@@ -1,0 +1,290 @@
+<div class="row phiTab">
+	
+  
+   <div class="col-md-4">
+      <phi-items-list>
+        <phi-items-list-bar></phi-items-list-bar>        
+        
+        <div class="row">
+          <div class="col-xs-12">
+            <table ng-table="tableParams" class="table">
+              <tr ng-repeat="vital in $data" ng-click="onSelect(vital)" ng-class="{'active': isSelected(vital)}">
+                
+                <td data-title="'Date'" sortable="'date'" width="20%">
+                  {{data.record[vital.id].date | date:'MM/dd/yyyy'}}
+                  <!-- <span class="label label-warning" ng-show="isDirty(vital) || isNew(vital)">Unsaved</span> -->
+                  <span class="label label-danger" ng-hide="isValid(vital)">Invalid</span>
+                </td>
+
+                <td data-title="'Height'" sortable="'height'" width="20%">
+                  <span>{{data.record[vital.id].height.value}} {{data.record[vital.id].height.units}}</span>
+                </td>
+                <td data-title="'Weight'" sortable="'weight'" width="20%">
+                  <span>{{data.record[vital.id].weight.value}} {{data.record[vital.id].weight.units}}</span>
+                </td>
+                <td data-title="'BP'" width="40%">
+                  <span>{{data.record[vital.id].bpSystolic.value}} {{data.record[vital.id].bpSystolic.units}} / {{data.record[vital.id].bpDiastolic.value}} {{data.record[vital.id].bpDiastolic.units}}</span>
+                </td>
+               
+              </tr>           
+            </table>
+          </div>
+        </div>       
+      </phi-items-list>
+    </div>    
+    
+    <div class="col-md-8" style="height: 100%;">
+      <phi-item-form item="selectedVital">        
+        <div class="row">
+          
+          <div class="col-md-3">
+            <label class="control-label">Start Date</label> 
+            <input type="datetime" class="form-control" ng-model="selectedVital.startDate" datepicker-popup="MM/dd/yyyy HH:mm" ng-required="true">
+          </div><!-- end col -->
+
+          <div class="col-md-3">
+            <label class="control-label">End Date</label> 
+            <input type="datetime" class="form-control" ng-model="selectedVital.endDate" datepicker-popup="MM/dd/yyyy HH:mm" ng-required="true">
+          </div><!-- end col -->
+
+          <div class="col-md-3">
+            <label class="control-label">Status (SNOMED-CT)</label>
+              <select id="status" class="form-control" ng-model="selectedVital.status" >
+                <option value="Empty" selected="selected">-- Empty --</option>
+                <option value="Patient">55561003: Active</option>
+                <option value="Medical">73425007: Inactive</option>
+                <option value="System">413322009: Resolved</option>                
+              </select> 
+          </div><!-- end col -->
+          
+          <div class="col-md-3">
+            <label class="control-label">Source</label>
+            <input id="source" type="text" class="form-control" ng-model="selectedVital.user" readonly/>
+          </div> <!-- end col -->
+          
+          
+          <div class="col-md-2">
+            <div ng-show="selectedVital.notEntered">
+              <label class="control-label">Not Entered Reason</label>
+              <select id="statusText" class="form-control" ng-model="selectedVital.notEnteredReason" >
+                <option value="NoReasonIdentified">No Reason Identified</option>
+                <option value="Patient">Patient</option>
+                <option value="Medical">Medical</option>
+                <option value="System">System</option>                
+              </select>           
+            </div>  
+          </div>  <!-- end col -->
+          
+        </div><!-- end row -->
+
+        <div class="row">
+          <div class="col-md-12">
+            <label class="control-label">Relation Code</label>
+              <select id="relationCode" class="form-control" ng-model="selectedVital.relationCode" >
+                <option value="Empty" selected="selected">-- Empty --</option>
+                <option value="0">ADOPT: adopted child</option>
+                <option value="1">AUNT: aunt</option>
+                <option value="2">CHILD: Child</option>
+                <option value="3">CHLDINLAW: child in-law</option>
+                <option value="4">COUSN: cousin</option>
+                <option value="5">DOMPART: domestic partner</option>
+                <option value="6">FAMMEMB: Family Member</option>
+                <option value="7">CHLDFOST: foster child</option>
+                <option value="8">GRNDCHILD: grandchild</option>
+                <option value="9">GPARNT: grandparent</option>
+                <option value="10">GRPRN: Grandparent</option>
+                <option value="11">GGRPRN: great grandparent</option>
+                <option value="12">HSIB: half-sibling</option>
+                <option value="13">MAUNT: MaternalAunt</option>
+                <option value="14">MCOUSN: MaternalCousin</option>
+                <option value="15">MGRPRN: MaternalGrandparent</option>
+                <option value="16">MGGRPRN: MaternalGreatgrandparent</option>
+                <option value="17">MUNCLE: MaternalUncle</option>
+                <option value="18">NCHILD: natural child</option>
+                <option value="19">NPRN: natural parent</option>
+                <option value="20">NSIB: natural sibling</option>
+                <option value="21">NIENEPH: niece/nephew</option>
+                <option value="22">PRN: Parent</option>
+                <option value="23">PRNINLAW: parent in-law</option>
+                <option value="24">PAUNT: PaternalAunt</option>
+                <option value="25">PCOUSN: PaternalCousin</option>
+                <option value="26">PGRPRN: PaternalGrandparent</option>
+                <option value="27">PGGRPRN: PaternalGreatgrandparent</option>
+                <option value="28">PUNCLE: PaternalUncle</option>
+                <option value="29">SIB: Sibling</option>
+                <option value="30">SIBINLAW: sibling in-law</option>
+                <option value="31">SIGOTHR: significant other</option>
+                <option value="32">SPS: spouse</option>
+                <option value="33">STEP: step child</option>
+                <option value="34">STPPRN: step parent</option>
+                <option value="35">STPSIB: step sibling</option>
+                <option value="36">UNCLE: uncle</option>              
+              </select>
+          </div><!-- end col -->
+        </div><!-- end row -->
+
+        <div class="row">
+          <div class="col-md-6">
+            <label class="control-label">Problem Type (SNOMED-CT)</label>
+              <select id="problemType" class="form-control" ng-model="selectedVital.problemType" >
+                <option value="Empty" selected="selected">-- Empty --</option>
+                <option value="0">404684003: Finding</option>
+                <option value="1">409586006: Complaint</option>
+                <option value="2">282291009: Diagnosis</option>
+                <option value="3">64572001: Condition</option>
+                <option value="4">248536006: Functional limitation</option>
+                <option value="5">418799008: Symptom</option>
+                <option value="6">55607006: Problem</option>         
+              </select>
+          </div><!-- end col -->
+
+          <div class="col-md-6">
+            <label class="control-label">Problem (SNOMED-CT)</label>
+            <input id="problem" type="text" class="form-control" ng-model="selectedVital.problem"/>
+          </div> <!-- end col -->
+        </div><!-- end row -->
+
+        <div class="row">
+          <div class="col-md-12">
+            <label class="control-label">Description (Text)</label>
+            <textarea name="" id="" style="width: 100%; resize:vertical;"></textarea>
+          </div>
+        </div>
+        
+        <!--<fieldset ng-disabled="selectedVital.notEntered">
+        
+          <div class="row" style="margin-top: 20px;">
+            
+            <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">Anthropometric Values</div>
+                <div class="panel-body">
+                  <label class="control-label">Height/Length</label>
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <input id="heightValue" type="number" class="form-control" ng-model="selectedVital.height.value" ng-disabled="selectedVital.heightOutOfScope" ng-change="initHeightUnits(selectedVital);recalculateBmi(selectedVital);"/>
+                    </div>
+                    <div class="col-xs-4">
+                      <select id="heightUnits" class="form-control" ng-model="selectedVital.height.units" ng-disabled="selectedVital.heightOutOfScope" ng-change="recalculateBmi(selectedVital);">
+                        <option value="in">in</option>
+                        <option value="cm">cm</option>                      
+                      </select>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" ng-model="selectedVital.heightOutOfScope" ng-change="onHeightOutOfScopeChanged(selectedVital);" />Out of scope
+                        </label>
+                      </div>                  
+                    </div>
+                  </div>  
+                  
+                  <label class="control-label">Weight</label>
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <input id="weightValue" type="number" class="form-control" ng-model="selectedVital.weight.value" ng-disabled="selectedVital.weightOutOfScope" ng-change="initWeightUnits(selectedVital);recalculateBmi(selectedVital);"/>
+                    </div>
+                    <div class="col-xs-4">
+                      <select id="weightUnits" class="form-control" ng-model="selectedVital.weight.units" ng-disabled="selectedVital.weightOutOfScope" ng-change="recalculateBmi(selectedVital);">
+                        <option value="lbs">lbs</option>
+                        <option value="kg">kg</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" ng-model="selectedVital.weightOutOfScope" ng-change="onWeightOutOfScopeChanged(selectedVital);"/>Out of scope
+                        </label>  
+                      </div>                
+                    </div>
+                  </div>  
+                  
+                  <label class="control-label">BMI</label>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <span style="padding-left: 12px;">{{selectedVital.bmi}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>           
+            </div>
+            
+            <div class="col-md-6">          
+              <div class="panel panel-default">
+                <div class="panel-heading">Blood Pressure</div>
+                <div class="panel-body">
+                  <label class="control-label">BP Systolyc</label>
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <input id="bpSystolicValue" type="number" class="form-control" ng-model="selectedVital.bpSystolic.value" ng-disabled="selectedVital.bpOutOfScope" ng-change="initBpUnits(selectedVital.bpSystolic);"/>
+                    </div>
+                    <div class="col-xs-4">
+                      <select id="bpSystolicUnits" class="form-control" ng-model="selectedVital.bpSystolic.units" ng-disabled="selectedVital.bpOutOfScope">
+                        <option value="mmHg">mmHg</option>                
+                      </select>
+                    </div>
+                  </div>  
+                  
+                  <label class="control-label">BP Diastolic</label>
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <input id="bpDiastolicValue" type="number" class="form-control" ng-model="selectedVital.bpDiastolic.value" ng-disabled="selectedVital.bpOutOfScope" ng-change="initBpUnits(selectedVital.bpDiastolic);"/>
+                    </div>
+                    <div class="col-xs-4">
+                      <select id="bpDiastolicUnits" class="form-control" ng-model="selectedVital.bpDiastolic.units" ng-disabled="selectedVital.bpOutOfScope">
+                        <option value="mmHg">mmHg</option>                
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>                      
+            </div>
+            
+          </div>  
+          
+          <div class="row">
+          
+            <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">Counseling</div>
+                <div class="panel-body">      
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" ng-model="selectedVital.counseling.nutritionCounseling"/>Nutrition Counseling
+                        </label>  
+                      </div>                                    
+                    </div>
+                  </div>  
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" ng-model="selectedVital.counseling.physActivityCounseling"/>Physical Activity Counseling
+                        </label>
+                      </div>                  
+                    </div>
+                  </div>  
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" ng-model="selectedVital.counseling.followupPlanDocumented"/>Followup Plan Documented
+                        </label>
+                      </div>                  
+                    </div>
+                  </div>
+                </div>
+              </div>                      
+            </div>
+          
+          </div>  
+        
+        </fieldset>    -->
+        
+      </phi-item-form>
+    </div>
+  
+  
+</div>
