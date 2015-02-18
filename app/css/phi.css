@@ -20,6 +20,10 @@
 	height: 100%;
 }
 
+.table td {
+	text-align: center;
+}
+
 
 .dropdown-submenu {
 	position: relative;
@@ -141,4 +145,10 @@
 	cursor: pointer;
 	opacity: 0.5;
 	text-decoration: none;
+}
+
+.main-nav {
+	margin: 20px 0 0 20px;
+	background-color: #fff;
+	color: #000;
 }

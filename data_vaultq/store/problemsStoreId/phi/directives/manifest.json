@@ -1,0 +1,12 @@
+{
+	"storeId":"problemsStoreId",
+	"title":"Problems",
+	"navigationPriority":31,
+	"resourcesPaths":[
+		"/store/problemsStoreId/phi/directives/items/problems.js",
+		"/store/problemsStoreId/phi/directives/items/problems.config.json",
+		"/store/problemsStoreId/phi/directives/items/customAtomicVitals.html",
+		"/store/problemsStoreId/phi/directives/items/problemsDashboardPanel.html"
+	],
+	"replacesPhiTabs":["problemsTab"]
+}

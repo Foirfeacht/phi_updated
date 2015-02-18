@@ -1,7 +1,10 @@
-<div>
-	<ul>
-		<li ng-repeat="storeId in storeIds">
-			<a ng-href="#/dyndirective/{{storeId}}">{{storeId}}</a>
-		</li>
-	</ul>
+<div class="btn-group main-nav" dropdown is-open="status.isopen">
+	<button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+        Navigate <span class="caret"></span>
+      </button>
+		<ul class="dropdown-menu" role="menu">
+			<li ng-repeat="storeId in storeIds">
+				<a ng-href="#/dyndirective/{{storeId}}">{{storeId}}</a>
+			</li>
+		</ul>
 </div>

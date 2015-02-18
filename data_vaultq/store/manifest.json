@@ -2,6 +2,7 @@
   "storeIds": [
     "customProblemsStoreId",
     "customAtomicVitalsStoreId",
-    "customFamilyHistoryStoreId"
+    "customFamilyHistoryStoreId",
+    "problemsStoreId"
   ]
 }

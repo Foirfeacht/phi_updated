@@ -49,7 +49,11 @@ defineDynamicDirective(function() {
                     data.field("record/" + updatedHistId + "/startDate").setStartValue(new Date()).setWatchable(true).register();
                     data.field("record/" + updatedHistId + "/problemStatus").setStartValue({}).setWatchable(true).register();
                     data.field("record/" + updatedHistId + "/relationCode").setStartValue({}).setWatchable(true).register();
-                    data.field("record/" + updatedHistId + "/description").setStartValue({}).setWatchable(true).register();
+                    data.field("record/" + updatedHistId + "/description").setWatchable(true).register();
+                    data.field("record/" + updatedHistId + "/endDate").setWatchable(true).register();
+                    data.field("record/" + updatedHistId + "/problemType").setStartValue({}).setWatchable(true).register();
+                    data.field("record/" + updatedHistId + "/problemValueSnomed").setStartValue({}).setWatchable(true).register();
+                    data.field("record/" + updatedHistId + "/noProblemKnown").setWatchable(true).register();
                   } else {
                     // Deregister all child fields
                     data.deregisterAllFieldsWithPathStartsWith("record/" + updatedHistId);
@@ -92,12 +96,12 @@ defineDynamicDirective(function() {
                   'active' : true,
                 };
                 data.field('records').putUpdate(update).then(function() {
-                  // After push/pull find newly added vital...
-                  var vital = _.find($scope.data.records, function(vital) {
-                    return vital.id === newId;
+                  // After push/pull find newly added history...
+                  var hist = _.find($scope.data.records, function(hist) {
+                    return hist.id === newId;
                   });
                   // ... and select it
-                  $scope.onSelect(vital);
+                  $scope.onSelect(hist);
                 });
                 return Promise.resolve();
               };
@@ -105,9 +109,10 @@ defineDynamicDirective(function() {
               $scope.onItemSelect = function(selectedHist) {
                 if (selectedHist) {
                   if (selectedHist.active) {
-                    data.field("record/" + selectedHist.id + "/endDate").setStartValue(false).setWatchable(true).register();
-                    data.field("record/" + selectedHist.id + "/problemType").setStartValue(false).setWatchable(true).register();
-                    data.field("record/" + selectedHist.id + "/problemValueSnomed").setStartValue(false).setWatchable(true).register();
+                    //data.field("record/" + selectedHist.id + "/endDate").setStartValue(false).setWatchable(true).register();
+                    //data.field("record/" + selectedHist.id + "/problemType").setStartValue(false).setWatchable(true).register();
+                    //data.field("record/" + selectedHist.id + "/problemValueSnomed").setStartValue(false).setWatchable(true).register();
+                    //data.field("record/" + selectedHist.id + "/description").setStartValue(false).setWatchable(true).register();
                     data.pullNewlyRegisteredFields();
                   }
                   $scope.selectedHist = data.asClassicJsObject().record[selectedHist.id];
@@ -121,7 +126,20 @@ defineDynamicDirective(function() {
                   data.field('records').putUpdate(deactivatedHist);
                 }
               };
-              // END of List specific logic           
+              
+              $scope.notProblemKnownCheckboxTouched = function(hist) {
+                if (hist) {
+                  if (hist.noProblemKnown) {
+                    //if (!hist.noProblemKnown) {
+                      hist.noProblemKnown = true;
+                      hist.description = "No Problem Known";
+                    //}
+                  } else {
+                    hist.noProblemKnown = false;
+                    hist.description = "";
+                  }
+                }
+              };       
 
 
             }
