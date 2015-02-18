@@ -8,12 +8,20 @@ var sys = require('sys'),
 
 var DEFAULT_PORT = 8000;
 
-function main(argv) {
+/*function main(argv) {
   new HttpServer({
     'GET': createServlet(StaticServlet),
     'HEAD': createServlet(StaticServlet),
     'POST': createServlet(StaticServlet),
   }).start(Number(argv[2]) || DEFAULT_PORT);
+}*/
+
+function main(argv) {
+  new HttpServer({
+    'GET': createServlet(StaticServlet),
+    'HEAD': createServlet(StaticServlet),
+    'POST': createServlet(StaticServlet),
+  }).start(process.env.PORT || DEFAULT_PORT);
 }
 
 function escapeHtml(value) {
