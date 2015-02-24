@@ -32,12 +32,12 @@
           dated from {{=it.date}}
   </script>-->
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <label class="control-label">Name</label> 
           <input type="text" class="form-control" ng-model="selectedInjuryForm.name" name="name" id="name" required ng-required="true">
         </div><!-- end col -->
 
-        <div class="col-md-4">
+        <div class="col-md-6">
           <label class="control-label">Today's Date</label> 
           <input type="datetime" class="form-control" ng-model="selectedInjuryForm.date" name="date" ui-date ui-date-format="mm/dd/yy">
         </div><!-- end col -->
@@ -65,7 +65,7 @@
       </div><!-- end row -->
 
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
           <label class="control-label">What Street, Highway or Intersection &amp; What City &amp; State did the collision occur? </label>
           <textarea id="location" ng-model="selectedInjuryForm.location" class="form-control"></textarea>
         </div>
