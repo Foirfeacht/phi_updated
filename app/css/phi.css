@@ -152,3 +152,20 @@
 	background-color: #fff;
 	color: #000;
 }
+
+/*auto injury form styles */
+
+#location {
+	width: 90%;
+	margin: 0 auto;
+	display: block;
+	resize: vertical;
+}
+
+#dd {
+	margin-top: 30px;
+}
+
+.table td:hover {
+	cursor: pointer;
+}

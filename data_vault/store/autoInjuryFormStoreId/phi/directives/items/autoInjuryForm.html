@@ -1,0 +1,84 @@
+
+<div class="row phiTab">
+  <div class="col-md-3">
+    <phi-items-list>
+        <phi-items-list-bar></phi-items-list-bar>        
+        
+        <div class="row">
+          <div class="col-xs-12">
+            <table ng-table="tableParams" class="table">
+              <tr ng-repeat="injuryForm in $data" ng-click="onSelect(injuryForm)" ng-class="{'active': isSelected(injuryForm)}">
+                
+                <td data-title="'Date'" sortable="'date'" width="50%">
+                  {{data.record[injuryForm.id].date | date:'MM/dd/yyyy'}}
+                  <span class="label label-warning" ng-show="isDirty(vital) || isNew(vital)">Unsaved</span>
+                  <span class="label label-danger" ng-hide="isValid(vital)">Invalid</span>
+                </td>
+                <td data-title="'Name'" sortable="'name'" width="50%">
+                  <span>{{data.record[injuryForm.id].name}}</span>
+                </td>               
+              </tr>           
+            </table>
+          </div>
+        </div>       
+    </phi-items-list>
+  </div><!-- end col --> 
+       
+  <div class="col-md-5">
+    <phi-item-form item="selectedInjuryForm">
+     <!-- <script id="narrtmpl" type="text/x-dot-template">
+         Injury form <br/>
+         for {{=it.name|| 'John Doe'}}<br/>
+          dated from {{=it.date}}
+  </script>-->
+      <div class="row">
+        <div class="col-md-4">
+          <label class="control-label">Name</label> 
+          <input type="text" class="form-control" ng-model="selectedInjuryForm.name" name="name" id="name" required ng-required="true">
+        </div><!-- end col -->
+
+        <div class="col-md-4">
+          <label class="control-label">Today's Date</label> 
+          <input type="datetime" class="form-control" ng-model="selectedInjuryForm.date" name="date" ui-date ui-date-format="mm/dd/yy">
+        </div><!-- end col -->
+
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4">
+          <label class="control-label">Date of collision</label> 
+          <input type="datetime" class="form-control" ng-model="selectedInjuryForm.dateCollision.date" ui-date ui-date-format="mm/dd/yy">
+        </div><!-- end col -->
+
+        <div class="row">
+        <div class="col-md-4">
+          <label class="control-label">Time of collision</label> 
+          <input type="datetime" class="form-control" ng-model="selectedInjuryForm.dateCollision.time">
+        </div><!-- end col -->  
+
+        <div class="col-md-3">
+          <select class="form-control" id="dd" ng-model="selectedInjuryForm.dateCollision.dd">
+            <option value="pm">pm</option>
+            <option value="am">am</option>
+          </select>
+        </div><!-- end col -->      
+
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-8">
+          <label class="control-label">What Street, Highway or Intersection &amp; What City &amp; State did the collision occur? </label>
+          <textarea id="location" ng-model="selectedInjuryForm.location" class="form-control"></textarea>
+        </div>
+      </div>
+    </div><!-- end col -->
+
+    </div><!-- end row -->
+
+    <div class="col-md-4">
+      <div class="narrative" ng-if='selectedInjuryForm'>
+        Injury form for {{selectedInjuryForm.name}} dated from {{selectedInjuryForm.date}} for collision occuring at {{selectedInjuryForm.dateCollision.date}} {{selectedInjuryForm.dateCollision.time}} {{selectedInjuryForm.dateCollision.dd}} <br/>
+        Injury occured at {{selectedInjuryForm.location}}
+      </div>
+    </div>
+  </phi-item-form>
+</div>

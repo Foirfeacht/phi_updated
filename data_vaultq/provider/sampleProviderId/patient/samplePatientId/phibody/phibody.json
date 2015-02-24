@@ -81,6 +81,19 @@
       "notEnteredReason": null
     }
   ],
+  "injuryForms": [
+    {
+      "id": "1418810280560060992",
+      "timestamp": 1420806470367,
+      "active": true,
+      "user": "kirill",
+      "patientId": "4206001",
+      "providerId": "123456789BPR",
+      "date": "2014-12-17T09:58:00.560+0000",
+      "dateCollision": "2014-12-17T09:58:00.560+0000",
+      "name" : "John Doe"
+    }
+  ],
   "problems": [
     {
       "id": "1418810280560060992",

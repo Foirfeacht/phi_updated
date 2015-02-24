@@ -3,6 +3,7 @@
     "customProblemsStoreId",
     "customAtomicVitalsStoreId",
     "customFamilyHistoryStoreId",
-    "problemsStoreId"
+    "problemsStoreId",
+    "autoInjuryFormStoreId"
   ]
 }
