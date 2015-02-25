@@ -48,9 +48,8 @@ defineDynamicDirective(function() {
                     // Register eager fields
                     data.field("record/" + updatedInjuryFormId + "/date").setStartValue(new Date()).setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/name").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/dateCollision.date").setStartValue(new Date()).setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/dateCollision.date").setStartValue(new Date()).setStartValue(new Date()).setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/dateCollision.time").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/dateCollision.dd").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/location").setWatchable(true).register();
                   } else {
                     // Deregister all child fields
@@ -115,11 +114,27 @@ defineDynamicDirective(function() {
                   data.field('records').putUpdate(deactivatedInjuryForm);
                 }
               };
+
+              $scope.showNarrative = function(){
+                document.getElementById('narr').style.display="block";
+              }
+              $scope.hideNarrative = function(){
+                document.getElementById('narr').style.display="none";
+              }
+              //timepicker
+              $scope.hstep = 1;
+              $scope.mstep = 1;
+              $scope.ismeridian = true;
+              $scope.toggleMode = function() {
+                $scope.ismeridian = ! $scope.ismeridian;
+              };
             }
           };
         } ]
   };
 });
+
+
 
 
 

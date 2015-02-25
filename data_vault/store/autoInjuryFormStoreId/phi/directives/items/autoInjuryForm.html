@@ -1,6 +1,6 @@
 
 <div class="row phiTab">
-  <div class="col-md-3">
+  <div class="col-md-3" ng-click="hideNarrative()">
     <phi-items-list>
         <phi-items-list-bar></phi-items-list-bar>        
         
@@ -24,7 +24,7 @@
     </phi-items-list>
   </div><!-- end col --> 
        
-  <div class="col-md-5">
+  <div class="col-md-8" ng-click="hideNarrative()">
     <phi-item-form item="selectedInjuryForm">
       <div class="row">
         <div class="col-md-6">
@@ -39,41 +39,67 @@
 
       </div><!-- end row -->
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <label class="control-label">Date of collision</label> 
           <input type="datetime" class="form-control" ng-model="selectedInjuryForm.dateCollision.date" ui-date ui-date-format="mm/dd/yy">
         </div><!-- end col -->
 
         <div class="row">
-        <div class="col-md-4">
-          <label class="control-label">Time of collision</label> 
-          <input type="datetime" class="form-control" ng-model="selectedInjuryForm.dateCollision.time">
+        <div class="col-md-2">
+          <label class="control-label" id="time-label">Time of collision</label> 
         </div><!-- end col -->  
 
-        <div class="col-md-3">
-          <select class="form-control" id="dd" ng-model="selectedInjuryForm.dateCollision.dd">
-            <option value="pm">pm</option>
-            <option value="am">am</option>
-          </select>
-        </div><!-- end col -->      
+        <div class="col-md-4">
+          <timepicker ng-model="selectedInjuryForm.dateCollision.time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+        </div><!-- end col -->  
 
       </div><!-- end row -->
 
       <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
           <label class="control-label">What Street, Highway or Intersection &amp; What City &amp; State did the collision occur? </label>
           <textarea id="location" ng-model="selectedInjuryForm.location" class="form-control"></textarea>
         </div>
-      </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-12">
+          <label class="control-label">Road conditions were </label>
+          <input type="radio" value="wet" ng-model="selectedInjuryForm.roadConditions" >WET</input>
+          <input type="radio" value="dry" ng-model="selectedInjuryForm.roadConditions" >DRY</input>
+          <input type="radio" value="icy" ng-model="selectedInjuryForm.roadConditions" >ICY</input>
+          <input type="radio" value="other" ng-model="selectedInjuryForm.roadConditions" >OTHER</input>
+        </div>
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-4">
+          <label class="control-label">Did the police come to the accident scene? </label>
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.police.arrive" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.police.arrive" >No</input>
+        </div>        
+        <div class="col-md-4">
+          <label class="control-label">Is there a report?</label>
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.police.report" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.police.report" >No</input>
+        </div>  
+        <div class="col-md-4">
+          <label class="control-label">Did you request the report?</label>
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.police.reportRequest" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.police.reportRequest" >No</input>
+        </div>  
+      </div><!-- end row -->
     </div><!-- end col -->
 
     </div><!-- end row -->
 
-    <div class="col-md-4">
-      <div class="narrative" ng-if='selectedInjuryForm'>
-        Injury form for {{selectedInjuryForm.name}} dated from {{selectedInjuryForm.date}} for collision occuring at {{selectedInjuryForm.dateCollision.date}} {{selectedInjuryForm.dateCollision.time}} {{selectedInjuryForm.dateCollision.dd}} <br/>
-        Injury occured at {{selectedInjuryForm.location}}
-      </div>
+    <div class="col-md-1 left-trigger" id="narr-trigger" ng-click="showNarrative()">
+      
+    </div>
+
+    <div class="narrative" id="narr" ng-if='selectedInjuryForm'>
+        Injury form for {{selectedInjuryForm.name}} dated from {{selectedInjuryForm.date | date:'MM/dd/yyyy'}} for collision occuring at {{selectedInjuryForm.dateCollision.date | date:'MM/dd/yyyy'}} {{selectedInjuryForm.time}}<br/>
+        Injury occured at {{selectedInjuryForm.location}}. Road conditions were {{selectedInjuryForm.roadConditions}}
     </div>
   </phi-item-form>
 </div>
+
