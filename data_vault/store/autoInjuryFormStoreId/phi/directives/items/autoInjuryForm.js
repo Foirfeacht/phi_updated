@@ -51,6 +51,23 @@ defineDynamicDirective(function() {
                     data.field("record/" + updatedInjuryFormId + "/dateCollision.date").setStartValue(new Date()).setStartValue(new Date()).setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/dateCollision.time").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/location").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/roadConditions").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/police.arrive").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/police.report").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/police.reportRequest").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/hospital").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/hospital.name").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/transportation").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/hospital.xray").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/hospital.injuries").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/hospital.duration").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collision.cutbleed").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collision.bruises").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collision.seat").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collision.awareness").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collision.consciousness").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collision.blackOutDuration").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collision.flashOfLight").setWatchable(true).register();
                   } else {
                     // Deregister all child fields
                     data.deregisterAllFieldsWithPathStartsWith("record/" + updatedInjuryFormId);
@@ -117,9 +134,11 @@ defineDynamicDirective(function() {
 
               $scope.showNarrative = function(){
                 document.getElementById('narr').style.display="block";
+                document.getElementById('narr-trigger').style.display="none";
               }
               $scope.hideNarrative = function(){
                 document.getElementById('narr').style.display="none";
+                document.getElementById('narr-trigger').style.display="block";
               }
               //timepicker
               $scope.hstep = 1;

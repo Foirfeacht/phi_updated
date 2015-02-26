@@ -91,15 +91,15 @@
       "providerId": "123456789BPR",
       "date": "2014-12-17T09:58:00.560+0000",
       "dateCollision": "2014-12-17T09:58:00.560+0000",
-      "name" : "John Doe",
-      "location" : "test",
-      "roadConditions" : "dry",
-      "police" : "yes",
-      "report" : "yes",
-      "reportRequest" : "yes",
-      "hospital" : "yes",
-      "hospitalName" : "Santa Anna",
-      "hospitalTransportation" : "ambulance"
+      "name": "John Doe",
+      "location": "test",
+      "roadConditions": "dry",
+      "police": "yes",
+      "report": "yes",
+      "reportRequest": "yes",
+      "hospital": "yes",
+      "hospitalName": "Santa Anna",
+      "hospitalTransportation": "ambulance"
     }
   ],
   "problems": [
@@ -299,9 +299,7 @@
       "expirationDate": null,
       "vaccineInformationStatement": {
         "vaccineFundingProgramEligibilityCategory": null,
-        "items": [
-          
-        ]
+        "items": []
       },
       "guardian": {
         "person": {
@@ -402,19 +400,13 @@
           "displayedName": "BOB JONES"
         },
         "addresses": {
-          "addresses": [
-            
-          ]
+          "addresses": []
         },
         "contacts": {
-          "contacts": [
-            
-          ]
+          "contacts": []
         }
       },
-      "secondaryParticipants": [
-        
-      ],
+      "secondaryParticipants": [],
       "clinicalSummarySent": false,
       "clinicalSummarySentDate": null,
       "patientDeclineSummary": false,
@@ -426,15 +418,9 @@
       "transitionOfCareSummaryReceived": false,
       "transitionOfCareMedicationReconciled": false,
       "transitionOfCareMedicationReconciledDate": null,
-      "diagnoses": [
-        
-      ],
-      "indications": [
-        
-      ],
-      "medicationsDuringEncounter": [
-        
-      ],
+      "diagnoses": [],
+      "indications": [],
+      "medicationsDuringEncounter": [],
       "referralsToOtherProviders": [
         {
           "date": "2014-12-02T14:57:06.406+0000",
@@ -462,14 +448,10 @@
               ]
             },
             "contacts": {
-              "contacts": [
-                
-              ]
+              "contacts": []
             }
           },
-          "documentSentDates": [
-            
-          ]
+          "documentSentDates": []
         },
         {
           "date": "2014-12-02T14:19:11.197+0000",
@@ -497,14 +479,10 @@
               ]
             },
             "contacts": {
-              "contacts": [
-                
-              ]
+              "contacts": []
             }
           },
-          "documentSentDates": [
-            
-          ]
+          "documentSentDates": []
         }
       ],
       "status": "Active"
@@ -719,14 +697,10 @@
           "displayedName": "BOB JONES"
         },
         "addresses": {
-          "addresses": [
-            
-          ]
+          "addresses": []
         },
         "contacts": {
-          "contacts": [
-            
-          ]
+          "contacts": []
         }
       },
       "secondaryParticipants": null,
@@ -734,9 +708,7 @@
       "substance": null,
       "method": null,
       "position": null,
-      "indications": [
-        
-      ]
+      "indications": []
     },
     {
       "id": "1417518841746956866",
@@ -771,14 +743,10 @@
           "displayedName": "BOB JONES"
         },
         "addresses": {
-          "addresses": [
-            
-          ]
+          "addresses": []
         },
         "contacts": {
-          "contacts": [
-            
-          ]
+          "contacts": []
         }
       },
       "secondaryParticipants": null,
@@ -786,9 +754,7 @@
       "substance": null,
       "method": null,
       "position": null,
-      "indications": [
-        
-      ]
+      "indications": []
     }
   ],
   "plansOfCare": [
@@ -1009,9 +975,7 @@
         "collectionDateTimeStart": "2011-03-31T22:05:51.000+0000",
         "collectionDateTimeEnd": null,
         "specimenRejectReasonCode": {
-          "codes": [
-            
-          ]
+          "codes": []
         },
         "specimenQuality": null,
         "specimenAppropriateness": null,
@@ -1090,9 +1054,7 @@
               }
             },
             "notes": null,
-            "images": [
-              
-            ],
+            "images": [],
             "reasonNotDone": null
           }
         ]
@@ -1102,16 +1064,12 @@
       },
       "childrenCount": 0,
       "triggeredNotifications": {
-        "notifications": [
-          
-        ]
+        "notifications": []
       },
       "realId": "546b0b5ee4b0dac9d8399ad7"
     }
   ],
-  "labTestsMetaInfo": {
-    
-  },
+  "labTestsMetaInfo": {},
   "patientPortalAccessCredentials": {
     "patientCredentials": {
       "urlcode": "Rf8jz6mB78iCQtr643xyEinBCAMJ",

@@ -153,12 +153,17 @@
 	color: #000;
 }
 
+.btn i {
+	margin-right: 10px;
+}
+
 /*auto injury form styles */
 
-#location {
-	width: 95%;
-	margin: 0 auto;
-	display: block;
+.aif .row {
+	margin: 10px auto;
+}
+
+.aif-txa {
 	resize: vertical;
 }
 
@@ -167,7 +172,11 @@
 }
 
 #time-label {
-	margin-top: 40px;
+	margin-top: 42px;
+}
+
+#timepicker-column {
+	padding-top: 15px;
 }
 
 .table td:hover {
@@ -176,6 +185,7 @@
 
 input[type="radio"]{
 	width: auto;
+	margin-left: 5px;
 }
 
 .narrative {
@@ -183,18 +193,24 @@ input[type="radio"]{
 	float: right;
 	width: 30%;
 	height: 100%;
-	position: absolute;
-	top: 0;
+	position: fixed;
+	top: 92px;
 	right: 0;
-	left: 70%;
 	background: rgba(87, 121, 158, .9);
 	color: #fff;
-	padding: 15px 10px;
+	padding: 10px 10px;
 }
 
 .left-trigger {
+	position: fixed;
+	top: 92px;
+	right: 0;
 	background: rgba(87, 121, 158, .3);
 	height: 100%;
+	color: #fff;
+	font-weight: 700;
+	padding: 20px 25px;
+	text-align: center;
 }
 
 .phiTab {
