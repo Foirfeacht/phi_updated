@@ -52,22 +52,22 @@ defineDynamicDirective(function() {
                     data.field("record/" + updatedInjuryFormId + "/dateCollision.time").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/location").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/roadConditions").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/police.arrive").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/police.report").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/police.reportRequest").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/police").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/report").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/reportRequest").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/hospital").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/hospital.name").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/transportation").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/hospital.xray").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/hospital.injuries").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/hospital.duration").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/collision.cutbleed").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/collision.bruises").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/collision.seat").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/collision.awareness").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/collision.consciousness").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/collision.blackOutDuration").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/collision.flashOfLight").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/hospitalName").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/hospitalTransportation").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/hospitalXray").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/hospitalInjuries").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/hospitalDuration").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/cutbleed").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/bruises").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/seat").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collisionAwareness").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collisionConsciousness").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collisionBlackOutDuration").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collisionFlashOfLight").setWatchable(true).register();
                   } else {
                     // Deregister all child fields
                     data.deregisterAllFieldsWithPathStartsWith("record/" + updatedInjuryFormId);

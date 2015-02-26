@@ -1,1 +1,1 @@
-Default port changed to 9090
+expanded auto injury, design changes

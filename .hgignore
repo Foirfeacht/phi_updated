@@ -7,3 +7,5 @@ syntax: regexp
 ^dist$
 syntax: regexp
 ^data_vaultq/provider$
+syntax: regexp
+^.git$
