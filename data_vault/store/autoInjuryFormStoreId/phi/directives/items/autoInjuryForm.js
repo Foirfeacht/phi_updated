@@ -13,7 +13,7 @@ defineDynamicDirective(function() {
               'phiData' : '='
             },
             templateUrl : '../data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html',
-            link : function($scope, element, attrs, controller) {
+            link : function($scope, element, attrs, controller, $window) {
             
               // Init data
               $scope.items = [];
@@ -68,6 +68,43 @@ defineDynamicDirective(function() {
                     data.field("record/" + updatedInjuryFormId + "/collisionConsciousness").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/collisionBlackOutDuration").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/collisionFlashOfLight").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/selectedAftermath").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/collisionSymptoms").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/headrest").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/seatBelt").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/seatBeltType").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/vehicleYear").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/vehicleMake").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/vehicleModel").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/vehicleStopped").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/driverBrake").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/estimatedSpeed").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/vehicleMoving").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/bodyPartHitHead").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/bodyPartHitChest").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/bodyPartHitShoulder").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/bodyPartHitArm").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/bodyPartHitHip").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/bodyPartHitLeg").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/bodyPartHitKnee").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/bodyPartHitOther").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/seatBeltInjury").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/seatBeltInjuryDesc").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/estimatedDamageUSD").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/trunkForward").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/trunkTurned").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/headForward").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/headTurned").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/otherVehicleYear").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/otherVehicleMoving").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/otherVehicleEstimatedSpeed").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/otherVehicleMovingDesc").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/offWork").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/offWorkFrom").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/offWorkTo").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/workEffortRequired").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/workAggPain").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/accidentDesc").setWatchable(true).register();
                   } else {
                     // Deregister all child fields
                     data.deregisterAllFieldsWithPathStartsWith("record/" + updatedInjuryFormId);
@@ -95,6 +132,50 @@ defineDynamicDirective(function() {
               });
 
               // END of Warm-up data sync service
+              
+              //some checkbox fields
+              
+              $scope.collisionAftermath = ['CONFUSED', 'NAUSEATED', 'DISORIENTED', 'BLURRED VISION', 'LIGHTHEADED', 'RING/BUZZ IN EARS'];
+
+              $scope.aftermathSelection = [];
+
+              $scope.toggleAftermathSelection = function toggleAftermathSelection(aftermathName) {
+                   var idx = $scope.aftermathSelection.indexOf(aftermathName);
+
+                   // is currently selected
+                   if (idx > -1) {
+                     $scope.aftermathSelection.splice(idx, 1);
+                   }
+
+                   // is newly selected
+                   else {
+                     $scope.aftermathSelection.push(aftermathName);
+                   }
+                 };
+
+              $scope.collisionSymptoms = ['CONFUSED', 'NAUSEATED', 'DISORIENTED', 'BLURRED VISION', 'LIGHTHEADED', 'RING/BUZZ IN EARS'];
+
+              /*$scope.collisionAftermath = [
+                {name: 'CONFUSED', selected: false},
+                {name: 'NAUSEATED', selected: false},
+                {name: 'DISORIENTED', selected: false},
+                {name: 'BLURRED VISION', selected: false},
+                {name: 'LIGHTHEADED', selected: false},
+                {name: 'RING/BUZZ IN EARS', selected: false},
+              ];
+
+              $scope.aftermathSelection = [];
+
+              $scope.selectedAftermath = function selectedAftermath() {
+                return filterFilter($scope.fruits, { selected: true });
+              };
+
+              $scope.$watch('aftermath|filter:{selected:true}', function (nv) {
+                $scope.aftermathSelection = nv.map(function (aftermath) {
+                  return aftermath.name;
+                });
+              }, true);
+*/
 
               // List specific logic
               $scope.addNewItem = function() {
@@ -132,14 +213,57 @@ defineDynamicDirective(function() {
                 }
               };
 
+              // dom manipulation - temporary working with dom in controllers
+              var windowEl = angular.element($window);
+       
+              
+              windowEl.on('scroll', function () {
+                console.log('window scrolled')
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if( scrollTop > 92 ){
+                  document.getElementsByClassName('trigger').style.top='0';
+                }
+              });
+
+              
               $scope.showNarrative = function(){
-                document.getElementById('narr').style.display="block";
-                document.getElementById('narr-trigger').style.display="none";
-              }
-              $scope.hideNarrative = function(){
-                document.getElementById('narr').style.display="none";
-                document.getElementById('narr-trigger').style.display="block";
-              }
+                var narr = document.getElementById('narr');
+                var lmenu = document.getElementById('left-menu');
+                var aif = document.getElementById('aif');
+
+                narr.style.display='block';
+                lmenu.style.display='none';
+                aif.className = 'col-md-7';
+              };
+
+              $scope.showMenu = function(dom){
+                var narr = document.getElementById('narr');
+                var lmenu = document.getElementById('left-menu');
+                var aif = document.getElementById('aif');
+                //if(!lmenu){
+                  lmenu.style.display='block';
+                //}
+                if(narr){
+                  narr.style.display='none';
+                }            
+                aif.className = 'col-md-9';
+              };
+
+              $scope.hidePanels = function(){
+                var narr = document.getElementById('narr');
+                var lmenu = document.getElementById('left-menu');
+                var aif = document.getElementById('aif');
+                narr.style.display='none';
+                lmenu.style.display='none';
+                aif.className = 'col-md-12';
+              };
+
+              $scope.sidebar = document.getElementsByClassName('sidebar');
+
+              //initial state on page refresh
+              $scope.$watch('$viewContentLoaded', function() {
+                $scope.showMenu();
+              });
               //timepicker
               $scope.hstep = 1;
               $scope.mstep = 1;
@@ -152,6 +276,7 @@ defineDynamicDirective(function() {
         } ]
   };
 });
+
 
 
 

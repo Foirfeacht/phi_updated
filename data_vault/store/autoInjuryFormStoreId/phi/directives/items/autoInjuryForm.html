@@ -1,31 +1,44 @@
 
+
 <div class="row phiTab">
-  <div class="col-md-3" ng-click="hideNarrative()">
-    <phi-items-list>
-        <phi-items-list-bar></phi-items-list-bar>        
-        
-        <div class="row">
-          <div class="col-xs-12">
-            <table ng-table="tableParams" class="table">
-              <tr ng-repeat="injuryForm in $data" ng-click="onSelect(injuryForm)" ng-class="{'active': isSelected(injuryForm)}">
-                
-                <td data-title="'Date'" sortable="'date'" width="50%">
-                  {{data.record[injuryForm.id].date | date:'MM/dd/yyyy'}}
-                  <span class="label label-warning" ng-show="isDirty(vital) || isNew(vital)">Unsaved</span>
-                  <span class="label label-danger" ng-hide="isValid(vital)">Invalid</span>
-                </td>
-                <td data-title="'Name'" sortable="'name'" width="50%">
-                  <span>{{data.record[injuryForm.id].name}}</span>
-                </td>               
-              </tr>           
-            </table>
-          </div>
-        </div>       
-    </phi-items-list>
-  </div><!-- end col --> 
+
+    
+
+  <div class="left-trigger trigger" id="left-trigger" ng-class="{triggerTop: scroll < 92, triggerScrolled: scroll > 92}" ng-click="showMenu()">
+    <i class="fa fa-angle-double-left"></i>
+
+  </div><!-- end col -->
+
+  <div class="left-menu col-md-3 sidebar" id="left-menu">
+      <phi-items-list>
+          <phi-items-list-bar></phi-items-list-bar>        
+          
+          <div class="row">
+            <div class="col-xs-12">
+              <table ng-table="tableParams" class="table">
+                <tr ng-repeat="injuryForm in $data" ng-click="onSelect(injuryForm)" ng-class="{'active': isSelected(injuryForm)}">
+                  
+                  <td data-title="'Date'" sortable="'date'" width="50%">
+                    {{data.record[injuryForm.id].date | date:'MM/dd/yyyy'}}
+                    <span class="label label-warning" ng-show="isDirty(vital) || isNew(vital)">Unsaved</span>
+                    <span class="label label-danger" ng-hide="isValid(vital)">Invalid</span>
+                  </td>
+                  <td data-title="'Name'" sortable="'name'" width="50%">
+                    <span>{{data.record[injuryForm.id].name}}</span>
+                  </td>               
+                </tr>           
+              </table>
+            </div>
+          </div>       
+      </phi-items-list>
+    </div><!-- end col -->
+ 
        
-  <div class="col-md-8 aif" ng-click="hideNarrative()">
+  <div id="aif" ng-click="hidePanels()">
     <phi-item-form item="selectedInjuryForm">
+
+      <div class="fieldset">
+
       <div class="row">
         <div class="col-md-6">
           <label class="control-label">Name</label> 
@@ -44,7 +57,6 @@
           <input type="datetime" class="form-control" ng-model="selectedInjuryForm.dateCollision.date" ui-date ui-date-format="mm/dd/yy">
         </div><!-- end col -->
 
-        <div class="row">
         <div class="col-md-2">
           <label class="control-label" id="time-label">Time of collision</label> 
         </div><!-- end col -->  
@@ -55,6 +67,10 @@
 
       </div><!-- end row -->
 
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
+
       <div class="row">
         <div class="col-md-12">
           <label class="control-label">What Street, Highway or Intersection &amp; What City &amp; State did the collision occur? </label>
@@ -64,6 +80,8 @@
       <div class="row">
         <div class="col-md-12">
           <label class="control-label">Road conditions were </label>
+        </div>
+        <div class="col-md-12">
           <input type="radio" value="wet" ng-model="selectedInjuryForm.roadConditions" >WET</input>
           <input type="radio" value="dry" ng-model="selectedInjuryForm.roadConditions" >DRY</input>
           <input type="radio" value="icy" ng-model="selectedInjuryForm.roadConditions" >ICY</input>
@@ -71,42 +89,58 @@
         </div>
       </div><!-- end row -->
 
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
+
       <div class="row">
-        <div class="col-md-5">
-          <label class="control-label">Did the police come to the accident scene? </label>
+        <div class="col-md-5 col-sm-4"><label class="control-label">Did the police come to the accident scene? </label></div>
+        <div class="col-md-3 col-sm-4"><label class="control-label">Is there a report?</label></div>
+        <div class="col-md-4 col-sm-4"><label class="control-label">Did you request the report?</label></div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-5 col-sm-4">
+          
           <input type="radio" value="yes" ng-model="selectedInjuryForm.police" >Yes</input>
           <input type="radio" value="no" ng-model="selectedInjuryForm.police" >No</input>
         </div>        
-        <div class="col-md-3">
-          <label class="control-label">Is there a report?</label>
+        <div class="col-md-3 col-sm-4">
+          
           <input type="radio" value="yes" ng-model="selectedInjuryForm.report" >Yes</input>
           <input type="radio" value="no" ng-model="selectedInjuryForm.report" >No</input>
         </div>  
-        <div class="col-md-4">
-          <label class="control-label">Did you request the report?</label>
+        <div class="col-md-4 col-sm-4">
+          
           <input type="radio" value="yes" ng-model="selectedInjuryForm.reportRequest" >Yes</input>
           <input type="radio" value="no" ng-model="selectedInjuryForm.reportRequest" >No</input>
         </div>  
       </div><!-- end row -->
 
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
+
       <div class="row">
-        <div class="col-md-4">
-          <label class="control-label">Did you go to the hospital?</label>
+        <div class="col-md-6 col-sm-6"><label class="control-label">Did you go to the hospital?</label></div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.hospital==='yes'"><label class="control-label">If yes, what Hospital? </label> </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          
           <input type="radio" value="yes" ng-model="selectedInjuryForm.hospital" >Yes</input>
           <input type="radio" value="no" ng-model="selectedInjuryForm.hospital" >No</input>
         </div>
-        <div class="col-md-2" ng-if="selectedInjuryForm.hospital==='yes'">
-          <label class="control-label">If yes, what Hospital? </label> 
-        </div>
-        <div class="col-md-6" ng-if="selectedInjuryForm.hospital==='yes'">
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.hospital==='yes'">
           
           <input type="text" class="form-control" ng-model="selectedInjuryForm.hospitalName">
         </div>
       </div><!-- end row -->
 
       <div class="row" ng-if="selectedInjuryForm.hospital==='yes'">
-        <div class="col-md-12" >
+        <div class="col-md-12">
           <label class="control-label">How did you get to the hospital/ Who transported you? </label>
+        </div>
+        <div class="col-md-12" >
           <input type="radio" value="ambulance" ng-model="selectedInjuryForm.hospitalTransportation" >AMBULANCE</input>
           <input type="radio" value="self" ng-model="selectedInjuryForm.hospitalTransportation" >SELF</input>
           <input type="radio" value="spouse" ng-model="selectedInjuryForm.hospitalTransportation" >SPOUSE</input>
@@ -117,41 +151,49 @@
       <div class="row" ng-if="selectedInjuryForm.hospital==='yes'">
         <div class="col-md-12">
           <label class="control-label">What parts of your body were x-rayed at the hospital? </label>
-          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.hospitalXray" class="form-control"></textarea>
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.hospitalXray"></textarea>
         </div>
       </div><!-- end row -->
 
       <div class="row" ng-if="selectedInjuryForm.hospital==='yes'">
         <div class="col-md-12">
           <label class="control-label">What did the hospital do for your injuries?</label>
-          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.hospitalInjuries" class="form-control"></textarea>
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.hospitalInjuries"></textarea>
         </div>
       </div><!-- end row -->
 
       <div class="row" ng-if="selectedInjuryForm.hospital==='yes'">
         <div class="col-md-12">
           <label class="control-label">How long did you stay at the hospital? </label>
-          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.hospitalDuration" class="form-control"></textarea>
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.hospitalDuration"></textarea>
         </div>
       </div><!-- end row -->
+
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
 
       <div class="row">
         <div class="col-md-12">
           <label class="control-label">Did you sustain cuts or bleed as a result of this injury? </label>
-          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.cutbleed" class="form-control"></textarea>
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.cutbleed"></textarea>
         </div>
       </div><!-- end row -->
 
       <div class="row">
         <div class="col-md-12">
           <label class="control-label">Did you sustain bruises did during this collision? </label>
-          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.bruises" class="form-control"></textarea>
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.bruises"></textarea>
         </div>
       </div><!-- end row -->
 
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
+
       <div class="row">
+        <div class="col-md-12"><label class="control-label">Where were you seated in the vehicle? </label></div>
         <div class="col-md-12" >
-          <label class="control-label">Where were you seated in the vehicle? </label>
           <input type="radio" value="driver" ng-model="selectedInjuryForm.seat" >DRIVER</input>
           <input type="radio" value="front passenger" ng-model="selectedInjuryForm.seat" >FRONT PASSENGER</input>
           <input type="radio" value="left rear" ng-model="selectedInjuryForm.seat" >LEFT REAR</input>
@@ -161,47 +203,481 @@
       </div><!-- end row -->
 
       <div class="row">
+        <div class="col-md-12"><label class="control-label">Were you aware or surprised by the collision? </label></div>
         <div class="col-md-12" >
-          <label class="control-label">Were you aware or surprised by the collision? </label>
+          
           <input type="radio" value="aware of" ng-model="selectedInjuryForm.collisionAwareness" >AWARE</input>
           <input type="radio" value="surprised by" ng-model="selectedInjuryForm.collisionAwareness" >SURPRISED</input>
         </div>
       </div><!-- end row -->
 
       <div class="row">
-        <div class="col-md-4" >
-          <label class="control-label">Did you lose consciousness (black out) upon impact?</label>
+        <div class="col-md-4 col-sm-4"><label class="control-label">Did you lose consciousness (black out) upon impact?</label></div>
+        <div class="col-md-4 col-sm-4" ng-if="selectedInjuryForm.collisionConsciousness==='yes'"><label class="control-label">How long:</label> </div>
+        <div class="col-md-4 col-sm-4"><label class="control-label">Did you experience a flash of light or explosion in your head?</label></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-4" >
+          
           <input type="radio" value="yes" ng-model="selectedInjuryForm.collisionConsciousness" >Yes</input>
           <input type="radio" value="no" ng-model="selectedInjuryForm.collisionConsciousness" >No</input>
         </div>
-        <div class="col-md-4" ng-if="selectedInjuryForm.collisionConsciousness==='yes'">
-          <label class="control-label">How long:</label> 
+        <div class="col-md-4 col-sm-4" ng-if="selectedInjuryForm.collisionConsciousness==='yes'">
+          
           <input type="text" class="form-control" ng-model="selectedInjuryForm.collisionBlackOutDuration">
         </div>
-        <div class="col-md-4" >
-          <label class="control-label">Did you experience a flash of light or explosion in your head?</label>
+        <div class="col-md-4 col-sm-4" >
+          
           <input type="radio" value="yes" ng-model="selectedInjuryForm.collisionFlashOfLight" >Yes</input>
           <input type="radio" value="no" ng-model="selectedInjuryForm.collisionFlashOfLight" >No</input>
         </div>
       </div><!-- end row -->
 
+      <div class="row">
+        <div class="col-md-12"><label class="control-label">Did you experience one or more of the following from the collision?</label></div>
+      </div><!-- end row -->
+      <div class="row">
+        <!--<div class="col-md-12">
+          <label ng-repeat="aftermath in selectedInjuryForm.collisionAftermath">
+            <input type="checkbox" value="aftermath" ng-checked="aftermathSelection.indexOf(aftermath) > -1" ng-click="toggleAftermathSelection(aftermath)" > {{aftermath}}
+          </label>
+        </div class="col-md-12">-->
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.aftermathConfused">CONFUSED  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.aftermathDisoriented">DISORIENTED  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.aftermathLightheaded">LIGHTHEADED  
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.aftermathNausea">NAUSEATED  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.aftermathVision">BLURRED VISION  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.aftermathBuzz">RING/BUZZ IN EARS  
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12"><label class="control-label">Are you still experiencing any of the above symptoms and if so select which ones? </label></div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.symptomConfused">CONFUSED  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.symptomDisoriented">DISORIENTED  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.symptomLightheaded">LIGHTHEADED  
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.symptomNausea">NAUSEATED  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.symptomVision">BLURRED VISION  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.symptomBuzz">RING/BUZZ IN EARS  
+        </div>
+      </div>  <!-- end row -->   
+
+      <div class="row">
+        <div class="col-md-12"><label class="control-label">Are you currently experiencing any of the following as a result of this injury: </label></div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.resultConcentration">DIFFICULT CONCENTRATING  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.resultMemory">DIFFICULTY WITH MEMORY  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.resultIrritation"> IRRITABLE
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.resultRestless">RESTLESSNESS  
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.resultForgetful">FORGETFULNESS
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input type="checkbox" ng-model="selectedInjuryForm.resultSleepless">SLEEPLESSNESS 
+        </div>
+      </div>  <!-- end row -->   
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <input type="checkbox" ng-model="selectedInjuryForm.resultHeatTolerance">REDUCED TOLERANCE TO HEAT  
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <input type="checkbox" ng-model="selectedInjuryForm.resultAlcTolerance">REDUCED TOLERANCE TO ALCOHOL
+        </div>
+      </div>  <!-- end row -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <label class="control-label">How far is the top of the headrest or seat back from the top of your head (approximately)?</label>
+        </div>
+        <div class="col-md-12">
+          <input type="text" class="form-control short" ng-model="selectedInjuryForm.headrest">
+          <span>inches above or below</span>
+        </div>
+      </div><!-- end row -->
+      
+      <div class="row">
+        <div class="col-md-6 col-sm-6"><label class="control-label">Were you wearing a seat belt?</label></div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.seatBelt==='yes'"><label class="control-label">Which type of seatbelt it was?</label></div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.seatBelt" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.seatBelt" >No</input>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.seatBelt==='yes'">
+          
+          <input type="radio" value="lap seatbelt" ng-model="selectedInjuryForm.seatBeltType" >LAP SEATBELT</input>
+          <input type="radio" value="shoulder-lap seatbelt" ng-model="selectedInjuryForm.seatBeltType" >SHOULDER-LAP SEATBELT</input>
+        </div>
+      </div><!-- end row -->
+
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
+
+      <div class="row">
+        <div class="col-md-12"><label class="control-label">List the year, make and model of the vehicle you were in</label></div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4 col-sm-4">Year</div>
+        <div class="col-md-4 col-sm-4">Make</div>
+        <div class="col-md-4 col-sm-4">Model</div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4 col-sm-4"><input type="text" class="form-control" ng-model="selectedInjuryForm.vehicleYear"></div>
+        <div class="col-md-4 col-sm-4"><input type="text" class="form-control" ng-model="selectedInjuryForm.vehicleMake"></div>
+        <div class="col-md-4 col-sm-4"><input type="text" class="form-control" ng-model="selectedInjuryForm.vehicleModel"></div>
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-6 col-sm-6"><label class="control-label">Was your car stopped at the time of impact?</label></div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.vehicleStopped==='yes'"><label class="control-label">Was the driver’s foot also on the brake?</label></div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.vehicleStopped==='no'"><label class="control-label">Estimate the speed of the vehicle you were in (mph)</label></div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.vehicleStopped" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.vehicleStopped" >No</input>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.vehicleStopped==='yes'">
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.driverBrake" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.driverBrake" >No</input>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.vehicleStopped==='no'">
+          <input type="text" class="form-control" ng-model="selectedInjuryForm.estimatedSpeed">
+        </div>
+      </div><!-- end row -->
+
+      <div class="row" ng-if="selectedInjuryForm.vehicleStopped==='no'">
+        <div class="col-md-12"><label class="control-label">If your vehicle was moving at the time of impact, was it</label></div>
+        <div class="col-md-12">
+          <input type="radio" value="Slowing Down" ng-model="selectedInjuryForm.vehicleMoving" >Slowing Down?</input>
+          <input type="radio" value="Gaining Speed" ng-model="selectedInjuryForm.vehicleMoving" >Gaining Speed?</input>
+          <input type="radio" value="Traveling at a steady rate of speed? " ng-model="selectedInjuryForm.vehicleMoving" >Traveling at a steady rate of speed?</input>
+        </div>
+      </div><!-- end row -->
+
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
+
+      <div class="row">
+        <div class="col-md-12"><label class="control-label">On what part of the automobile did your following body parts hit?</label></div>
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Head:</label>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Chest:</label>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.bodyPartHitHead"></textarea>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.bodyPartHitChest"></textarea>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Right/Left Shoulder:</label>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Right/Left Arm:</label>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.bodyPartHitShoulder"></textarea>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.bodyPartHitArm"></textarea>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Right/Left Hip:</label>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Right/Left Leg:</label>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.bodyPartHitHip"></textarea>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.bodyPartHitLeg"></textarea>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Right/Left Knee:</label>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Other:</label>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.bodyPartHitKnee"></textarea>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.bodyPartHitOther"></textarea>
+        </div>
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Did you receive any injury or bruise from the seat belt?</label>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.seatBeltInjury==='yes'">
+          <label class="control-label">Describe</label>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.seatBeltInjury" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.seatBeltInjury" >No</input>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.seatBeltInjury==='yes'">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.seatBeltInjuryDesc"></textarea>
+        </div>
+      </div><!-- end row -->
+
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
+
+      <div class="row">
+        <div class="col-md-12">
+          <label class="control-label">What is the estimated cost damage to the vehicle you were in? $ </label>
+        </div>
+        <div class="col-md-12">
+          <input type="text" class="form-control" ng-model="selectedInjuryForm.estimatedDamageUSD">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <!------------------------ checkboxes ---------------------------->
+        </div>
+      </div>
+
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
+
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Was the trunk of your body pointed straight forward at the time of the collision? </label>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.trunkForward==='no'">
+          <label class="control-label">What direction was it turned and by how much?</label>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.trunkForward" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.trunkForward" >No</input>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.trunkForward==='no'">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.trunkTurned"></textarea>
+        </div>
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <label class="control-label">Was the trunk of your body pointed straight forward at the time of the collision? </label>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.headForward==='no'">
+          <label class="control-label">What direction was it turned and by how much?</label>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.headForward" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.headForward" >No</input>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.headForward==='no'">
+          <input type="text" class="form-control" ng-model="selectedInjuryForm.headTurned"></input>
+        </div>
+      </div><!-- end row -->
+
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
+
+      <div class="row">
+        <div class="col-md-12"><label class="control-label">What is the year, make and model of the the other vehicle?</label></div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4 col-sm-4">Year</div>
+        <div class="col-md-4 col-sm-4">Make</div>
+        <div class="col-md-4 col-sm-4">Model</div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4 col-sm-4"><input type="text" class="form-control" ng-model="selectedInjuryForm.otherVehicleYear"></div>
+        <div class="col-md-4 col-sm-4"><input type="text" class="form-control" ng-model="selectedInjuryForm.otherVehicleMake"></div>
+        <div class="col-md-4 col-sm-4"><input type="text" class="form-control" ng-model="selectedInjuryForm.otherVehicleModel"></div>
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-6 col-sm-6"><label class="control-label">Was the other vehicle moving at the time of the collision? </label></div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.otherVehicleMoving==='yes'"><label class="control-label">What was its approximate speed? </label></div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.otherVehicleMoving" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.otherVehicleMoving" >No</input>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="selectedInjuryForm.otherVehicleMoving==='yes'">
+          <input type="text" class="form-control" ng-model="selectedInjuryForm.otherVehicleEstimatedSpeed">
+        </div>
+      </div><!-- end row -->
+
+      <div class="row" ng-if="selectedInjuryForm.otherVehicleMoving==='yes'">
+        <div class="col-md-12"><label class="control-label">At the time of the collision, was the other vehicle</label></div>
+        <div class="col-md-12">
+          <input type="radio" value="slowing down" ng-model="selectedInjuryForm.otherVehicleMovingDesc" >Slowing Down?</input>
+          <input type="radio" value="gaining speed" ng-model="selectedInjuryForm.otherVehicleMovingDesc" >Gaining Speed?</input>
+          <input type="radio" value="traveling at a steady rate of speed" ng-model="selectedInjuryForm.otherVehicleMovingDesc" >Traveling at a steady rate of speed?</input>
+        </div>
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <!------------------------ checkboxes ---------------------------->
+        </div>
+      </div><!-- end row -->
+
+      </div><!-- end fieldset -->
+
+      <div class="fieldset">
+
+      <div class="row">
+        <div class="col-md-4 col-sm-4">
+          <label class="control-label">Were you off work as a result of your injuries?</label>
+        </div>
+        <div class="col-md-4 col-sm-4" ng-if="selectedInjuryForm.offWork==='yes'">
+          <label class="control-label">From:</label>
+        </div>
+        <div class="col-md-4 col-sm-4" ng-if="selectedInjuryForm.offWork==='yes'">
+          <label class="control-label">To:</label>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="col-md-4 col-sm-4">
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.offWork" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.offWork" >No</input>
+        </div>
+        <div class="col-md-4 col-sm-4" ng-if="selectedInjuryForm.offWork==='yes'">
+          <input type="datetime" class="form-control" ng-model="selectedInjuryForm.offWorkFrom" ui-date ui-date-format="mm/dd/yy">
+        </div>
+        <div class="col-md-4 col-sm-4" ng-if="selectedInjuryForm.offWork==='yes'">
+          <input type="datetime" class="form-control" ng-model="selectedInjuryForm.offWorkTo" ui-date ui-date-format="mm/dd/yy">
+        </div>
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <label class="control-label">What type of physical effort is required in your line of work?</label>
+        </div>
+        <div class="col-md-12">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.workEffortRequired"></textarea>
+        </div>
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <label class="control-label">Does your work aggravate your pain?</label>
+        </div>
+        <div class="col-md-12">
+          <input type="radio" value="yes" ng-model="selectedInjuryForm.workAggPain" >Yes</input>
+          <input type="radio" value="no" ng-model="selectedInjuryForm.workAggPain" >No</input>
+          <input type="radio" value="somewhat" ng-model="selectedInjuryForm.workAggPain" >Somewhat</input>
+        </div>
+      </div><!-- end row -->
+
+      </div><!-- end fieldset -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <label class="control-label">Please describe, to the best of your knowledge, what happened during this accident: </label>
+        </div>
+        <div class="col-md-12">
+          <textarea class="aif-txa form-control" ng-model="selectedInjuryForm.accidentDesc"></textarea>
+        </div>
+      </div><!-- end row -->
+
+      <div class="row">
+        <div class="col-md-12 final-words">Thank you for taking the time to fill out this form.</div>
+      </div>
+
+
 
     </div><!-- end col -->
 
-    </div><!-- end row -->
+    
 
-    <div class="col-md-1 left-trigger" id="narr-trigger" ng-click="showNarrative()">
-      Click to display narrative
-    </div>
-
-    <div class="narrative" id="narr" ng-if='selectedInjuryForm'>
+    <div class="narrative col-md-3 sidebar" id="narr" ng-if='selectedInjuryForm'>
+      <div class="narrative-text">
         Injury form for {{selectedInjuryForm.name}} dated from {{selectedInjuryForm.date | date:'MM/dd/yyyy'}} for collision occuring at {{selectedInjuryForm.dateCollision.date | date:'MM/dd/yyyy'}} {{selectedInjuryForm.time}}<br>
         <span ng-if="selectedInjuryForm.location || selectedInjuryForm.roadConditions">Injury occured at {{selectedInjuryForm.location}}. Road conditions were {{selectedInjuryForm.roadConditions}} <br></span>
         <span ng-if="selectedInjuryForm.police">Police came to the accident scene? {{ selectedInjuryForm.police }}</span> <br>
         <span ng-if="selectedInjuryForm.police && selectedInjuryForm.report">Is there a report? {{ selectedInjuryForm.report }}</span> <br>
         <span ng-if="selectedInjuryForm.police && selectedInjuryForm.reportRequest">Was report requested? {{ selectedInjuryForm.reportRequest }}</span> <br>
+        <span ng-if="selectedInjuryForm.collisionAftermath">Patient experienced <span ng-repeat="aftermath in selectedInjuryForm.aftermathSelection">{{ selectedInjuryForm.aftermath }}</span> after collision</span> <br>
+      </div>
+    </div><!-- end col -->
 
-    </div>
+      <div class="right-trigger trigger" id="right-trigger" ng-click="showNarrative()" ng-if="selectedInjuryForm">
+        <i class="fa fa-angle-double-right"></i>
+      </div><!-- end col -->
   </phi-item-form>
-</div>
+
+</div><!--end row-->
 
