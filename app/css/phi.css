@@ -267,7 +267,9 @@ input[type="checkbox"]{
 
 .phiTab {
 	position: relative;
-	padding: 0 50px;
 }
 
+.hidable {
+	padding: 0 50px;
+}
 
