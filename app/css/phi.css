@@ -165,6 +165,10 @@
 	padding: 10px 0;
 }
 
+#aif {
+	padding-bottom: 30px;
+}
+
 #aif .row {
 	margin: 10px auto;
 }
@@ -203,19 +207,15 @@ input[type="checkbox"]{
 	width: 200px;
 }
 
-.narrative,
-.left-menu {
-	display: none;
-}
-
 .narrative-text {
 	height: 100%;
 }
 
 .sidebar {
 	-webkit-transition: all 1s;
-	transition: all 1s;
-	opacity: 1;
+	transition: all .6s ease;
+	opacity: 0;
+	display: none;
 }
 
 
@@ -223,11 +223,15 @@ input[type="checkbox"]{
 	position: fixed;	
 	width: 50px;
 	height: 100%;
-	background: rgba(87, 121, 158, .3);
-	color: #fff;
+	/*background: rgba(87, 121, 158, .3);*/
+	color: #286090;
 	font-weight: 700;
 	padding: 20px 25px;
 	text-align: center;
+}
+
+.trigger:hover {
+	cursor: pointer;
 }
 
 .left-trigger i {
