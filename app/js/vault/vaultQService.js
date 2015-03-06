@@ -69,10 +69,10 @@ app.factory('vaultQ', [ '$http', '$q', '$resource', function($http, $q, $resourc
       return $q.all(promices).then(processResults);
     },
 
-    put : function(path, obj, currentCnt) {
+    put : function(path, obj) {
       var that = this;
       var stringifiedObj = angular.toJson(obj, true);
-      return that.putRaw(path, stringifiedObj, currentCnt);
+      return that.putRaw(path, stringifiedObj);
     },
 
     putRaw : function(path, stringifiedObj) {

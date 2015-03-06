@@ -47,7 +47,7 @@ this server is:
 
 Now browse to the app at
 
-	http://localhost:8000/app/index.html
+	http://localhost:9090/app/index.html
 
 You can kill the web server by pressing `CTRL-C`
 
@@ -65,9 +65,9 @@ Notice, that every restart of the web server restore payload domain data to its 
 	        {storeId}/             - contains code resources for every single module
 	
 	data_vaultq/                   - emulates VaultQ storage
-	    phi/
-	        data/                  - contains domain data using by custom directives  
-	            {dataType}/{providerId}/{patientId}.json   - single data file  
+	    provider/{providerId}/     - contains domain data using by custom directives  
+	        patient/{patientId}/
+	        					{dataType}/*	   - single data file  
 	    store/  
 	        {storeId}/             - contains metadata (settings) file for every custom module
 	        manifest.json          - holds a list of store IDs that assigned with a custom module
@@ -103,14 +103,8 @@ Gives you access to various parameters of outer PHI environment
 *  `getServiceDate():String` - Service Date from Superbill control panel
 *  `getRenderingPhysicianId():String`	- Physician Id from Superbill control panel
 
-##### `phiCustomModuleDataService`
-Service for retrieving and operating on domain data (in JSON format). Have internal caching system for common PHI logic maintenance (Reload/Save/Dirty checking/Discard changes). In the project these data are storing at `data_vaultq/phi/data` in JSON format
-
-*  `getData(dataType:String):Promise{JSONObject/JSONArray}` - returns data by a key for current provider-patient combination. If it is first invoking for particular `dataType`, it performs initial loading and storing in internal cache. Example: `customVitals.js`
-*  `initData(dataType:String, initialData:JSONObject/JSONArray):JSONObject/JSONArray` - Using for data initiating in case of `getData` returned empty result (means there is no any data in VaultQ for these params). Example: `customVitals.js`
-*  `reloadAllData():Promise{void}` - reloading from the server all the data stored in the internal cache. Typically invoking on PHI 'Reload' button clicking
-*  `saveAllData():Promise{void}` - push to the server all the data stored in the internal cache. Typically invoking on PHI 'Save' button clicking
-*  `discardAllChanges():Promise{void}` - restore all the data stored in the internal cache to their original state. Typically invoking on PHI 'Discard Changes' button clicking
+##### `dynPhiDataSyncService`
+Service for retrieving and operating on domain data. Allow concurrent editing of medical record (e.g. allow two different users edit the same note record simultaneously, but editing different fields). It is achieved by splitting payload data object into different chunks and saving them separately in versioned VaultQ storage. Developer define how to split an object by 'registering' fields. Service also responsible for grabbing all the changes in the data, pushing them to the server and pulling any updates for registered fields from the server if they are since latest sync process. 
 
 ##### `dashboardService`
 Service for exposing data to PHI dashboard
@@ -124,10 +118,12 @@ Service for getting(putting) data from(to) Vault storage
 *  `getBatch(paths:String[])                  :Promise{ [{path:String, obj:JSONObject/JSONArray}] }`  
 *  `getRaw(path:String)                       :Promise{String}` 
 *  `getRawBatch(paths:String[])               :Promise{ [{path:String, obj:String}] }` 
+
 *  `put(path:String, obj:JSONObject/JSONArray):Promise{void}`  
 *  `putBatch( [{path:String, obj:JSONObject/JSONArray}] ):Promise{void}`  
 *  `putRaw(path:String, obj:String)           :Promise{void}`  
 *  `putRawBatch( [{path:String, obj:String}] ):Promise{void}`  
+
 *  `remove(path:String)                       :Promise{void}` 
 
 ##### `vaultQ`
@@ -137,8 +133,17 @@ Service for getting(putting) data from(to) versioned VaultQ storage. In a normal
 *  `getLatestBatch(paths:String[])            :Promise{ [{path:String, obj:JSONObject/JSONArray, cnt:String}] }`  
 *  `getLatestRaw(path:String)                 :Promise{obj:String, cnt:String}` 
 *  `getLatestRawBatch(paths:String[])         :Promise{ [{path:String, obj:String, cnt:String}] }` 
-*  `put(path:String, obj:JSONObject/JSONArray, currentCnt:String)           :Promise{void}`  
-*  `putRaw(path:String, obj:String, currentCnt:String)           :Promise{void}`  
+
+*  `put(path:String, obj:JSONObject/JSONArray)																								:Promise{void}`  
+*  `putRaw(path:String, obj:String)           																								:Promise{void}`  
+*  `putBatch(pathsAndObjects:[{path:String, obj:JSONObject/JSONArray}])           	:Promise{void}`  
+*  `putRawBatch(pathsAndObjects:[{path:String, obj:String}])           								:Promise{void}`  
+
+*  `getUpdatesBatch(pathsAndCounters:[{path:String, cnt:String}])          :Promise{[{path:String, updates:[{obj:JSONObject/JSONArray, cnt:String}]}]}`  
+*  `getUpdatesRawBatch(pathsAndCounters:[{path:String, cnt:String}])       :Promise{[{path:String, updates:[{obj:String, cnt:String}]}]}`  
+
+*  `putAndGetUpdatesBatch(pathsAndObjectsForPut:[{path:String, obj:JSONObject/JSONArray}], pathsAndCountersForGet:[{path:String, cnt:String}])          :Promise{updateResponses:[{path:String, updates:[{obj:JSONObject/JSONArray, cnt:String}]}]}`
+
 
 ##### `phiStandardDataService`
 Service for specific actions related with standard PHI Data (e.g. Vitals, Problems, Encounters)
@@ -156,5 +161,5 @@ Service for specific actions related with standard PHI Data (e.g. Vitals, Proble
 ## Custom Module Examples
 Project already have a couple of example modules written for most general use-cases
 
-*  `customVitalsStoreId`  - Example of classic two-side editor with common PHI buttons (Load/Save/Discard) support and adding panel to the PHI Dashboard
+*  `customAtomicVitalsStoreId`  - Example of classic two-side editor with adding panel to the PHI Dashboard
 *  `customProblemsStoreId`  - Example of operating on standard PHI data (passing to directive with `phiData` isolated scope member) with common PHI buttons (Load/Save/Discard) support

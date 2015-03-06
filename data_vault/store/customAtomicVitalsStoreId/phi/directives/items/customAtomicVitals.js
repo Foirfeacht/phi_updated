@@ -18,20 +18,18 @@ defineDynamicDirective(function() {
               // Init data
               $scope.items = [];
 
-              function equalIdsPredicate(vital) {
-                return vital.id === updatedVitalId;
-              }
-
               // Warm-up data sync service
               function applyUpdatesFn(currentValue, updates) {
+                function equalIdsPredicate(vital) {
+                  return vital.id === updatedVitalId;
+                }
+
                 for (var i = 0; i < updates.length; i++) {
                   var updatedVital = updates[i].obj;
                   var updatedVitalId = updatedVital.id;
                   var updatedVitalIsActive = updatedVital.active;
 
-                  var currentVitalWithSameId = _.find(currentValue, function equalIdsPredicate(vital) {
-                    return vital.id === updatedVitalId;
-                  });
+                  var currentVitalWithSameId = _.find(currentValue, equalIdsPredicate);
                   if (currentVitalWithSameId) {
                     if (updatedVitalIsActive) {
                       currentValue.splice(currentValue.indexOf(currentVitalWithSameId), 1, updatedVital);
