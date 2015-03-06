@@ -4,7 +4,7 @@
 
     
 
-  <div class="left-trigger trigger" id="left-trigger" ng-class="{triggerTop: scroll < 92, triggerScrolled: scroll > 92}" ng-click="showMenu()">
+  <div class="left-trigger trigger" id="left-trigger" ng-class="{triggerTop: scroll < 92, triggerScrolled: scroll > 92}" ng-click="showMenu();">
     <i class="fa fa-angle-double-left"></i>
 
   </div><!-- end col -->
@@ -34,7 +34,7 @@
     </div><!-- end col -->
  
        
-  <div id="aif" ng-click="hidePanels()">
+  <div id="aif" class="col-md-9">
     <phi-item-form item="selectedInjuryForm">
 
       <div class="fieldset">
@@ -141,10 +141,10 @@
           <label class="control-label">How did you get to the hospital/ Who transported you? </label>
         </div>
         <div class="col-md-12" >
-          <input type="radio" value="ambulance" ng-model="selectedInjuryForm.hospitalTransportation" >AMBULANCE</input>
-          <input type="radio" value="self" ng-model="selectedInjuryForm.hospitalTransportation" >SELF</input>
-          <input type="radio" value="spouse" ng-model="selectedInjuryForm.hospitalTransportation" >SPOUSE</input>
-          <input type="radio" value="friend" ng-model="selectedInjuryForm.hospitalTransportation" >FRIEND</input>
+          <input type="radio" value="by ambulance" ng-model="selectedInjuryForm.hospitalTransportation" >AMBULANCE</input>
+          <input type="radio" value="by himself" ng-model="selectedInjuryForm.hospitalTransportation" >SELF</input>
+          <input type="radio" value="with spouse" ng-model="selectedInjuryForm.hospitalTransportation" >SPOUSE</input>
+          <input type="radio" value="with the help of friend" ng-model="selectedInjuryForm.hospitalTransportation" >FRIEND</input>
         </div>
       </div><!-- end row -->
 
@@ -194,11 +194,11 @@
       <div class="row">
         <div class="col-md-12"><label class="control-label">Where were you seated in the vehicle? </label></div>
         <div class="col-md-12" >
-          <input type="radio" value="driver" ng-model="selectedInjuryForm.seat" >DRIVER</input>
-          <input type="radio" value="front passenger" ng-model="selectedInjuryForm.seat" >FRONT PASSENGER</input>
-          <input type="radio" value="left rear" ng-model="selectedInjuryForm.seat" >LEFT REAR</input>
-          <input type="radio" value="middle rear" ng-model="selectedInjuryForm.seat" >MIDDLE REAR</input>
-          <input type="radio" value="right rear" ng-model="selectedInjuryForm.seat" >RIGHT REAR</input>
+          <input type="radio" value="Patient was seated on driver seat." ng-model="selectedInjuryForm.seat" >DRIVER</input>
+          <input type="radio" value="Patient was seated on front passenger seat." ng-model="selectedInjuryForm.seat" >FRONT PASSENGER</input>
+          <input type="radio" value="Patient was seated on left rear seat." ng-model="selectedInjuryForm.seat" >LEFT REAR</input>
+          <input type="radio" value="Patient was seated on middle rear seat." ng-model="selectedInjuryForm.seat" >MIDDLE REAR</input>
+          <input type="radio" value="Patient was seated on right rear seat." ng-model="selectedInjuryForm.seat" >RIGHT REAR</input>
         </div>
       </div><!-- end row -->
 
@@ -206,8 +206,8 @@
         <div class="col-md-12"><label class="control-label">Were you aware or surprised by the collision? </label></div>
         <div class="col-md-12" >
           
-          <input type="radio" value="aware of" ng-model="selectedInjuryForm.collisionAwareness" >AWARE</input>
-          <input type="radio" value="surprised by" ng-model="selectedInjuryForm.collisionAwareness" >SURPRISED</input>
+          <input type="radio" value="Patient was aware of the collision. " ng-model="selectedInjuryForm.collisionAwareness" >AWARE</input>
+          <input type="radio" value="Patient was surprised by the collision. " ng-model="selectedInjuryForm.collisionAwareness" >SURPRISED</input>
         </div>
       </div><!-- end row -->
 
@@ -663,14 +663,18 @@
 
     
 
-    <div class="narrative col-md-3 sidebar" id="narr" ng-if='selectedInjuryForm'>
+    <div class="narrative col-md-3 sidebar" id="narr" >
       <div class="narrative-text">
-        Injury form for {{selectedInjuryForm.name}} dated from {{selectedInjuryForm.date | date:'MM/dd/yyyy'}} for collision occuring at {{selectedInjuryForm.dateCollision.date | date:'MM/dd/yyyy'}} {{selectedInjuryForm.time}}<br>
-        <span ng-if="selectedInjuryForm.location || selectedInjuryForm.roadConditions">Injury occured at {{selectedInjuryForm.location}}. Road conditions were {{selectedInjuryForm.roadConditions}} <br></span>
-        <span ng-if="selectedInjuryForm.police">Police came to the accident scene? {{ selectedInjuryForm.police }}</span> <br>
-        <span ng-if="selectedInjuryForm.police && selectedInjuryForm.report">Is there a report? {{ selectedInjuryForm.report }}</span> <br>
-        <span ng-if="selectedInjuryForm.police && selectedInjuryForm.reportRequest">Was report requested? {{ selectedInjuryForm.reportRequest }}</span> <br>
-        <span ng-if="selectedInjuryForm.collisionAftermath">Patient experienced <span ng-repeat="aftermath in selectedInjuryForm.aftermathSelection">{{ selectedInjuryForm.aftermath }}</span> after collision</span> <br>
+        <div>Injury form for {{selectedInjuryForm.name}} dated from {{selectedInjuryForm.date | date:'MM/dd/yyyy'}} for collision occuring at {{selectedInjuryForm.dateCollision.date | date:'MM/dd/yyyy'}} {{selectedInjuryForm.time}}</div>
+        <div ng-if="selectedInjuryForm.location || selectedInjuryForm.roadConditions">Injury occured at {{selectedInjuryForm.location}}. Road conditions were {{selectedInjuryForm.roadConditions}}</div>
+        <div ng-if="selectedInjuryForm.police">Police came to the accident scene? {{ selectedInjuryForm.police }}</div> 
+        <div ng-if="selectedInjuryForm.police && selectedInjuryForm.report">Is there a report? {{ selectedInjuryForm.report }}</div>
+        <div ng-if="selectedInjuryForm.police && selectedInjuryForm.reportRequest">Was report requested? {{ selectedInjuryForm.reportRequest }}</div> 
+        <div ng-if="selectedInjuryForm.hospital==='no'">Patient didn't go to the hospital</div>
+        <div ng-if="selectedInjuryForm.hospital==='yes'">Patient went to the hospital {{selectedInjuryForm.hospitalName}} {{selectedInjuryForm.hospitalTransportation}}. <br>{{selectedInjuryForm.hospitalXray}} were x-rayed. <br> {{selectedInjuryForm.hospitalInjuries}} <br>  Patient stayed in the hospital for {{selectedInjuryForm.hospitalDuration}}</div><!-- end if -->
+        <div>{{selectedInjuryForm.cutbleed}}</div>
+        <div>{{selectedInjuryForm.bruises}}</div>
+        <div>{{selectedInjuryForm.seat}} {{selectedInjuryForm.collisionAwareness}} </div> <span ng-if="selectedInjuryForm.collisionConsciousness==='yes'">After the collision, patient lost consciousness for {{selectedInjuryForm.collisionBlackOutDuration}}. </span><span ng-if="selectedInjuryForm.collisionConsciousness==='no'">Patient remained counscious</span><span ng-if="selectedInjuryForm.collisionFlashOfLight==='yes'">Patient experienced flash of light in the moment of collision</span>
       </div>
     </div><!-- end col -->
 

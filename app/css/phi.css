@@ -211,11 +211,12 @@ input[type="checkbox"]{
 	height: 100%;
 }
 
-.sidebar {
-	-webkit-transition: all 1s;
-	transition: all .6s ease;
-	opacity: 0;
-	display: none;
+
+
+#narr {display: none;}
+
+#left-menu {
+	display: block;
 }
 
 

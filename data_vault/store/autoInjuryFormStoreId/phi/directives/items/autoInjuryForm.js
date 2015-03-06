@@ -243,62 +243,25 @@ defineDynamicDirective(function() {
                 }
               });
 
-              
+
+              var narr = document.getElementById('narr');
+              var lmenu = document.getElementById('left-menu');
+              var aif = document.getElementById('aif');
+
+              $scope.showMenu = function(){
+                lmenu.style.display = (lmenu.style.display === 'none') ? 'block' : 'none'; 
+                aif.className = (lmenu.style.display === 'none') ? 'col-md-12' : 'col-md-9';
+
+                if(narr){narr.style.display === 'none'}
+              };
+
               $scope.showNarrative = function(){
-                var narr = document.getElementById('narr');
-                var lmenu = document.getElementById('left-menu');
-                var aif = document.getElementById('aif');
 
-                lmenu.style.display='none';
-                lmenu.style.opacity='0';
-
-                if(narr){
-                  narr.style.display='none';
-                  narr.style.opacity='0';
-                }
-
-                narr.style.display='block';
-                narr.style.opacity='1';
-                
-                aif.className = 'col-md-7';
+                narr.style.display = (narr.style.display === 'none') ? 'block' : 'none';
+                aif.className = (narr.style.display === 'none') ? 'col-md-12' : 'col-md-9'; 
+                lmenu.style.display ='none';
               };
 
-              $scope.showMenu = function(dom){
-                var narr = document.getElementById('narr');
-                var lmenu = document.getElementById('left-menu');
-                var aif = document.getElementById('aif');
-                  lmenu.style.display='block';
-                  lmenu.style.opacity='1';
-                if(narr){
-                  narr.style.display='none';
-                  narr.style.opacity='0';
-                }            
-                aif.className = 'col-md-9';
-              };
-
-              $scope.hidePanels = function(){
-                var narr = document.getElementById('narr');
-                var lmenu = document.getElementById('left-menu');
-                var aif = document.getElementById('aif');
-                narr.style.display='none';
-                narr.style.opacity='0';
-                lmenu.style.display='none';
-                lmenu.style.opacity='0';
-                aif.className = 'col-md-12';
-              };
-
-              $scope.sidebar = document.getElementsByClassName('sidebar');
-
-              $scope.menu = true;
-
-             
-
-             
-
-              //initial state on page refresh
-              $scope.$watch('$viewContentLoaded', function() {
-                $scope.showMenu();
-              });
               //timepicker
               $scope.hstep = 1;
               $scope.mstep = 1;
