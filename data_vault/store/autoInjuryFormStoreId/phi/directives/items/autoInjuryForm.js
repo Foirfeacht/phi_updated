@@ -68,8 +68,26 @@ defineDynamicDirective(function() {
                     data.field("record/" + updatedInjuryFormId + "/collisionConsciousness").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/collisionBlackOutDuration").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/collisionFlashOfLight").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/selectedAftermath").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/collisionSymptoms").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/aftermathConfused").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/aftermathDisoriented").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/aftermathLightheaded").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/aftermathNausea").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/aftermathVision").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/aftermathBuzz").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/symptomConfused").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/symptomDisoriented").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/symptomLightheaded").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/symptomNausea").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/symptomVision").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/symptomBuzz").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/resultIrritation").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/resultRestless").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/resultForgetful").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/resultSleepless").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/resultConcentration").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/resultMemory").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/resultHeatTolerance").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/resultAlcTolerance").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/headrest").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/seatBelt").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/seatBeltType").setWatchable(true).register();
@@ -79,7 +97,7 @@ defineDynamicDirective(function() {
                     data.field("record/" + updatedInjuryFormId + "/vehicleStopped").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/driverBrake").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/estimatedSpeed").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/vehicleMoving").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/vehicleMoving").setWatchable(true).register(); 
                     data.field("record/" + updatedInjuryFormId + "/bodyPartHitHead").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/bodyPartHitChest").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/bodyPartHitShoulder").setWatchable(true).register();
@@ -225,45 +243,25 @@ defineDynamicDirective(function() {
                 }
               });
 
-              
+
+              var narr = document.getElementById('narr');
+              var lmenu = document.getElementById('left-menu');
+              var aif = document.getElementById('aif');
+
+              $scope.showMenu = function(){
+                lmenu.style.display = (lmenu.style.display === 'none') ? 'block' : 'none'; 
+                aif.className = (lmenu.style.display === 'none') ? 'col-md-12' : 'col-md-9';
+
+                if(narr){narr.style.display === 'none'}
+              };
+
               $scope.showNarrative = function(){
-                var narr = document.getElementById('narr');
-                var lmenu = document.getElementById('left-menu');
-                var aif = document.getElementById('aif');
 
-                narr.style.display='block';
-                lmenu.style.display='none';
-                aif.className = 'col-md-7';
+                narr.style.display = (narr.style.display === 'none') ? 'block' : 'none';
+                aif.className = (narr.style.display === 'none') ? 'col-md-12' : 'col-md-9'; 
+                lmenu.style.display ='none';
               };
 
-              $scope.showMenu = function(dom){
-                var narr = document.getElementById('narr');
-                var lmenu = document.getElementById('left-menu');
-                var aif = document.getElementById('aif');
-                //if(!lmenu){
-                  lmenu.style.display='block';
-                //}
-                if(narr){
-                  narr.style.display='none';
-                }            
-                aif.className = 'col-md-9';
-              };
-
-              $scope.hidePanels = function(){
-                var narr = document.getElementById('narr');
-                var lmenu = document.getElementById('left-menu');
-                var aif = document.getElementById('aif');
-                narr.style.display='none';
-                lmenu.style.display='none';
-                aif.className = 'col-md-12';
-              };
-
-              $scope.sidebar = document.getElementsByClassName('sidebar');
-
-              //initial state on page refresh
-              $scope.$watch('$viewContentLoaded', function() {
-                $scope.showMenu();
-              });
               //timepicker
               $scope.hstep = 1;
               $scope.mstep = 1;
