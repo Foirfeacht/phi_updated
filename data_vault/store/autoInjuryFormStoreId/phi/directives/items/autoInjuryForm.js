@@ -1,3 +1,5 @@
+
+
 defineDynamicDirective(function() {
   return {
     name : 'autoInjuryForm',
@@ -6,14 +8,15 @@ defineDynamicDirective(function() {
         'dynPhiDataSyncService',
         'dashboardService',
         'vault',
-        function(phiContext, dynPhiDataSyncService, dashboardService, vault) {
+        '$mdSidenav',
+        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $mdSidenav) {
           return {
             restrict : 'E',
             scope : {
               'phiData' : '='
             },
             templateUrl : '../data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html',
-            link : function($scope, element, attrs, controller, $window) {
+            link : function($scope, element, attrs, controller, $mdSidenav) {
             
               // Init data
               $scope.items = [];
@@ -231,18 +234,6 @@ defineDynamicDirective(function() {
                 }
               };
 
-              // dom manipulation - temporary working with dom in controllers
-              var windowEl = angular.element($window);
-       
-              
-              windowEl.on('scroll', function () {
-                console.log('window scrolled')
-                var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if( scrollTop > 92 ){
-                  document.getElementsByClassName('trigger').style.top='0';
-                }
-              });
-
 
               var narr = document.getElementById('narr');
               var lmenu = document.getElementById('left-menu');
@@ -258,8 +249,16 @@ defineDynamicDirective(function() {
               $scope.showNarrative = function(){
 
                 narr.style.display = (narr.style.display === 'none') ? 'block' : 'none';
-                aif.className = (narr.style.display === 'none') ? 'col-md-12' : 'col-md-9'; 
+                aif.className = (narr.style.display === 'block') ? 'col-md-9' : 'col-md-12'; 
                 lmenu.style.display ='none';
+              };
+
+              $scope.toggleLeft = function() {
+                $mdSidenav('left').toggle();
+                 
+              };
+              $scope.toggleRight = function() {
+                $mdSidenav('right').toggle();
               };
 
               //timepicker

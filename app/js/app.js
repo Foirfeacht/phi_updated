@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-var app = angular.module('vrcApp', ['ngRoute', 'ngResource', 'ngTable', 'ui.bootstrap', 'ui.date']);
+var app = angular.module('vrcApp', ['ngRoute', 'ngResource', 'ngTable', 'ui.bootstrap', 'ui.date', 'ngMaterial']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/dyndirective'});
