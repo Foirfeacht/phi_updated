@@ -18,55 +18,39 @@ defineDynamicDirective(function() {
               // Init data
               $scope.items = [];
 
-              // Warm-up data sync service
-              function applyUpdatesFn(currentValue, updates) {
-                function equalIdsPredicate(vital) {
-                  return vital.id === updatedVitalId;
-                }
-
-                for (var i = 0; i < updates.length; i++) {
-                  var updatedVital = updates[i].obj;
-                  var updatedVitalId = updatedVital.id;
-                  var updatedVitalIsActive = updatedVital.active;
-
-                  var currentVitalWithSameId = _.find(currentValue, equalIdsPredicate);
-                  if (currentVitalWithSameId) {
-                    if (updatedVitalIsActive) {
-                      currentValue.splice(currentValue.indexOf(currentVitalWithSameId), 1, updatedVital);
-                    } else {
-                      currentValue.splice(currentValue.indexOf(currentVitalWithSameId), 1);
-                    }
-                  } else {
-                    if (updatedVitalIsActive) {
-                      currentValue.push(updatedVital);
-                    }
-                  }
-
-                  if (updatedVitalIsActive) {
-                    // Register eager fields
-                    data.field("record/" + updatedVitalId + "/date").setStartValue(new Date()).setWatchable(true).register();
-                    data.field("record/" + updatedVitalId + "/height").setStartValue({}).setWatchable(true).register();
-                    data.field("record/" + updatedVitalId + "/weight").setStartValue({}).setWatchable(true).register();
-                    data.field("record/" + updatedVitalId + "/bpSystolic").setStartValue({}).setWatchable(true).register();
-                    data.field("record/" + updatedVitalId + "/bpDiastolic").setStartValue({}).setWatchable(true).register();
-                  } else {
-                    // Deregister all child fields
-                    data.deregisterAllFieldsWithPathStartsWith("record/" + updatedVitalId);
-                  }
-                }
-                // Pull newly registered fields
-                data.pullNewlyRegisteredFields();
-                return currentValue;
-              }
-
-              function extractUpdateFn(currentValue, latestSynchronizedValue) {
-                return undefined;
-              }
-
               var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/vitals/';
               var data = dynPhiDataSyncService.initModel($scope, rootPath);
-              data.field("records").setStartValue([]).setApplyUpdatesToModelFn(applyUpdatesFn).setExtractUpdateFromChangedModelFn(
-                  extractUpdateFn).register();
+
+              function registerEagerFieldsFn(updatedVital) {
+                var updatedVitalId = updatedVital.id;
+                var updatedVitalIsActive = updatedVital.active;
+
+                var vitalComposite = data.compositeField("record/" + updatedVitalId);
+                if (updatedVitalIsActive) {
+                  // Register eager fields
+                  vitalComposite.field("date").setStartValue(new Date()).setWatchable(true).register();
+                  vitalComposite.field("height").setStartValue({}).setWatchable(true).register();
+                  vitalComposite.field("weight").setStartValue({}).setWatchable(true).register();
+                  vitalComposite.field("bpSystolic").setStartValue({}).setWatchable(true).register();
+                  vitalComposite.field("bpDiastolic").setStartValue({}).setWatchable(true).register();
+                } else {
+                  // Deregister all child fields
+                  vitalComposite.deregisterAllFields();
+                }
+              }
+
+              function pullNewlyRegisteredFieldsFn() {
+                // Pull newly registered fields
+                data.pullNewlyRegisteredFields();
+              }
+
+              data.field("records")
+                .behaveAsCollection()
+                .setStartValue([])
+                .onAfterSingleIncomingUpdateApplied(registerEagerFieldsFn)
+                .onAfterBatchIncomingUpdatesApplied(pullNewlyRegisteredFieldsFn)
+                .disableAutomaticOutgoingUpdatesExtractingOnPush()
+                .register();
               data.pull();
 
               // For two-way binding onto form
@@ -78,7 +62,6 @@ defineDynamicDirective(function() {
               // Load render template
               var dashboardRenderTmplPath = "/store/customAtomicVitalsStoreId/phi/directives/items/customAtomicVitalsDashboardPanel.html";
               vault.getRaw(dashboardRenderTmplPath).then(function(dashboardRenderTmpl) {
-                // TODO: resolve dashboard rendering
                 dashboardService.addDynamicPanel('customVitalsDashboardPanel', 'Custom Vitals', dashboardRenderTmpl, $scope.data);
               });
               // END of Warm-up data sync service
@@ -87,10 +70,10 @@ defineDynamicDirective(function() {
               $scope.addNewItem = function() {
                 var newId = UUID.generate();
                 var update = {
-                  'id' : newId,
-                  'active' : true,
+                  id : newId,
+                  active : true
                 };
-                data.field('records').putUpdate(update).then(function() {
+                data.field("records").putUpdate(update).then(function() {
                   // After push/pull find newly added vital...
                   var vital = _.find($scope.data.records, function(vital) {
                     return vital.id === newId;
@@ -98,21 +81,29 @@ defineDynamicDirective(function() {
                   // ... and select it
                   $scope.onSelect(vital);
                 });
+                // phi-items-list require returning of newly created object
+                // wrapped with a promise. But 'putUpdate' execution already
+                // added a new item to the list, so just return an empty promise
                 return Promise.resolve();
               };
 
               $scope.onItemSelect = function(selectedVital) {
                 if (selectedVital) {
                   if (selectedVital.active) {
-                    data.field("record/" + selectedVital.id + "/heightOutOfScope").setStartValue(false).setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/weightOutOfScope").setStartValue(false).setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/bpOutOfScope").setStartValue(false).setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/bmi").setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/counseling").setStartValue({}).setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/notEntered").setStartValue(false).setWatchable(true).register();
-                    data.field("record/" + selectedVital.id + "/notEnteredReason").setWatchable(true).register();
+                    // register lazy fields
+                    var selectedVitalComposite = data.compositeField("record/" + selectedVital.id);
+
+                    selectedVitalComposite.field("heightOutOfScope").setStartValue(false).setWatchable(true).register();
+                    selectedVitalComposite.field("weightOutOfScope").setStartValue(false).setWatchable(true).register();
+                    selectedVitalComposite.field("bpOutOfScope").setStartValue(false).setWatchable(true).register();
+                    selectedVitalComposite.field("bmi").setWatchable(true).register();
+                    selectedVitalComposite.field("counseling").setStartValue({}).setWatchable(true).register();
+                    selectedVitalComposite.field("notEntered").setStartValue(false).setWatchable(true).register();
+                    selectedVitalComposite.field("notEnteredReason").setWatchable(true).register();
+
                     data.pullNewlyRegisteredFields();
                   }
+                  // ... and bind selected record to the edit form
                   $scope.selectedVital = data.asClassicJsObject().record[selectedVital.id];
                 } else {
                   $scope.selectedVital = null;
@@ -121,7 +112,7 @@ defineDynamicDirective(function() {
 
               $scope.onItemRemoved = function(deactivatedVital) {
                 if (deactivatedVital) {
-                  data.field('records').putUpdate(deactivatedVital);
+                  data.field("records").putUpdate(deactivatedVital);
                 }
               };
               // END of List specific logic

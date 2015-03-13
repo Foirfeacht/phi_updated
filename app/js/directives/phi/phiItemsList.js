@@ -46,14 +46,9 @@ app.directive('phiItemsList', [ '$timeout', '$parse', '$http', '$q', '$filter', 
             }
           });
 
-          scope.tableParams = new ngTableParams({ 
+          scope.tableParams = new ngTableParams({
             sorting : {
-              'date' : 'desc' // initial sorting,
-              //'startDate' : 'desc',
-              //'relationCode' : 'desc'
-            },
-            filter: {
-                problemStatus: 'M'       // initial filter
+              'date' : 'desc' // initial sorting
             }
           }, {
             $scope : scope,
