@@ -12,7 +12,7 @@
                 
                 <td data-title="'Date'" sortable="'date'" width="20%">
                   {{data.record[vital.id].date | date:'MM/dd/yyyy'}}
-                  <span class="label label-warning" ng-show="isDirty(vital) || isNew(vital)">Unsaved</span>
+                  <!-- <span class="label label-warning" ng-show="isDirty(vital) || isNew(vital)">Unsaved</span> -->
                   <span class="label label-danger" ng-hide="isValid(vital)">Invalid</span>
                 </td>
                 <td data-title="'Height'" sortable="'height'" width="20%">
@@ -32,7 +32,7 @@
       </phi-items-list>
     </div>    
     
-    <div class="col-md-8" style="height: 100%;"> 
+    <div class="col-md-8" style="height: 100%;">
       <phi-item-form item="selectedVital">        
         <div class="row">
           

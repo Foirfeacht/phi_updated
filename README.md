@@ -89,7 +89,7 @@ Creates a skeleton for a new custom module
 *  Creates directive's HTML template at `data_vault/store/{storeId}/phi/directives/items/{mainDirectiveName}.html`  
 *  Creates directive's config file at `data_vault/store/{storeId}/phi/directives/items/{mainDirectiveName}.config.json`  
 
-##### `grunt packModule:{storeId}`
+##### `grunt packModule:{seedStoreId}:{finalStoreId}`
 Packs developed custom module in a zip file ready to be exported to [Vericle Admin UI](https://test.vericle.com/phi_custom_modules/servlet/lwc/index.html#/phiCustomModules/). Packed distributive is placing in `dist/`. You can upload a zip by clicking 'Upload Packed Module' button
 
 ## Available angular services API

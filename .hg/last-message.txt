@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-auto injury form 95% complete
-=======
-design changes
->>>>>>> 58dccb91bdd680036a09d8f148f88b453f9fbcbe
+merged

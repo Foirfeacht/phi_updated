@@ -5,6 +5,7 @@
 	"resourcesPaths":[
 		"/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.js",
 		"/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.config.json",
-		"/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html"
+		"/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html",
+		"/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryFormDashboardPanel.html"		
 	]
 }

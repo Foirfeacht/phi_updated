@@ -17,6 +17,11 @@ app.factory('dynPhiDataSyncService', [ '$interval', '$timeout', 'vaultQ', functi
       return fieldMeta;
     },
 
+    compositeField : function(subPath) {
+      var compositeField = new CompositeDataField(subPath, this);
+      return compositeField;
+    },
+
     registerField : function(subPath, fieldMeta) {
       var self = this;
 
@@ -105,7 +110,7 @@ app.factory('dynPhiDataSyncService', [ '$interval', '$timeout', 'vaultQ', functi
         var request = batchPullUpdatesRequests[i];
         var subPath = self.subPath(request.path);
         var fieldMeta = self.registeredFieldsMeta[subPath];
-        if (fieldMeta.latestCnt === undefined) {
+        if (fieldMeta && fieldMeta.latestCnt === undefined) {
           fieldMeta.latestCnt = 0;
         }
       }
@@ -143,6 +148,7 @@ app.factory('dynPhiDataSyncService', [ '$interval', '$timeout', 'vaultQ', functi
           updateFieldMeta.currentValue = calculatedNewFieldValue;
           // Remember current time for skipping nearest 'watch' iteration
           updateFieldMeta.latestPullUpdateTs = Date.now();
+          updateFieldMeta.skipNextWatch = true;
         }
       }
     },
@@ -171,22 +177,26 @@ app.factory('dynPhiDataSyncService', [ '$interval', '$timeout', 'vaultQ', functi
         if (this.registeredFieldsMeta.hasOwnProperty(subPath)) {
           var fieldMeta = this.registeredFieldsMeta[subPath];
 
-          var latestValue = fieldMeta.latestValue;
-          var currentFieldValue = fieldMeta.currentValue;
+          // If automatic updates extracting and pushing is not disabled
+          if (fieldMeta.extractUpdateFromChangedModelFn) {
 
-          var currentAndActualAreTheSame = angular.equals(currentFieldValue, latestValue);
-          if (!currentAndActualAreTheSame) {
-            var fullPath = this.fullPath(subPath);
-            var update = fieldMeta.extractUpdateFromChangedModelFn(currentFieldValue, latestValue);
+            var latestValue = fieldMeta.latestValue;
+            var currentFieldValue = fieldMeta.currentValue;
 
-            if (update !== undefined) {
-              console.log("Outgoing update found for: " + subPath);
-              console.log(update);
+            var currentAndActualAreTheSame = angular.equals(currentFieldValue, latestValue);
+            if (!currentAndActualAreTheSame) {
+              var fullPath = this.fullPath(subPath);
+              var update = fieldMeta.extractUpdateFromChangedModelFn(currentFieldValue, latestValue);
 
-              batchPushUpdatesRequests.push({
-                path : fullPath,
-                obj : update
-              });
+              if (update !== undefined) {
+                console.log("Outgoing update found for: " + subPath);
+                console.log(update);
+
+                batchPushUpdatesRequests.push({
+                  path : fullPath,
+                  obj : update
+                });
+              }
             }
           }
         }
@@ -312,27 +322,33 @@ app.factory('dynPhiDataSyncService', [ '$interval', '$timeout', 'vaultQ', functi
           // This field was not initially pulled yet
           return;
         }
+        var skipThisWatch = fieldMeta.skipNextWatch;
         var latestPullUpdateTs = fieldMeta.latestPullUpdateTs;
-        if (!latestPullUpdateTs || Date.now() - latestPullUpdateTs > 200) {
-          // If this changing was not caused by 'pull' ...
 
-          if (self.watchPendingSyncTask) {
-            // There is scheduled sync task from one of watchable fields -
-            // cancel it...
-            $timeout.cancel(self.watchPendingSyncTask);
+        if (skipThisWatch) {
+          fieldMeta.skipNextWatch = false;
+          if (Date.now() - latestPullUpdateTs < 200) {
+            // If this changing was caused by 'pull'. Skip it ...
+            return;
           }
-
-          // ... and schedule new one
-          var syncTask = $timeout(function() {
-            self.sync();
-          }, bombingAvoidingDelay);
-
-          self.watchPendingSyncTask = syncTask;
-
-          syncTask.then(function() {
-            delete self.watchPendingSyncTask;
-          });
         }
+
+        if (self.watchPendingSyncTask) {
+          // There is scheduled sync task from one of watchable fields -
+          // cancel it...
+          $timeout.cancel(self.watchPendingSyncTask);
+        }
+
+        // ... and schedule new one
+        var syncTask = $timeout(function() {
+          self.sync();
+        }, bombingAvoidingDelay);
+
+        self.watchPendingSyncTask = syncTask;
+
+        syncTask.then(function() {
+          delete self.watchPendingSyncTask;
+        });
       }
 
       var scope = managedDataModels[this.rootPath].scope;
@@ -372,8 +388,61 @@ app.factory('dynPhiDataSyncService', [ '$interval', '$timeout', 'vaultQ', functi
     }
   }
 
+  function defaultApplyUpdatesToModelOfCollectionTypeFn(currentValue, incomingUpdates) {
+    function equalIdsPredicate(item) {
+      return item.id === updatedItemId;
+    }
+
+    for (var i = 0; i < incomingUpdates.length; i++) {
+      var updatedItem = incomingUpdates[i].obj;
+      var updatedItemId = updatedItem.id;
+      var updatedItemIsActive = updatedItem.active;
+
+      var currentItemWithSameId = _.find(currentValue, equalIdsPredicate);
+      if (currentItemWithSameId) {
+        if (updatedItemIsActive) {
+          currentValue.splice(currentValue.indexOf(currentItemWithSameId), 1, updatedItem);
+        } else {
+          currentValue.splice(currentValue.indexOf(currentItemWithSameId), 1);
+        }
+      } else {
+        if (updatedItemIsActive) {
+          currentValue.push(updatedItem);
+        }
+      }
+
+      if (this.afterSingleIncomingUpdateAppliedListener) {
+        this.afterSingleIncomingUpdateAppliedListener(updatedItem);
+      }
+    }
+
+    if (this.afterBatchIncomingUpdatesAppliedListener) {
+      this.afterBatchIncomingUpdatesAppliedListener(currentValue);
+    }
+    return currentValue;
+  }
+
   function defaultExtractUpdateFromChangedModelFn(currentValue, latestSynchronizedValue) {
     return currentValue;
+  }
+
+  function defaultExtractUpdateFromChangedModelOfCollectionTypeFn(currentValue, latestSynchronizedValue) {
+    if (!Array.isArray(currentValue)) {
+      throw "Current Value isn't array";
+    }
+    if (latestSynchronizedValue) {
+      if (!Array.isArray(latestSynchronizedValue)) {
+        throw "Latest Synchronized Value isn't array";
+      }
+    }
+
+    var addedItems = _.difference(currentValue, latestSynchronizedValue);
+    var removedItems = _.filter(currentValue, function(item) {
+      return item.active === false;
+    });
+    var updates = _.union(addedItems, removedItems);
+    updates.isForCollectionType = true;
+    return updates;
   }
 
   function DataField(subPath, parentDataModel) {
@@ -386,6 +455,7 @@ app.factory('dynPhiDataSyncService', [ '$interval', '$timeout', 'vaultQ', functi
     this.extractUpdateFromChangedModelFn = defaultExtractUpdateFromChangedModelFn;
     this.isWatchable = false;
     this.latestPullUpdateTs = undefined;
+    this.skipNextWatch = false;
   }
   DataField.prototype = {
     setStartValue : function(startValue) {
@@ -417,6 +487,34 @@ app.factory('dynPhiDataSyncService', [ '$interval', '$timeout', 'vaultQ', functi
       return this;
     },
 
+    behaveAsCollection : function() {
+      this.applyUpdatesToModelFn = defaultApplyUpdatesToModelOfCollectionTypeFn;
+      this.extractUpdateFromChangedModelFn = defaultExtractUpdateFromChangedModelOfCollectionTypeFn;
+      return this;
+    },
+
+    behaveAsSimpleValue : function() {
+      this.applyUpdatesToModelFn = defaultApplyUpdatesToModelFn;
+      this.extractUpdateFromChangedModelFn = defaultExtractUpdateFromChangedModelFn;
+      return this;
+    },
+
+    onAfterSingleIncomingUpdateApplied : function(fn) {
+      this.afterSingleIncomingUpdateAppliedListener = fn;
+      return this;
+    },
+
+    onAfterBatchIncomingUpdatesApplied : function(fn) {
+      this.afterBatchIncomingUpdatesAppliedListener = fn;
+      return this;
+    },
+
+    disableAutomaticOutgoingUpdatesExtractingOnPush : function() {
+      // allow only explicit updates putting
+      this.extractUpdateFromChangedModelFn = null;
+      return this;
+    },
+
     setWatchable : function(isWatchable) {
       this.isWatchable = isWatchable;
       return this;
@@ -425,6 +523,26 @@ app.factory('dynPhiDataSyncService', [ '$interval', '$timeout', 'vaultQ', functi
     putUpdate : function(update) {
       return this.parentDataModel.putUpdate(this.subPath, update);
     },
+  };
+
+  function CompositeDataField(subPath, parentDataModel) {
+    this.subPath = subPath;
+    this.parentDataModel = parentDataModel;
+  }
+
+  CompositeDataField.prototype = {
+    field : function(fieldName) {
+      var fullSubPath = this.subPath + "/" + fieldName;
+      var fieldMeta = this.parentDataModel.registeredFieldsMeta[fullSubPath];
+      if (!fieldMeta) {
+        fieldMeta = new DataField(fullSubPath, this.parentDataModel);
+      }
+      return fieldMeta;
+    },
+
+    deregisterAllFields : function() {
+      this.parentDataModel.deregisterAllFieldsWithPathStartsWith(this.subPath);
+    }
   };
 
   var managedDataModels = {
