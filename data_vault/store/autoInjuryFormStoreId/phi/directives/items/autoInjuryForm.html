@@ -5,7 +5,7 @@
     
 
   <div class="left-trigger trigger" id="left-trigger" ng-class="{triggerTop: scroll < 92, triggerScrolled: scroll > 92}" ng-click="showMenu();">
-    <i class="fa fa-angle-double-left"></i>
+    <i class="mdi mdi-more"></i>
 
   </div>
 
@@ -37,7 +37,7 @@
       </phi-items-list>
     </div>
 
-  <!--<md-sidenav md-component-id="left" class="md-sidenav-left md-open" id="left">
+  <!--<md-sidenav md-component-id="left" class="md-sidenav-left" id="left">
       <phi-items-list>
           <phi-items-list-bar></phi-items-list-bar>        
           
@@ -796,8 +796,8 @@
 
     
 
-    <div class="narrative col-md-3 sidebar" id="narr" >
-      <div class="narrative-text">
+    <div class="narrative col-md-3 sidebar" id="narr">
+      <div class="narrative-text" ng-if="selectedInjuryForm">
         <div>Injury form for {{selectedInjuryForm.name}} dated from {{selectedInjuryForm.date | date:'MM/dd/yyyy'}} for collision occuring at {{selectedInjuryForm.dateCollision.date | date:'MM/dd/yyyy'}} {{selectedInjuryForm.time}}</div>
         <div ng-if="selectedInjuryForm.location || selectedInjuryForm.roadConditions">Injury occured at {{selectedInjuryForm.location}}. Road conditions were {{selectedInjuryForm.roadConditions}}</div>
         <div ng-if="selectedInjuryForm.police">Police came to the accident scene? {{ selectedInjuryForm.police }}</div> 
@@ -812,7 +812,7 @@
     </div><!-- end col -->
 
       <div class="right-trigger trigger" id="right-trigger" ng-if="selectedInjuryForm" ng-click="showNarrative()">
-        <i class="fa fa-angle-double-right"></i>
+        <i class="mdi mdi-more"></i>
       </div><!-- end col -->
   </phi-item-form>
 

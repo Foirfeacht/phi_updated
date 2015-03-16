@@ -1,5 +1,3 @@
-
-
 defineDynamicDirective(function() {
   return {
     name : 'autoInjuryForm',
@@ -242,8 +240,9 @@ defineDynamicDirective(function() {
               $scope.showMenu = function(){
                 lmenu.style.display = (lmenu.style.display === 'none') ? 'block' : 'none'; 
                 aif.className = (lmenu.style.display === 'none') ? 'col-md-12' : 'col-md-9';
+                narr.style.display === 'none'
 
-                if(narr){narr.style.display === 'none'}
+                //if(narr){narr.style.display === 'none'}
               };
 
               $scope.showNarrative = function(){
@@ -253,8 +252,10 @@ defineDynamicDirective(function() {
                 lmenu.style.display ='none';
               };
 
+
               $scope.toggleLeft = function() {
-                $mdSidenav('left').toggle();
+                //$mdSidenav('left').toggle();
+                document.getElementById('left').toggle();
                  
               };
               $scope.toggleRight = function() {
