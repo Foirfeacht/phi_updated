@@ -6,18 +6,57 @@ defineDynamicDirective(function() {
         'dynPhiDataSyncService',
         'dashboardService',
         'vault',
+        '$compile',
+        '$timeout',
         '$mdSidenav',
-        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $mdSidenav) {
+        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $compile, $timeout, $mdSidenav) {
           return {
             restrict : 'E',
             scope : {
               'phiData' : '='
             },
+            //require: "^dyndirective",
             templateUrl : '../data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html',
-            link : function($scope, element, attrs, controller, $mdSidenav) {
+            controller: function($scope, $mdSidenav) {
+              var leftTrigger = document.getElementById('left-trigger');
+              var rightTrigger = document.getElementById('right-trigger');
+              $scope.toggleLeft = function() {
+                $mdSidenav('left').toggle().then(function(){
+                  //leftTrigger.className = (leftTrigger.className === 'flipped') ? 'notFlipped' : 'flipped';
+                });              
+              };
+              $scope.toggleRight = function() {
+                $mdSidenav('right').toggle().then(function(){
+                  //rightTrigger.className = (leftTrigger.className === 'flipped') ? 'notFlipped' : 'flipped';
+                });
+              };
+            },
+            link : function($scope, element, attrs, controller) {
             
               // Init data
               $scope.items = [];
+
+              // narrative
+
+              $scope.narrative = '';
+              var narrativeEl = document.getElementById('narrative-text');
+              var narrativeContainer = document.getElementById('narrative-txa');
+              $scope.narrative = narrativeEl.textContent;
+              
+
+              $scope.$watch(function () {
+                 return narrativeEl.innerHTML;
+              }, function(val) {
+                 $scope.updateNarrative();
+                 narrativeContainer.value = $scope.narrative;
+              });
+
+
+              $scope.updateNarrative = function(){
+                $scope.narrative = narrativeEl.textContent;
+              }
+
+
 
               function equalIdsPredicate(injuryForm) {
                 return injuryForm.id === updatedInjuryFormId;
@@ -124,6 +163,7 @@ defineDynamicDirective(function() {
                     data.field("record/" + updatedInjuryFormId + "/workEffortRequired").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/workAggPain").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/accidentDesc").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/narrative").setWatchable(true).register();
                   } else {
                     // Deregister all child fields
                     data.deregisterAllFieldsWithPathStartsWith("record/" + updatedInjuryFormId);
@@ -152,49 +192,7 @@ defineDynamicDirective(function() {
 
               // END of Warm-up data sync service
               
-              //some checkbox fields
               
-              $scope.collisionAftermath = ['CONFUSED', 'NAUSEATED', 'DISORIENTED', 'BLURRED VISION', 'LIGHTHEADED', 'RING/BUZZ IN EARS'];
-
-              $scope.aftermathSelection = [];
-
-              $scope.toggleAftermathSelection = function toggleAftermathSelection(aftermathName) {
-                   var idx = $scope.aftermathSelection.indexOf(aftermathName);
-
-                   // is currently selected
-                   if (idx > -1) {
-                     $scope.aftermathSelection.splice(idx, 1);
-                   }
-
-                   // is newly selected
-                   else {
-                     $scope.aftermathSelection.push(aftermathName);
-                   }
-                 };
-
-              $scope.collisionSymptoms = ['CONFUSED', 'NAUSEATED', 'DISORIENTED', 'BLURRED VISION', 'LIGHTHEADED', 'RING/BUZZ IN EARS'];
-
-              /*$scope.collisionAftermath = [
-                {name: 'CONFUSED', selected: false},
-                {name: 'NAUSEATED', selected: false},
-                {name: 'DISORIENTED', selected: false},
-                {name: 'BLURRED VISION', selected: false},
-                {name: 'LIGHTHEADED', selected: false},
-                {name: 'RING/BUZZ IN EARS', selected: false},
-              ];
-
-              $scope.aftermathSelection = [];
-
-              $scope.selectedAftermath = function selectedAftermath() {
-                return filterFilter($scope.fruits, { selected: true });
-              };
-
-              $scope.$watch('aftermath|filter:{selected:true}', function (nv) {
-                $scope.aftermathSelection = nv.map(function (aftermath) {
-                  return aftermath.name;
-                });
-              }, true);
-*/
 
               // List specific logic
               $scope.addNewItem = function() {
@@ -221,6 +219,8 @@ defineDynamicDirective(function() {
                     data.pullNewlyRegisteredFields();
                   }
                   $scope.selectedInjuryForm = data.asClassicJsObject().record[selectedInjuryForm.id];
+
+                  
                 } else {
                   $scope.selectedInjuryForm = null;
                 }
@@ -230,50 +230,16 @@ defineDynamicDirective(function() {
                 if (deactivatedInjuryForm) {
                   data.field('records').putUpdate(deactivatedInjuryForm);
                 }
-              };
 
-
-              var narr = document.getElementById('narr');
-              var lmenu = document.getElementById('left-menu');
-              var aif = document.getElementById('aif');
-
-              $scope.showMenu = function(){
-                lmenu.style.display = (lmenu.style.display === 'none') ? 'block' : 'none'; 
-                aif.className = (lmenu.style.display === 'none') ? 'col-md-12' : 'col-md-9';
-                narr.style.display === 'none'
-
-                //if(narr){narr.style.display === 'none'}
-              };
-
-              $scope.showNarrative = function(){
-
-                narr.style.display = (narr.style.display === 'none') ? 'block' : 'none';
-                aif.className = (narr.style.display === 'block') ? 'col-md-9' : 'col-md-12'; 
-                lmenu.style.display ='none';
-              };
-
-
-              $scope.toggleLeft = function() {
-                //$mdSidenav('left').toggle();
-                document.getElementById('left').toggle();
-                 
-              };
-              $scope.toggleRight = function() {
-                $mdSidenav('right').toggle();
-              };
-
-              //timepicker
-              $scope.hstep = 1;
-              $scope.mstep = 1;
-              $scope.ismeridian = true;
-              $scope.toggleMode = function() {
-                $scope.ismeridian = ! $scope.ismeridian;
               };
             }
           };
         } ]
   };
 });
+
+
+
 
 
 

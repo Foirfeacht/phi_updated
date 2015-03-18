@@ -1,19 +1,15 @@
 
 
-<div class="row phiTab hidable">
+<div class="row phiTab hidable" layout="row">
 
     
-
-  <div class="left-trigger trigger" id="left-trigger" ng-class="{triggerTop: scroll < 92, triggerScrolled: scroll > 92}" ng-click="showMenu();">
+ <div class="left-trigger trigger notFlipped" id="left-trigger" ng-click="toggleLeft()" ng-swipe-left="toggleLeft()">
     <i class="mdi mdi-more"></i>
+  </div> 
 
-  </div>
+ 
 
-  <!--<div class="left-trigger trigger" id="left-trigger" ng-click="toggleLeft()">
-    <i class="fa fa-angle-double-left"></i>
-  </div> -->
-
-  <div class="left-menu col-md-3 sidebar" id="left-menu">
+  <md-sidenav md-component-id="left" class="md-sidenav-left" id="left" md-is-locked-open="$mdMedia('gt-md')"> 
       <phi-items-list>
           <phi-items-list-bar></phi-items-list-bar>        
           
@@ -35,34 +31,10 @@
             </div>
           </div>       
       </phi-items-list>
-    </div>
-
-  <!--<md-sidenav md-component-id="left" class="md-sidenav-left" id="left">
-      <phi-items-list>
-          <phi-items-list-bar></phi-items-list-bar>        
-          
-          <div class="row">
-            <div class="col-xs-12">
-              <table ng-table="tableParams" class="table">
-                <tr ng-repeat="injuryForm in $data" ng-click="onSelect(injuryForm)" ng-class="{'active': isSelected(injuryForm)}">
-                  
-                  <td data-title="'Date'" sortable="'date'" width="50%">
-                    {{data.record[injuryForm.id].date | date:'MM/dd/yyyy'}}
-                    <span class="label label-warning" ng-show="isDirty(vital) || isNew(vital)">Unsaved</span>
-                    <span class="label label-danger" ng-hide="isValid(vital)">Invalid</span>
-                  </td>
-                  <td data-title="'Name'" sortable="'name'" width="50%">
-                    <span>{{data.record[injuryForm.id].name}}</span>
-                  </td>               
-                </tr>           
-              </table>
-            </div>
-          </div>       
-      </phi-items-list>
-    </md-sidenav>-->
+    </md-sidenav>
  
        
-  <div id="aif" class="col-md-9">
+  <md-content id="aif">
     <phi-item-form item="selectedInjuryForm">
 
       <div class="fieldset">
@@ -790,28 +762,30 @@
         <div class="col-md-12 final-words">Thank you for taking the time to fill out this form.</div>
       </div>
 
-
-
     </div><!-- end col -->
 
     
 
-    <div class="narrative col-md-3 sidebar" id="narr">
-      <div class="narrative-text" ng-if="selectedInjuryForm">
+    <md-sidenav md-component-id="right" class="md-sidenav-right" id="right">
+      <div class="narrative-text" id="narrative-text">
         <div>Injury form for {{selectedInjuryForm.name}} dated from {{selectedInjuryForm.date | date:'MM/dd/yyyy'}} for collision occuring at {{selectedInjuryForm.dateCollision.date | date:'MM/dd/yyyy'}} {{selectedInjuryForm.time}}</div>
         <div ng-if="selectedInjuryForm.location || selectedInjuryForm.roadConditions">Injury occured at {{selectedInjuryForm.location}}. Road conditions were {{selectedInjuryForm.roadConditions}}</div>
         <div ng-if="selectedInjuryForm.police">Police came to the accident scene? {{ selectedInjuryForm.police }}</div> 
         <div ng-if="selectedInjuryForm.police && selectedInjuryForm.report">Is there a report? {{ selectedInjuryForm.report }}</div>
         <div ng-if="selectedInjuryForm.police && selectedInjuryForm.reportRequest">Was report requested? {{ selectedInjuryForm.reportRequest }}</div> 
         <div ng-if="selectedInjuryForm.hospital==='no'">Patient didn't go to the hospital</div>
-        <div ng-if="selectedInjuryForm.hospital==='yes'">Patient went to the hospital {{selectedInjuryForm.hospitalName}} {{selectedInjuryForm.hospitalTransportation}}. <br>{{selectedInjuryForm.hospitalXray}} were x-rayed. <br> {{selectedInjuryForm.hospitalInjuries}} <br>  Patient stayed in the hospital for {{selectedInjuryForm.hospitalDuration}}</div><!-- end if -->
+        <div ng-if="selectedInjuryForm.hospital==='yes'">Patient went to the hospital {{selectedInjuryForm.hospitalName}} {{selectedInjuryForm.hospitalTransportation}}. <br>{{selectedInjuryForm.hospitalXray}} were x-rayed. <br> {{selectedInjuryForm.hospitalInjuries}} <br>  Patient stayed in the hospital for {{selectedInjuryForm.hospitalDuration}}</div>
         <div>{{selectedInjuryForm.cutbleed}}</div>
         <div>{{selectedInjuryForm.bruises}}</div>
         <div>{{selectedInjuryForm.seat}} {{selectedInjuryForm.collisionAwareness}} </div> <span ng-if="selectedInjuryForm.collisionConsciousness==='yes'">After the collision, patient lost consciousness for {{selectedInjuryForm.collisionBlackOutDuration}}. </span><span ng-if="selectedInjuryForm.collisionConsciousness==='no'">Patient remained counscious</span><span ng-if="selectedInjuryForm.collisionFlashOfLight==='yes'">Patient experienced flash of light in the moment of collision</span>
-      </div>
-    </div><!-- end col -->
 
-      <div class="right-trigger trigger" id="right-trigger" ng-if="selectedInjuryForm" ng-click="showNarrative()">
+      </div>
+      <textarea id="narrative-txa" class="hidden" ng-model="selectedInjuryForm.narrative"></textarea>
+
+      
+    </md-sidenav>
+
+      <div class="right-trigger trigger notFlipped" id="right-trigger" ng-if="selectedInjuryForm" ng-click="toggleRight()" ng-swipe-right="toggleRight()">
         <i class="mdi mdi-more"></i>
       </div><!-- end col -->
   </phi-item-form>
