@@ -86,6 +86,12 @@ input[type="checkbox"]{
 	cursor: pointer;
 }
 
+@media (min-width: 960px){
+	.left-trigger {
+		display: none;
+	}
+}
+
 .left-trigger i {
 	position: fixed; 
 	top: 50%;
@@ -134,11 +140,36 @@ input[type="checkbox"]{
 	padding: 10px;
 }
 
-.flipped {
+.left-trigger .flipped {
 	-moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
+    left: 465px;
+}
+
+.right-trigger .flipped {
+	-moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    right: 465px;
+}
+
+.left-trigger .not-flipped {
+	-moz-transform: scaleX(1);
+    -o-transform: scaleX(1);
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+    left: 15px
+}
+
+.right-trigger .not-flipped {
+	-moz-transform: scaleX(1);
+    -o-transform: scaleX(1);
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+    right: 15px
 }
 
 md-sidenav {

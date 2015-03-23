@@ -6,10 +6,9 @@ defineDynamicDirective(function() {
         'dynPhiDataSyncService',
         'dashboardService',
         'vault',
-        '$compile',
-        '$timeout',
         '$mdSidenav',
-        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $compile, $timeout, $mdSidenav) {
+        '$http',
+        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $http, $mdSidenav) {
           return {
             restrict : 'E',
             scope : {
@@ -17,18 +16,32 @@ defineDynamicDirective(function() {
             },
             //require: "^dyndirective",
             templateUrl : '../data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html',
-            controller: function($scope, $mdSidenav) {
+            controller: function($scope, $mdSidenav, $http) {
               var leftTrigger = document.getElementById('left-trigger');
               var rightTrigger = document.getElementById('right-trigger');
               $scope.toggleLeft = function() {
-                $mdSidenav('left').toggle().then(function(){
-                  //leftTrigger.className = (leftTrigger.className === 'flipped') ? 'notFlipped' : 'flipped';
-                });              
+                $mdSidenav('left').toggle();
+                if($mdSidenav('left').className === "md-closed"){
+                  $scope.leftState = false;
+                } 
+                                      
               };
               $scope.toggleRight = function() {
-                $mdSidenav('right').toggle().then(function(){
-                  //rightTrigger.className = (leftTrigger.className === 'flipped') ? 'notFlipped' : 'flipped';
-                });
+                $mdSidenav('right').toggle();
+            
+              };
+              $scope.rightState = false;
+              $scope.leftState = false;
+              $scope.leftIsOpen = false;
+              $scope.rightIsOpen = false;
+              $scope.printPDF = function() {
+                $http.get('../servlet/rest/PdfPrint/VaultQ?id=/store/manifest.json')
+                  .success(function(data) {
+                      console.log('printed');
+                  })
+                  .error(function (data) {
+                      console.log('Error: ' + data);
+                  });
               };
             },
             link : function($scope, element, attrs, controller) {
@@ -192,6 +205,9 @@ defineDynamicDirective(function() {
 
               // END of Warm-up data sync service
               
+              //print PDF
+              
+              
               
 
               // List specific logic
@@ -232,6 +248,27 @@ defineDynamicDirective(function() {
                 }
 
               };
+
+              $scope.classOne = 'flipped';
+              $scope.classTwo = 'flipped';
+
+              $scope.toggleLeftButton = function() {
+                if ($scope.classOne === "flipped"){
+                  $scope.classOne = "notFlipped";
+                } else {
+                  $scope.classOne = "flipped";
+                }
+              };
+
+              $scope.toggleRightButton = function() {
+                if ($scope.classTwo === "flipped"){
+                  $scope.classTwo = "notFlipped";
+                } else {
+                  $scope.classTwo = "flipped";
+                }
+              };
+
+
             }
           };
         } ]
