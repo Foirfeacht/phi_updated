@@ -21,15 +21,28 @@ defineDynamicDirective(function() {
               var rightTrigger = document.getElementById('right-trigger');
               $scope.toggleLeft = function() {
                 $mdSidenav('left').toggle();
-                if($mdSidenav('left').className === "md-closed"){
-                  $scope.leftState = false;
-                } 
-                                      
               };
               $scope.toggleRight = function() {
-                $mdSidenav('right').toggle();
-            
-              };
+                $mdSidenav('right').toggle()
+					.then(function(){
+						if($('md-sidenav-backdrop').hasClass('md-closed')){
+							$scope.rightState = false;
+							$scope.leftState = false;
+							console.log('clicked')
+						}
+					});
+
+			  };
+
+
+
+				$scope.toggleSideButtons = function(){
+					$scope.rightState = false;
+					$scope.leftState = false;
+					console.log('flip');
+				}
+
+				$scope.$watch('isOpen', function(){console.log('isopen')});
               $scope.rightState = false;
               $scope.leftState = false;
               $scope.leftIsOpen = false;

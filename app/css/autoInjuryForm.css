@@ -1,6 +1,6 @@
 /*auto injury form styles */
 
-.fieldset {
+.autoInJuryForm .fieldset {
 	border-radius: 4px;
 	border: 1px thin rgba(0, 0, 0, 0.8);
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -16,11 +16,11 @@
 	margin: 10px auto;
 }
 
-.aif-txa {
+#aif .aif-txa {
 	resize: vertical;
 }
 
-#dd {
+#aif #dd {
 	margin-top: 30px;
 }
 
@@ -36,18 +36,14 @@
 	cursor: pointer;
 }
 
-input[type="radio"]{
+.autoInJuryForm input[type="radio"]{
 	width: auto;
 	margin-right: 3px;
 	margin-left: 8px
 }
 
-input[type="checkbox"]{
+.autoInJuryForm input[type="checkbox"]{
 	margin-right: 5px;
-}
-
-.form-control.short {
-	width: 200px;
 }
 
 .narrative-text {
@@ -70,7 +66,7 @@ input[type="checkbox"]{
 }
 
 
-.trigger {
+.autoInJuryForm .trigger {
 	position: fixed;	
 	width: 50px;
 	height: 100%;
@@ -82,65 +78,61 @@ input[type="checkbox"]{
 	z-index: 999;
 }
 
-.trigger:hover {
+.autoInJuryForm .trigger:hover {
 	cursor: pointer;
 }
 
 @media (min-width: 960px){
-	.left-trigger {
+    .autoInJuryForm .left-trigger {
 		display: none;
 	}
 }
 
-.left-trigger i {
+.autoInJuryForm .left-trigger i {
 	position: fixed; 
 	top: 50%;
 	left: 15px;
 	font-size: 2em;
 }
 
-.right-trigger i {
+.autoInJuryForm .right-trigger i {
 	position: fixed; 
 	top: 50%;
 	right: 15px;
 	font-size: 2em;
 }
 
-.triggerScrolled {top: 0;}
-
-.triggerTop {top: 92px;}
-
-.left-trigger {
+.autoInJuryForm .left-trigger {
 	left: 0;
 }
 
-.right-trigger {
+.autoInJuryForm .right-trigger {
 	right: 0;
 }
 
-.final-words {
+.autoInJuryForm .final-words {
 	text-align: center;
 	font-weight: 700;
 }
 
-.phiTab {
+.autoInJuryForm.phiTab {
 	position: relative;
 }
 
-.hidable {
+.autoInJuryForm.hidable {
 	padding: 0 50px;
 }
 
-.btn-danger i {
+.autoInJuryForm .btn-danger i {
 	display: block;
 	margin: 0 auto;
 }
 
-.btn-danger {
+.autoInJuryForm .btn-danger {
 	padding: 10px;
 }
 
-.left-trigger .flipped {
+.autoInJuryForm .left-trigger .flipped {
 	-moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
@@ -148,7 +140,7 @@ input[type="checkbox"]{
     left: 465px;
 }
 
-.right-trigger .flipped {
+.autoInJuryForm .right-trigger .flipped {
 	-moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
@@ -156,7 +148,7 @@ input[type="checkbox"]{
     right: 465px;
 }
 
-.left-trigger .not-flipped {
+.autoInJuryForm .left-trigger .not-flipped {
 	-moz-transform: scaleX(1);
     -o-transform: scaleX(1);
     -webkit-transform: scaleX(1);
@@ -164,7 +156,7 @@ input[type="checkbox"]{
     left: 15px
 }
 
-.right-trigger .not-flipped {
+.autoInJuryForm .right-trigger .not-flipped {
 	-moz-transform: scaleX(1);
     -o-transform: scaleX(1);
     -webkit-transform: scaleX(1);
@@ -172,27 +164,27 @@ input[type="checkbox"]{
     right: 15px
 }
 
-md-sidenav {
+.autoInJuryForm md-sidenav {
 	padding: 10px 20px;
 }
 
-md-sidenav, 
-md-sidenav.md-locked-open, 
-md-sidenav.md-closed.md-locked-open-add-active {
+.autoInJuryForm md-sidenav,
+.autoInJuryForm md-sidenav.md-locked-open,
+.autoInJuryForm md-sidenav.md-closed.md-locked-open-add-active {
     min-width: 400px !important;
     width: 450px !important;
     max-width: 450px !important;
-} 
+}
 
-md-content {
+.autoInJuryForm md-content {
 	width: 80%;
 	padding: 10px 1%;
 }
 
-.tab-content {
+.autoInJuryForm .tab-content {
 	top: 42px;
 }
 
-.hidden {
+.autoInJuryForm .hidden {
 	visibility: none;
 }
