@@ -34,13 +34,8 @@ defineDynamicDirective(function() {
 
 			  };
 
+				$scope.date = new Date();
 
-
-				$scope.toggleSideButtons = function(){
-					$scope.rightState = false;
-					$scope.leftState = false;
-					console.log('flip');
-				}
 
 				$scope.$watch('isOpen', function(){console.log('isopen')});
               $scope.rightState = false;
@@ -109,6 +104,8 @@ defineDynamicDirective(function() {
                       currentValue.push(updatedInjuryForm);
                     }
                   }
+
+
 
                   if (updatedInjuryFormIsActive) {
                     // Register eager fields
@@ -219,6 +216,7 @@ defineDynamicDirective(function() {
               // END of Warm-up data sync service
               
               //print PDF
+				$scope.printPDF
               
               
               
