@@ -49,8 +49,8 @@
       <file leaf-file-name="autoInjuryForm.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48597082" vertical-offset="332" max-vertical-offset="5151">
-              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.44781145" vertical-offset="383" max-vertical-offset="5151">
+              <caret line="46" column="33" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -433,8 +433,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48597082" vertical-offset="332" max-vertical-offset="5151">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.44781145" vertical-offset="383" max-vertical-offset="5151">
+          <caret line="46" column="33" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
           <folding />
         </state>
       </provider>

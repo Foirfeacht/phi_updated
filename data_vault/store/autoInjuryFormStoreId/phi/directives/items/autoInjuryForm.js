@@ -44,7 +44,7 @@ defineDynamicDirective(function() {
               $scope.rightIsOpen = false;
               $scope.printPDF = function() {
 
-                $http.get('../servlet/rest/PdfPrint/VaultQ?id=/store/manifest.json')
+                $http.get('../../../servlet/rest/PdfPrint/VaultQ?id=/store/manifest.json')
                   .success(function(data) {
                       console.log('printed');
                   })
