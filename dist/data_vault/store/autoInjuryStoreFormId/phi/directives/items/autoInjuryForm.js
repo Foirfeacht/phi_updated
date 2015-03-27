@@ -15,7 +15,7 @@ defineDynamicDirective(function() {
               'phiData' : '='
             },
             //require: "^dyndirective",
-            templateUrl : '../data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html',
+            templateUrl : '../data_vault/store/autoInjuryStoreFormId/phi/directives/items/autoInjuryForm.html',
             controller: function($scope, $mdSidenav, $http) {
               var leftTrigger = document.getElementById('left-trigger');
               var rightTrigger = document.getElementById('right-trigger');
@@ -39,7 +39,6 @@ defineDynamicDirective(function() {
               $scope.leftState = false;
               $scope.leftIsOpen = false;
               $scope.rightIsOpen = false;
-				$scope.updatedInjuryFormId = printService.updatedInjuryFormId;
 
 				$scope.printPDF = function(id) {
 					var updatedInjuryFormId = id;
@@ -62,13 +61,7 @@ defineDynamicDirective(function() {
               // Init data
               $scope.items = [];
 
-				$scope.$watch('updatedInjuryFormId', function() {
-					printService.getId($scope.latLng);
-				});
-
-				$scope.$on('valuesUpdated', function() {
-					$scope.updatedInjuryFormId = printService.updatedInjuryFormId;
-				});
+				$scope.$apply("printPDF($scope.updatedInjuryFormId)");
 
               // narrative
 

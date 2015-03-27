@@ -1,0 +1,11 @@
+{
+	"storeId":"autoInjuryStoreFormId",
+	"title":"Auto Injury Form",
+	"navigationPriority":1000,
+	"resourcesPaths":[
+		"/store/autoInjuryStoreFormId/phi/directives/items/autoInjuryForm.js",
+		"/store/autoInjuryStoreFormId/phi/directives/items/autoInjuryForm.config.json",
+		"/store/autoInjuryStoreFormId/phi/directives/items/autoInjuryForm.html",
+		"/store/autoInjuryStoreFormId/phi/directives/items/autoInjuryFormDashboardPanel.html"		
+	]
+}
