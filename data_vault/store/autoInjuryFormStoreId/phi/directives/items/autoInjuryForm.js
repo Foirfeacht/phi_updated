@@ -8,7 +8,8 @@ defineDynamicDirective(function() {
         'vault',
         '$mdSidenav',
         '$http',
-        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $http, $mdSidenav) {
+		'printService',
+        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $http, $mdSidenav, printService) {
           return {
             restrict : 'E',
             scope : {
@@ -16,7 +17,7 @@ defineDynamicDirective(function() {
             },
             //require: "^dyndirective",
             templateUrl : '../data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html',
-            controller: function($scope, $mdSidenav, $http) {
+            controller: function($scope, $mdSidenav, $http, printService) {
               var leftTrigger = document.getElementById('left-trigger');
               var rightTrigger = document.getElementById('right-trigger');
               $scope.toggleLeft = function() {
@@ -41,11 +42,10 @@ defineDynamicDirective(function() {
               $scope.rightIsOpen = false;
 				$scope.updatedInjuryFormId = printService.updatedInjuryFormId;
 
-				$scope.printPDF = function(id) {
-					var updatedInjuryFormId = id;
+				$scope.printPDF = function() {
 					var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
 					var data = dynPhiDataSyncService.initModel($scope, rootPath);
-					var subPath = "record/" + id + "/narrative";
+					var subPath = "record/" + $scope.updatedInjuryFormId + "/narrative";
 					var request = '../../../f402/servlet/rest/PdfPrint/VaultQ?id=' + rootPath + subPath;
 
 					$http.get(request)
