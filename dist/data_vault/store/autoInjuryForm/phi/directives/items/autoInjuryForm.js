@@ -8,43 +8,56 @@ defineDynamicDirective(function() {
         'vault',
         '$mdSidenav',
         '$http',
-        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $http, $mdSidenav) {
+        'vaultPdfPrint',
+        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $http, $mdSidenav, vaultPdfPrint) {
           return {
             restrict : 'E',
             scope : {
               'phiData' : '='
             },
             //require: "^dyndirective",
-            templateUrl : '../data_vault/store/autoInjuryStoreFormId/phi/directives/items/autoInjuryForm.html',
-            controller: function($scope, $mdSidenav, $http) {
+            templateUrl : '../data_vault/store/autoInjuryForm/phi/directives/items/autoInjuryForm.html',
+            controller: function($scope, $mdSidenav, $http, vaultPdfPrint) {
               var leftTrigger = document.getElementById('left-trigger');
               var rightTrigger = document.getElementById('right-trigger');
               $scope.toggleLeft = function() {
-                $mdSidenav('left').toggle();
+                $mdSidenav('left').toggle()
+					.then(function() {
+						$('.md-sidenav-backdrop').hide();
+						if ($('.md-sidenav-backdrop').hasClass('md-closed')) {
+							$scope.rightState = false;
+							$scope.leftState = false;
+							console.log('clicked');
+							$('md-content').css('width', '60%');
+						}
+					});
               };
               $scope.toggleRight = function() {
                 $mdSidenav('right').toggle()
 					.then(function(){
-						if($('md-sidenav-backdrop').hasClass('md-closed')){
+						$('.md-sidenav-backdrop').hide();
+						if($('.md-sidenav-backdrop').hasClass('md-closed')){
 							$scope.rightState = false;
 							$scope.leftState = false;
-							console.log('clicked')
+							console.log('clicked');
+
 						}
 					});
 
 			  };
-				$scope.date = new Date();
 				$scope.$watch('isOpen', function(){console.log('isopen')});
               $scope.rightState = false;
               $scope.leftState = false;
               $scope.leftIsOpen = false;
               $scope.rightIsOpen = false;
 
-				$scope.printPDF = function(id) {
-					var updatedInjuryFormId = id;
+        //$scope.printPDF = vaultPdfPrint.printPDF(vaultQ, );
+
+
+				/*$scope.printPDF = function() {
 					var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
 					var data = dynPhiDataSyncService.initModel($scope, rootPath);
-					var subPath = "record/" + id + "/narrative";
+					var subPath = "record/" + $scope.updatedInjuryFormId + "/narrative";
 					var request = '../../../f402/servlet/rest/PdfPrint/VaultQ?id=' + rootPath + subPath;
 
 					$http.get(request)
@@ -54,34 +67,57 @@ defineDynamicDirective(function() {
 						.error(function (data) {
 							console.log('Error: ' + data);
 						});
-				};
+				};*/
             },
             link : function($scope, element, attrs, controller) {
             
               // Init data
               $scope.items = [];
 
-				$scope.$apply("printPDF($scope.updatedInjuryFormId)");
+              
+              
+              $scope.printPdf = function(){
+                $scope.updateNarrative();
+                var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
+                var data = dynPhiDataSyncService.initModel($scope, rootPath);
+                var subPath = "record/" + $scope.updatedInjuryFormId + "/narrative";
+                var path = rootPath + subPath;
+                vaultPdfPrint.printPdf('vaultQ', path);	
+                var $e = angular.element(narrativeContainer);
+                $e.triggerHandler('input');
+
+                 console.log($scope.narrative);			
+              }
 
               // narrative
 
               $scope.narrative = '';
               var narrativeEl = document.getElementById('narrative-text');
               var narrativeContainer = document.getElementById('narrative-txa');
-              $scope.narrative = narrativeEl.textContent;
+              
               
 
               $scope.$watch(function () {
                  return narrativeEl.innerHTML;
               }, function(val) {
-                 $scope.updateNarrative();
-                 narrativeContainer.value = $scope.narrative;
+                 $scope.narrativeText = narrativeEl.textContent;
+                 console.log('updated');
+                 narrativeContainer.value = $scope.narrativeText;
+        
               });
 
 
               $scope.updateNarrative = function(){
                 $scope.narrative = narrativeEl.textContent;
               }
+
+				// date
+
+				$scope.initDate = function(){
+					$scope.date = new Date($scope.date);
+					$scope.dateCollision.date = new Date($scope.dateCollision.date);
+					scope.dateCollision.time = new Date($scope.dateCollision.time);
+				}
 
 
 
@@ -96,7 +132,8 @@ defineDynamicDirective(function() {
                 for (var i = 0; i < updates.length; i++) {
                   var updatedInjuryForm = updates[i].obj;
                   var updatedInjuryFormId = updatedInjuryForm.id;
-					$scope.updatedInjuryFormId = updatedInjuryFormId;
+					        $scope.updatedInjuryFormId = updatedInjuryFormId;
+                  console.log(updatedInjuryFormId)
                   var updatedInjuryFormIsActive = updatedInjuryForm.active;
 
                   var currentInjuryFormWithSameId = _.find(currentValue, function equalIdsPredicate(injuryForm) {
@@ -120,8 +157,8 @@ defineDynamicDirective(function() {
                     // Register eager fields
                     data.field("record/" + updatedInjuryFormId + "/date").setStartValue(new Date()).setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/name").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/dateCollision.date").setStartValue(new Date()).setStartValue(new Date()).setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/dateCollision.time").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/dateCollision.date").setStartValue(new Date()).setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/dateCollision.time").setStartValue(new Date()).setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/location").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/roadConditions").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/police").setWatchable(true).register();
@@ -223,12 +260,7 @@ defineDynamicDirective(function() {
               });
 
               // END of Warm-up data sync service
-              
-              //print PDF
-				$scope.printPDF
-              
-              
-              
+
 
               // List specific logic
               $scope.addNewItem = function() {

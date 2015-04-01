@@ -171,7 +171,8 @@
 }
 
 .autoInJuryForm md-content {
-	width: 80%;
+	width: auto;
+	max-width: 80%;
 	padding: 10px 1%;
 }
 
@@ -180,5 +181,6 @@
 }
 
 .autoInJuryForm .hidden {
-	visibility: none;
+	opacity: 0;
+	visibility: hidden;
 }

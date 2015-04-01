@@ -960,7 +960,7 @@
     
 
     <md-sidenav md-component-id="right" class="md-sidenav-right" id="right">
-        <md-button class="md-fab md-primary" aria-label="Print PDF" ng-click="printPDF()">
+        <md-button class="md-fab md-primary" aria-label="Print PDF" ng-click="printPdf()">
             <i class="mdi mdi-printer"></i>
         </md-button>
       <div class="narrative-text" id="narrative-text">
@@ -984,8 +984,11 @@
         <div>
           <span ng-if="selectedInjuryForm.collisionFlashOfLight==='yes'">Patient experienced flash of light in the moment of collision</span>
         </div>
+        <div>
+          {{selectedInjuryForm.narrative}}
+        </div>
       </div>
-      <textarea id="narrative-txa" class="hidden" ng-model="selectedInjuryForm.narrative"></textarea>
+      <textarea id="narrative-txa" ng-model="selectedInjuryForm.narrative"></textarea>
 
       
     </md-sidenav>
@@ -996,5 +999,7 @@
   </phi-item-form>
 
 </div><!--end row-->
+
+
 
 

@@ -8,8 +8,8 @@ defineDynamicDirective(function() {
         'vault',
         '$mdSidenav',
         '$http',
-		'printService',
-        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $http, $mdSidenav, printService) {
+        'vaultPdfPrint',
+        function(phiContext, dynPhiDataSyncService, dashboardService, vault, $http, $mdSidenav, vaultPdfPrint) {
           return {
             restrict : 'E',
             scope : {
@@ -17,32 +17,32 @@ defineDynamicDirective(function() {
             },
             //require: "^dyndirective",
             templateUrl : '../data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html',
-            controller: function($scope, $mdSidenav, $http, printService) {
+            controller: function($scope, $mdSidenav, $http, vaultPdfPrint) {
               var leftTrigger = document.getElementById('left-trigger');
               var rightTrigger = document.getElementById('right-trigger');
               $scope.toggleLeft = function() {
                 $mdSidenav('left').toggle()
-					.then(function() {
-						$('.md-sidenav-backdrop').hide();
-						if ($('.md-sidenav-backdrop').hasClass('md-closed')) {
-							$scope.rightState = false;
-							$scope.leftState = false;
-							console.log('clicked');
-							$('md-content').css('width', '60%');
-						}
+          					.then(function() {
+          						$('.md-sidenav-backdrop').hide();
+          						if ($('.md-sidenav-backdrop').hasClass('md-closed')) {
+          							$scope.rightState = false;
+          							$scope.leftState = false;
+          							console.log('clicked');
+          							$('md-content').css('width', '60%');
+          						}
 					});
               };
               $scope.toggleRight = function() {
                 $mdSidenav('right').toggle()
-					.then(function(){
-						$('.md-sidenav-backdrop').hide();
-						if($('.md-sidenav-backdrop').hasClass('md-closed')){
-							$scope.rightState = false;
-							$scope.leftState = false;
-							console.log('clicked');
-
-						}
+          					.then(function(){
+          						$('.md-sidenav-backdrop').hide();
+          						if($('.md-sidenav-backdrop').hasClass('md-closed')){
+          							$scope.rightState = false;
+          							$scope.leftState = false;
+          							console.log('clicked');
+          						}
 					});
+
 
 			  };
 				$scope.$watch('isOpen', function(){console.log('isopen')});
@@ -50,49 +50,40 @@ defineDynamicDirective(function() {
               $scope.leftState = false;
               $scope.leftIsOpen = false;
               $scope.rightIsOpen = false;
-				$scope.updatedInjuryFormId = printService.updatedInjuryFormId;
-
-				$scope.printPDF = function() {
-					var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
-					var data = dynPhiDataSyncService.initModel($scope, rootPath);
-					var subPath = "record/" + $scope.updatedInjuryFormId + "/narrative";
-					var request = '../../../f402/servlet/rest/PdfPrint/VaultQ?id=' + rootPath + subPath;
-
-					$http.get(request)
-						.success(function(data) {
-							console.log('printed');
-						})
-						.error(function (data) {
-							console.log('Error: ' + data);
-						});
-				};
             },
             link : function($scope, element, attrs, controller) {
+
+               $scope.toggleLeft();
             
               // Init data
               $scope.items = [];
 
-				$scope.$watch('updatedInjuryFormId', function() {
-					printService.getId($scope.latLng);
-				});
-
-				$scope.$on('valuesUpdated', function() {
-					$scope.updatedInjuryFormId = printService.updatedInjuryFormId;
-				});
+              
+              
+              $scope.printPdf = function(){
+                var $e = angular.element(narrativeContainer);
+                $e.triggerHandler('input');
+                var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
+                var data = dynPhiDataSyncService.initModel($scope, rootPath);
+                var subPath = "record/" + $scope.updatedInjuryFormId + "/narrative";
+                var path = rootPath + subPath;
+                vaultPdfPrint.printPdf('vaultQ', path);		
+              }
 
               // narrative
 
               $scope.narrative = '';
               var narrativeEl = document.getElementById('narrative-text');
               var narrativeContainer = document.getElementById('narrative-txa');
-              $scope.narrative = narrativeEl.textContent;
+              
               
 
               $scope.$watch(function () {
                  return narrativeEl.innerHTML;
               }, function(val) {
                  $scope.updateNarrative();
-                 narrativeContainer.value = $scope.narrative;
+                 narrativeContainer.value = $scope.narrativeText;
+        
               });
 
 
@@ -121,7 +112,8 @@ defineDynamicDirective(function() {
                 for (var i = 0; i < updates.length; i++) {
                   var updatedInjuryForm = updates[i].obj;
                   var updatedInjuryFormId = updatedInjuryForm.id;
-					$scope.updatedInjuryFormId = updatedInjuryFormId;
+					        $scope.updatedInjuryFormId = updatedInjuryFormId;
+                  console.log(updatedInjuryFormId)
                   var updatedInjuryFormIsActive = updatedInjuryForm.active;
 
                   var currentInjuryFormWithSameId = _.find(currentValue, function equalIdsPredicate(injuryForm) {
