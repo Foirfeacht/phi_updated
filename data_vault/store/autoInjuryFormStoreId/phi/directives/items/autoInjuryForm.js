@@ -21,20 +21,30 @@ defineDynamicDirective(function() {
               var leftTrigger = document.getElementById('left-trigger');
               var rightTrigger = document.getElementById('right-trigger');
               $scope.toggleLeft = function() {
-                $mdSidenav('left').toggle();
+                $mdSidenav('left').toggle()
+					.then(function() {
+						$('.md-sidenav-backdrop').hide();
+						if ($('.md-sidenav-backdrop').hasClass('md-closed')) {
+							$scope.rightState = false;
+							$scope.leftState = false;
+							console.log('clicked');
+							$('md-content').css('width', '60%');
+						}
+					});
               };
               $scope.toggleRight = function() {
                 $mdSidenav('right').toggle()
 					.then(function(){
-						if($('md-sidenav-backdrop').hasClass('md-closed')){
+						$('.md-sidenav-backdrop').hide();
+						if($('.md-sidenav-backdrop').hasClass('md-closed')){
 							$scope.rightState = false;
 							$scope.leftState = false;
-							console.log('clicked')
+							console.log('clicked');
+
 						}
 					});
 
 			  };
-				$scope.date = new Date();
 				$scope.$watch('isOpen', function(){console.log('isopen')});
               $scope.rightState = false;
               $scope.leftState = false;
@@ -90,6 +100,14 @@ defineDynamicDirective(function() {
                 $scope.narrative = narrativeEl.textContent;
               }
 
+				// date
+
+				$scope.initDate = function(){
+					$scope.date = new Date($scope.date);
+					$scope.dateCollision.date = new Date($scope.dateCollision.date);
+					scope.dateCollision.time = new Date($scope.dateCollision.time);
+				}
+
 
 
 
@@ -127,8 +145,8 @@ defineDynamicDirective(function() {
                     // Register eager fields
                     data.field("record/" + updatedInjuryFormId + "/date").setStartValue(new Date()).setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/name").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/dateCollision.date").setStartValue(new Date()).setStartValue(new Date()).setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/dateCollision.time").setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/dateCollision.date").setStartValue(new Date()).setWatchable(true).register();
+                    data.field("record/" + updatedInjuryFormId + "/dateCollision.time").setStartValue(new Date()).setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/location").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/roadConditions").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/police").setWatchable(true).register();
@@ -230,12 +248,7 @@ defineDynamicDirective(function() {
               });
 
               // END of Warm-up data sync service
-              
-              //print PDF
-				$scope.printPDF
-              
-              
-              
+
 
               // List specific logic
               $scope.addNewItem = function() {
