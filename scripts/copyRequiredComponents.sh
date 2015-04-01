@@ -14,6 +14,7 @@ cp ~/workspace/vericle/espoc_app/vericle-gwt/war/lwc/js/directives/phi/summary/b
 cp ~/workspace/vericle/espoc_app/vericle-gwt/war/lwc/partials/directives/phi/summary/briefSummaryPanel.html app/partials/directives/phi/summary/
 cp ~/workspace/vericle/espoc_app/vericle-gwt/war/lwc/js/directives/phi/summary/dynamicDashboardContentRenderer.js app/js/directives/phi/summary/
 
+
 cp ~/workspace/vericle/espoc_app/vericle-gwt/war/lwc/lib/require-2.1.15.js app/lib/
 
 #	Dynamic Directives Bridge 
@@ -25,6 +26,7 @@ cp ~/workspace/vericle/espoc_app/vericle-gwt/war/lwc/js/phi/custommodules/bootsr
 #cp ~/workspace/vericle/espoc_app/vericle-gwt/war/lwc/js/vault/vaultService.js app/js/vault/
 #cp ~/workspace/vericle/espoc_app/vericle-gwt/war/lwc/js/vault/vaultQService.js app/js/vault/
 cp ~/workspace/vericle/espoc_app/vericle-gwt/war/lwc/js/phi/dynPhiDataSyncService.js app/js/phi/
+cp ~/workspace/vericle/espoc_app/vericle-gwt/war/lwc/js/vault/vaultPdfPrintService.js app/js/vault/
 
 #	Examples
 cp ~/workspace/vericle/espoc_app/vericle-gwt/war/lwc/js/directives/phi/custommodules/atomicVitals/customAtomicVitals.js data_vault/store/customAtomicVitalsStoreId/phi/directives/items/
