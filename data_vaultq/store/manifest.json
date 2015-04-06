@@ -4,6 +4,7 @@
     "customAtomicVitalsStoreId",
     "customFamilyHistoryStoreId",
     "problemsStoreId",
-    "autoInjuryFormStoreId"
+    "autoInjuryFormStoreId",
+    "bestPTStoreId"
   ]
 }

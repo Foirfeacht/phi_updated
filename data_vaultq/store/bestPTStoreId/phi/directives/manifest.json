@@ -1,0 +1,10 @@
+{
+	"storeId":"bestPTStoreId",
+	"title":"Best PT Evaluation",
+	"navigationPriority":1000,
+	"resourcesPaths":[
+		"/store/bestPTStoreId/phi/directives/items/bestPT.js",
+		"/store/bestPTStoreId/phi/directives/items/bestPT.config.json",
+		"/store/bestPTStoreId/phi/directives/items/bestPT.html"		
+	]
+}

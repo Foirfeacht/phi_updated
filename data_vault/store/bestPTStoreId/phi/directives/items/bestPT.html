@@ -1,0 +1,460 @@
+<style>
+    /*auto injury form styles */
+
+    .bestpt .fieldset {
+        border-radius: 4px;
+        border: 1px thin rgba(0, 0, 0, 0.8);
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        margin: 30px auto;
+        padding: 10px 0;
+    }
+
+    .bestpt {
+        padding-bottom: 30px;
+    }
+
+    .bestpt .row {
+        margin: 10px auto;
+    }
+
+   .bestpt .aif-txa {
+        resize: vertical;
+    }
+
+    #bestpt #dd {
+        margin-top: 30px;
+    }
+
+    #time-label {
+        margin-top: 42px;
+    }
+
+    #timepicker-column {
+        padding-top: 15px;
+    }
+
+    .table td:hover {
+        cursor: pointer;
+    }
+
+    .narrative-text {
+        height: 100%;
+    }
+
+    #right {
+      border-radius: 4px;
+        border: 1px thin rgba(0, 0, 0, 0.8);
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    md-sidenav .md-fab {
+        position: fixed;
+        bottom: 25px;
+        right: 30px;
+    }
+
+    md-sidenav .md-fab i {
+        font-size: 2em;
+    }
+
+
+    #left-menu {
+        display: block;
+    }
+
+
+    .trigger {
+        position: fixed;
+        width: 50px;
+        height: 100%;
+        /*background: rgba(87, 121, 158, .3);*/
+        color: #286090;
+        font-weight: 700;
+        padding: 20px 25px;
+        text-align: center;
+        z-index: 999;
+    }
+
+    .trigger:hover {
+        cursor: pointer;
+    }
+
+    
+
+    .left-trigger i {
+        position: fixed;
+        top: 50%;
+        left: 15px;
+        font-size: 2em;
+    }
+
+     .right-trigger i {
+        position: fixed;
+        top: 50%;
+        right: 15px;
+        font-size: 2em;
+    }
+
+    .left-trigger {
+        left: 0;
+    }
+
+    .right-trigger {
+        right: 0;
+    }
+
+    .bestpt .final-words {
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .bestpt.phiTab {
+        position: relative;
+    }
+
+    .bestpt.hidable {
+        padding: 0 50px;
+    }
+
+    .bestpt .btn-danger i {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .bestpt .btn-danger {
+        padding: 10px;
+    }
+
+   .left-trigger .not-flipped {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        left: 465px;
+    }
+
+    .left-trigger .flipped {
+        -moz-transform: scaleX(1);
+        -o-transform: scaleX(1);
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+        left: 15px
+    }
+
+    .right-trigger .flipped {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        right: 21%;
+    }
+
+    
+
+    .right-trigger .not-flipped {
+        -moz-transform: scaleX(1);
+        -o-transform: scaleX(1);
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+        right: 15px
+    }
+
+    md-sidenav {
+        padding: 10px 20px;
+    }
+
+     md-sidenav,
+    md-sidenav.md-locked-open,
+    md-sidenav.md-closed.md-locked-open-add-active {
+        min-width: 20% !important;
+        width: 20% !important;
+        max-width: 450px !important;
+    }
+
+    @media screen and (min-width: 960px){
+    
+        #left {
+          position: static;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+        }
+    
+        #left.md-closed {
+          display: none;
+        }
+    }
+
+    .bestpt md-content {
+        width: 60%;
+        padding: 10px 1%;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+    }
+
+    .bestpt md-content > div {
+      width: 100%;
+    }
+
+    .bestpt .md-tabs-content {
+      padding: 30px 20px;
+    }
+
+    @media (max-width: 959px){
+      .bestpt md-content {
+        width: auto;
+      }
+      md-sidenav,
+      md-sidenav.md-locked-open,
+      md-sidenav.md-closed.md-locked-open-add-active {
+          min-width: 400px !important;
+          width: 400px !important;
+          max-width: 450px !important;
+      }
+    }
+
+    .bestpt .tab-content {
+        top: 42px;
+    }
+
+    .bestpt .hidden {
+        visibility: hidden;
+        opacity: 0;
+    }
+</style>
+
+<div class="phiTab hidable bestpt" layout="row" flex>
+
+    
+ <div class="left-trigger trigger notFlipped" id="left-trigger" ng-click="toggleLeft(); leftState = !leftState;" ng-init="!leftState" ng-swipe-left="toggleLeft()">
+    <i class="mdi mdi-more" ng-class="{'flipped' : leftState}" ng-if="!$mdMedia('gt-md')"></i>
+  </div> 
+
+ 
+
+  <md-sidenav md-component-id="left" class="md-sidenav-left" id="left"> 
+      <phi-items-list>
+          <phi-items-list-bar></phi-items-list-bar>        
+          
+          <div class="row">
+            <div class="col-xs-12">
+              <table ng-table="tableParams" class="table">
+                <tr ng-repeat="bestPT in $data" ng-click="onSelect(bestPT)" ng-class="{'active': isSelected(bestPT)}">
+                  
+                  <td data-title="'Date'" sortable="'date'" width="50%">
+                    {{data.record[bestPT.id].date | date:'MM/dd/yyyy'}}
+                    <span class="label label-warning" ng-show="isDirty(bestPT) || isNew(bestPT)">Unsaved</span>
+                    <span class="label label-danger" ng-hide="isValid(bestPT)">Invalid</span>
+                  </td>
+                  <td data-title="'Name'" sortable="'name'" width="50%">
+                    <span>{{data.record[bestPT.id].name}}</span>
+                  </td>               
+                </tr>           
+              </table>
+            </div>
+          </div>       
+      </phi-items-list>
+    </md-sidenav>
+ 
+       
+  <md-content ng-click="toggleSideButtons()">
+    <phi-item-form item="selectedBestPT">
+
+      <!-- tabs -->
+      <md-tabs class="md-accent" md-selected="tabData.selectedIndex">
+
+        <!-- demographics -->
+        <md-tab id="tab1">
+          <md-tab-label>Demographics</md-tab-label>
+          <md-tab-template>
+            
+            <div class="row">
+              <div class="col-md-4">
+                <md-input-container>
+                  <label>Patient Name:</label>
+                  <input type="text" ng-model="selectedBestPT.name">
+                </md-input-container>
+              </div>
+              <div class="col-md-4">
+                <md-input-container>
+                  <label>Referring Physician:</label>
+                  <input type="text" ng-model="selectedBestPT.refPhysician">
+                </md-input-container>
+              </div>
+              <div class="col-md-4">
+                <md-input-container>
+                  <label>Start of Care: </label>
+                  <input type="date" ng-model="selectedBestPT.startOfCare">
+                </md-input-container>
+              </div>
+            </div><!-- end row -->
+
+            <div class="fieldset">
+
+              <div class="row">
+                <div class="col-md-6">
+                  <md-input-container>
+                    <label>Referral Diagnosis: </label>
+                    <input type="text" ng-model="selectedBestPT.demographics.refDiagnosis">
+                  </md-input-container>
+                </div>
+                <div class="col-md-6">
+                  <md-input-container>
+                    <label>Treatment Diagnosis:</label>
+                    <input type="text" ng-model="selectedBestPT.demographics.treatmentDiagnosis">
+                  </md-input-container>
+                </div>
+              </div><!-- end row -->
+
+              <div class="row">
+                <div class="col-md-6">
+                  <md-input-container>
+                    <label>Referral ICD Code: </label>
+                    <input type="text" ng-model="selectedBestPT.demographics.refICD">
+                  </md-input-container>
+                </div>
+                <div class="col-md-6">
+                  <md-input-container>
+                    <label>Treatment ICD Code:</label>
+                    <input type="text" ng-model="selectedBestPT.demographics.treatmentICD">
+                  </md-input-container>
+                </div>
+              </div><!-- end row -->
+
+              <div class="row">
+                <div class="col-md-6">
+                  <md-input-container>
+                    <label>Injury: </label>
+                    <input type="text" ng-model="selectedBestPT.demographics.injury">
+                  </md-input-container>
+                </div>
+                <div class="col-md-6">
+                  <md-input-container>
+                    <label>Date of Injury:</label>
+                    <input type="date" ng-model="selectedBestPT.demographics.doi">
+                  </md-input-container>
+                </div>
+              </div><!-- end row -->
+
+              <div class="row">
+                <div class="col-md-6">
+                  <md-input-container>
+                    <label>Exam Date: </label>
+                    <input type="date" ng-model="selectedBestPT.demographics.examDate">
+                  </md-input-container>
+                </div>
+                <div class="col-md-6">
+                  <md-input-container>
+                    <label>Exam Time:</label>
+                    <input type="time" ng-model="selectedBestPT.demographics.examTime">
+                  </md-input-container>
+                </div>
+              </div><!-- end row -->
+            </div><!-- end fieldset -->
+
+
+          </md-tab-template>
+        </md-tab>
+
+        <!-- end demographics -->
+
+        <!-- Subjective -->
+        <md-tab id="tab2">
+          <md-tab-label>Subjective</md-tab-label>
+          <md-tab-template>
+            View for Item #2 <br/>
+          </md-tab-template>
+        </md-tab>
+
+        <!-- end Subjective -->
+
+        <!-- Objective -->
+        <md-tab id="tab3">
+          <md-tab-label>Objective</md-tab-label>
+          <md-tab-template>
+            View for Item #3 <br/>
+          </md-tab-template>
+        </md-tab>
+
+        <!-- end Objective -->
+
+        <!-- Assessment -->
+        <md-tab id="tab4">
+          <md-tab-label>Assessment</md-tab-label>
+          <md-tab-template>
+            View for Item #4 <br/>
+          </md-tab-template>
+        </md-tab>
+
+        <!-- end Assessment -->
+
+        <!-- Plan -->
+        <md-tab id="tab5">
+          <md-tab-label>Plan</md-tab-label>
+          <md-tab-template>
+            View for Item #5 <br/>
+          </md-tab-template>
+        </md-tab>
+
+        <!-- end Plan -->
+
+        <!-- Medicare -->
+        <md-tab id="tab6">
+          <md-tab-label>Medicare</md-tab-label>
+          <md-tab-template>
+            View for Item #6 <br/>
+          </md-tab-template>
+        </md-tab>
+
+        <!-- end Medicare -->
+
+      </md-tabs>
+    
+    
+
+    <md-sidenav md-component-id="right" class="md-sidenav-right" id="right">
+        <md-button class="md-fab md-primary" aria-label="Print PDF" ng-click="printPdf()">
+            <i class="mdi mdi-printer"></i>
+        </md-button>
+      <div class="narrative-text" id="narrative-text">
+        <div>Injury form for</div>
+         <div>for person name: {{selectedInjuryForm.name || 'NOT SPECIFIED'}} </div>
+          <div ng-if="selectedInjuryForm.date">dated from {{selectedInjuryForm.date | date:'MM/dd/yyyy'}}</div> 
+          <div ng-if="selectedInjuryFormd.dateCollision.date && selectedInjuryFormd.time">for collision occuring at {{selectedInjuryForm.dateCollision.date | date:'MM/dd/yyyy'}} {{selectedInjuryForm.time}}</div>
+
+        <div ng-if="selectedInjuryForm.location && selectedInjuryForm.roadConditions">Injury occured at {{selectedInjuryForm.location}}. Road conditions were {{selectedInjuryForm.roadConditions}}</div>
+        <div ng-if="selectedInjuryForm.police">Police came to the accident scene? {{ selectedInjuryForm.police }}</div> 
+        <div ng-if="selectedInjuryForm.police && selectedInjuryForm.report">Is there a report? {{ selectedInjuryForm.report }}</div>
+        <div ng-if="selectedInjuryForm.police && selectedInjuryForm.reportRequest">Was report requested? {{ selectedInjuryForm.reportRequest }}</div> 
+        <div ng-if="selectedInjuryForm.hospital==='no'">Patient didn't go to the hospital</div>
+        <div ng-if="selectedInjuryForm.hospital==='yes'">Patient went to the hospital {{selectedInjuryForm.hospitalName}} {{selectedInjuryForm.hospitalTransportation}}. <br>{{selectedInjuryForm.hospitalXray}} were x-rayed. <br> {{selectedInjuryForm.hospitalInjuries}} <br>  Patient stayed in the hospital for {{selectedInjuryForm.hospitalDuration}}</div>
+        <div ng-if="selectedInjuryForm.cutbleed">{{selectedInjuryForm.cutbleed}}</div>
+        <div ng-if="selectedInjuryForm.bruises">{{selectedInjuryForm.bruises}}</div>
+        <div >{{selectedInjuryForm.seat}} {{selectedInjuryForm.collisionAwareness}} </div> 
+        <div>
+          <span ng-if="selectedInjuryForm.collisionConsciousness==='yes'">After the collision, patient lost consciousness for {{selectedInjuryForm.collisionBlackOutDuration}}. </span><span ng-if="selectedInjuryForm.collisionConsciousness==='no'">Patient remained counscious</span>
+        </div>
+        <div>
+          <span ng-if="selectedInjuryForm.collisionFlashOfLight==='yes'">Patient experienced flash of light in the moment of collision</span>
+        </div>
+      </div>
+      <textarea id="narrative-txa" class="invisible" ng-model="selectedInjuryForm.narrative"></textarea>
+
+      
+    </md-sidenav>
+
+      <div class="right-trigger trigger notFlipped" id="right-trigger" ng-if="selectedInjuryForm" ng-click="toggleRight();rightState = !rightState;" ng-swipe-right="toggleRight()">
+        <i class="mdi mdi-more" ng-class="{'flipped' : rightState}"></i>
+      </div><!-- end col -->
+  </phi-item-form>
+
+</div><!--end row-->
+
+
+
+
