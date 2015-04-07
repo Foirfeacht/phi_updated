@@ -30,6 +30,13 @@ defineDynamicDirective(function() {
                 $scope.tabData.selectedIndex = Math.max($scope.tabData.selectedIndex - 1, 0);
               };
 
+              // powering subtabs
+              $scope.planSelectedTab = 'frequency';
+
+              $scope.planSelect = function(item){
+                $scope.planSelectedTab = item;
+              }
+
 
 
               var leftTrigger = document.getElementById('left-trigger');
@@ -38,32 +45,39 @@ defineDynamicDirective(function() {
                 $mdSidenav('left').toggle()
                     .then(function() {
                       $('.md-sidenav-backdrop').hide();
-                      if ($('.md-sidenav-backdrop').hasClass('md-closed')) {
-                        $scope.rightState = false;
-                        $scope.leftState = false;
-                        console.log('clicked');
-                        $('md-content').css('width', '60%');
-                      }
-          });
+                    });
               };
               $scope.toggleRight = function() {
                 $mdSidenav('right').toggle()
                     .then(function(){
                       $('.md-sidenav-backdrop').hide();
-                      if($('.md-sidenav-backdrop').hasClass('md-closed')){
-                        $scope.rightState = false;
-                        $scope.leftState = false;
-                        console.log('clicked');
-                      }
-          });
+                    });
+                };
 
 
-        };
-        $scope.$watch('isOpen', function(){console.log('isopen')});
-              $scope.rightState = false;
-              $scope.leftState = false;
-              $scope.leftIsOpen = false;
-              $scope.rightIsOpen = false;
+            $scope.classTwo = 'flipped';
+            $scope.classOne = 'flipped';
+
+            $scope.rightState = false;
+            $scope.leftState = false;
+
+            $scope.toggleRightButton = function() {
+              if ($scope.classTwo === "flipped"){
+                $scope.classTwo = "notFlipped";
+              } else {
+                $scope.classTwo = "flipped";
+              }
+            };
+   
+
+            $scope.toggleLeftButton = function() {
+              if ($scope.classOne === "flipped"){
+                $scope.classOne = "notFlipped";
+              } else {
+                $scope.classOne = "flipped";
+              }
+            };
+        
             },
             link : function($scope, element, attrs, controller) {
 
@@ -110,17 +124,6 @@ defineDynamicDirective(function() {
               */
 
         // date
-
-        $scope.initDate = function(){
-          $scope.startOfCare = new Date($scope.startOfCare);
-          $scope.dateCollision.demographics.doi = new Date($scope.demographics.doi);
-          $scope.dateCollision.demographics.examDate = new Date($scope.dateCollision.demographics.examDate);
-          $scope.dateCollision.demographics.examTime = new Date($scope.dateCollision.demographics.examTime);
-        }
-
-
-
-
 
               function equalIdsPredicate(bestPT) {
                 return bestPT.id === updatedBestPTId;
@@ -235,24 +238,50 @@ defineDynamicDirective(function() {
 
               };
 
-              $scope.classOne = 'flipped';
-              $scope.classTwo = 'flipped';
+              //timepicker
+              //
+              $scope.demographicsExamTime = new Date();      
 
-              $scope.toggleLeftButton = function() {
-                if ($scope.classOne === "flipped"){
-                  $scope.classOne = "notFlipped";
-                } else {
-                  $scope.classOne = "flipped";
-                }
-              };
+              $scope.hstep = 1;
+              $scope.mstep = 15;
+              $scope.ismeridian = true;
 
-              $scope.toggleRightButton = function() {
-                if ($scope.classTwo === "flipped"){
-                  $scope.classTwo = "notFlipped";
-                } else {
-                  $scope.classTwo = "flipped";
-                }
-              };
+              //datepicker
+              $scope.startOfCare = new Date();
+              $scope.demographicsDoi =  new Date();
+              $scope.demographicsExamDate =  new Date();
+         
+              $scope.minDate = new Date();
+               $scope.openOne = function($event) {
+                  $event.preventDefault();
+                  $event.stopPropagation();
+
+                  $scope.firstOpened = true;
+                };
+
+                $scope.openTwo = function($event) {
+                  $event.preventDefault();
+                  $event.stopPropagation();
+
+                  $scope.secondOpened = true;
+                };
+
+                $scope.openThree = function($event) {
+                  $event.preventDefault();
+                  $event.stopPropagation();
+
+                  $scope.thirdOpened = true;
+                };
+
+
+
+                $scope.dateOptions = {
+                  formatYear: 'yy',
+                  startingDay: 1
+                };
+
+                $scope.format = 'yyyy/MM/dd';
+
 
               
               

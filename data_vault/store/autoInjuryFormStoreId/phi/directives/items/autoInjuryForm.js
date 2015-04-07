@@ -18,54 +18,50 @@ defineDynamicDirective(function() {
             //require: "^dyndirective",
             templateUrl : '../data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html',
             controller: function($scope, $mdSidenav, $http, vaultPdfPrint) {
+
+              // sidenavs and triggers
               var leftTrigger = document.getElementById('left-trigger');
               var rightTrigger = document.getElementById('right-trigger');
               $scope.toggleLeft = function() {
                 $mdSidenav('left').toggle()
           					.then(function() {
-          						$('.md-sidenav-backdrop').hide();
-          					
-					});
+          						$('.md-sidenav-backdrop').hide();		
+      					});
               };
+
               $scope.toggleRight = function() {
                 $mdSidenav('right').toggle()
           					.then(function(){
           						$('.md-sidenav-backdrop').hide();
-
-					});
-
-
-			  };
+        					});
+        			  };
 
             $scope.classTwo = 'flipped';
+            $scope.classOne = 'flipped';
 
-              $scope.toggleRightButton = function() {
-                if ($scope.classTwo === "flipped"){
-                  $scope.classTwo = "notFlipped";
-                } else {
-                  $scope.classTwo = "flipped";
-                }
-              };
+            $scope.rightState = false;
+            $scope.leftState = false;
 
-              $scope.classOne = 'flipped';
+            $scope.toggleRightButton = function() {
+              if ($scope.classTwo === "flipped"){
+                $scope.classTwo = "notFlipped";
+              } else {
+                $scope.classTwo = "flipped";
+              }
+            };
+   
+
+            $scope.toggleLeftButton = function() {
+              if ($scope.classOne === "flipped"){
+                $scope.classOne = "notFlipped";
+              } else {
+                $scope.classOne = "flipped";
+              }
+            };
+
+
               
-
-              $scope.toggleLeftButton = function() {
-                if ($scope.classOne === "flipped"){
-                  $scope.classOne = "notFlipped";
-                } else {
-                  $scope.classOne = "flipped";
-                }
-              };
-
-
-
-
-				$scope.$watch('isOpen', function(){console.log('isopen')});
-              $scope.rightState = false;
-              $scope.leftState = false;
-              $scope.leftIsOpen = false;
-              $scope.rightIsOpen = false;
+             
             },
             link : function($scope, element, attrs, controller) {
 
@@ -300,10 +296,6 @@ defineDynamicDirective(function() {
                 }
 
               };
-
-              
-
-
 
               //timepicker
               $scope.timeCollision = new Date();
