@@ -17,7 +17,7 @@
         margin: 10px auto;
     }
 
-   .bestpt .aif-txa {
+   .bestpt txa {
         resize: vertical;
     }
 
@@ -233,6 +233,11 @@
         top: 42px;
     }
 
+    .subtab {
+        width: 100%;
+        padding: 15px 10px;
+    }
+
     .bestpt .hidden {
         visibility: hidden;
         opacity: 0;
@@ -301,7 +306,7 @@
           
                   <label>Start of Care: </label>
                   <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedBestPT.startOfCare" is-open="firstOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedBestPT.startOfCare" is-open="datePickers.firstOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="openOne($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -352,7 +357,7 @@
                 <div class="col-md-6">
                     <label>Date of Injury:</label>
                     <p class="input-group">
-                      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedBestPT.demographicsDoi" is-open="secondOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedBestPT.demographicsDoi" is-open="datePickers.secondOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                         <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="openTwo($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -364,7 +369,7 @@
                 <div class="col-md-6">
                     <label>Exam Date: </label>
                     <p class="input-group">
-                      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedBestPT.demographicsExamDate" is-open="thirdOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedBestPT.demographicsExamDate" is-open="datePickers.thirdOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                         <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="openThree($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -417,22 +422,84 @@
           <md-tab-label>Plan</md-tab-label>
           <md-tab-template>
             
-            <!-- Sub tabs -->
-            <md-button class="md-primary" class="md-raised" ng-click="planSelect(frequency)">Frequency and Duration</md-button>
-            <md-button class="md-primary" class="md-raised" ng-click="planSelect(discharge)">Discharge</md-button>
-            <md-button class="md-primary" class="md-raised" ng-click="planSelect(signature)">Signature</md-button>
+            <!--===== Sub tabs =====-->
+            <md-button class="md-primary md-raised" ng-click="planSelect('frequency')">Frequency and Duration</md-button>
+            <md-button class="md-primary md-raised" ng-click="planSelect('discharge')">Discharge</md-button>
+            <md-button class="md-primary md-raised" ng-click="planSelect('signature')">Signature</md-button>
 
-            <ng-switch on="planSelectedTab">
-              <div class="subtab" style="width: 100%;" ng-switch-when="frequency">
-                content for subtab 1
-              </div>
-              <div class="subtab" style="width: 100%;" ng-switch-when="discharge">
-                content for subtab 1
-              </div>
-              <div class="subtab" style="width: 100%;" ng-switch-when="signature">
-                content for subtab 1
-              </div>
-            </ng-switch>
+              <div class="subtab" ng-if="planSelectedTab === 'frequency' ">
+                  <div class="row">
+                      <div class="col-md-4 col-sm-4">
+                              <md-radio-group ng-model="selectedBestPT.plan.frequency.times">
+                                  <label>Times</label>
+                                  <md-radio-button value="1">1</md-radio-button>
+                                  <md-radio-button value="2">2</md-radio-button>
+                                  <md-radio-button value="3">3</md-radio-button>
+                                  <md-radio-button value="4">4</md-radio-button>
+                                  <md-radio-button value="5">5</md-radio-button>
+                                  <md-radio-button value="6">6</md-radio-button>
+                                  <md-radio-button value="7">7</md-radio-button>
+                              </md-radio-group>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                          <md-radio-group ng-model="selectedBestPT.plan.frequency.weekMonth">
+                              <label>per:</label>
+                              <md-radio-button value="week">week</md-radio-button>
+                              <md-radio-button value="month">month</md-radio-button>
+                          </md-radio-group>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                          <md-input-container>
+                              <label>for: </label>
+                              <input type="text" ng-model="selectedBestPT.plan.frequency.for">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <md-input-container>
+                          <label>Plan Notes:</label>
+                          <textarea class="txa" ng-model="selectedBestPT.plan.frequency.notes"></textarea>
+                      </md-input-container>
+                    </div>
+                  </div><!-- end row -->
+
+
+              </div><!-- ========= end subtab =========-->
+
+              <div class="subtab" ng-if="planSelectedTab === 'discharge' ">
+                content for subtab 2
+              </div><!-- ========= end subtab =========-->
+              <div class="subtab" ng-if="planSelectedTab === 'signature' ">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <md-input-container>
+                            <label>Name: </label>
+                            <input type="text" ng-model="selectedBestPT.plan.signature.name">
+
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <label>Date:</label>
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedBestPT.planSignatureDate" is-open="datePickers.signatureOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openSignature($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div><!-- end row -->
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <label>NPI #:</label>
+                              <textarea class="txa" ng-model="selectedBestPT.plan.signature.notes"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+              </div><!-- ========= end subtab =========-->
+
           </md-tab-template>
         </md-tab>
 

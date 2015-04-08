@@ -29,12 +29,13 @@ defineDynamicDirective(function() {
       					});
               };
 
+
               $scope.toggleRight = function() {
                 $mdSidenav('right').toggle()
           					.then(function(){
           						$('.md-sidenav-backdrop').hide();
-        					});
-        			  };
+                    });
+  					 };
 
             $scope.classTwo = 'flipped';
             $scope.classOne = 'flipped';
@@ -58,6 +59,38 @@ defineDynamicDirective(function() {
                 $scope.classOne = "flipped";
               }
             };
+
+            //datepicker
+              $scope.date = new Date();
+              $scope.dateCollision = new Date();
+              $scope.minDate = new Date();
+
+              $scope.datePickers = {
+                firstOpened: false,
+                secondOpened: false
+              };
+
+               $scope.openOne = function($event) {
+                  $event.preventDefault();
+                  $event.stopPropagation();
+
+                  $scope.datePickers.firstOpened = true;
+                };
+                $scope.openTwo = function($event) {
+                  $event.preventDefault();
+                  $event.stopPropagation();
+
+                  $scope.datePickers.secondOpened = true;
+                };
+
+                
+
+                $scope.dateOptions = {
+                  formatYear: 'yy',
+                  startingDay: 1
+                };
+
+                $scope.format = 'yyyy/MM/dd';
 
 
               
@@ -91,7 +124,7 @@ defineDynamicDirective(function() {
               
               
 
-              $scope.$watch(function () {
+              $scope.$watch(narrativeEl, function () {
                  return narrativeEl.innerHTML;
               }, function(val) {
                  $scope.updateNarrative();
@@ -304,30 +337,7 @@ defineDynamicDirective(function() {
               $scope.mstep = 15;
               $scope.ismeridian = true;
 
-              //datepicker
-              $scope.date = new Date();
-              $scope.dateCollision = new Date();
-              $scope.minDate = new Date();
-               $scope.openOne = function($event) {
-                  $event.preventDefault();
-                  $event.stopPropagation();
-
-                  $scope.firstOpened = true;
-                };
-
-                $scope.openTwo = function($event) {
-                  $event.preventDefault();
-                  $event.stopPropagation();
-
-                  $scope.secondOpened = true;
-                };
-
-                $scope.dateOptions = {
-                  formatYear: 'yy',
-                  startingDay: 1
-                };
-
-                $scope.format = 'yyyy/MM/dd';
+              
 
 
             }

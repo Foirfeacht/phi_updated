@@ -34,7 +34,9 @@ defineDynamicDirective(function() {
               $scope.planSelectedTab = 'frequency';
 
               $scope.planSelect = function(item){
+                console.log(item);
                 $scope.planSelectedTab = item;
+	
               }
 
 
@@ -77,6 +79,57 @@ defineDynamicDirective(function() {
                 $scope.classOne = "flipped";
               }
             };
+
+				//datepicker
+				$scope.startOfCare = new Date();
+				$scope.demographicsDoi =  new Date();
+				$scope.demographicsExamDate =  new Date();
+				$scope.planSignatureDate = new Date();
+
+				$scope.datePickers = {
+					firstOpened: false,
+					secondOpened: false,
+					thirdOpened: false,
+					signatureOpened: false
+				};
+
+				$scope.minDate = new Date();
+				$scope.openOne = function($event) {
+					$event.preventDefault();
+					$event.stopPropagation();
+
+					$scope.datePickers.firstOpened = true;
+				};
+
+				$scope.openTwo = function($event) {
+					$event.preventDefault();
+					$event.stopPropagation();
+
+					$scope.datePickers.secondOpened = true;
+				};
+
+				$scope.openThree = function($event) {
+					$event.preventDefault();
+					$event.stopPropagation();
+
+					$scope.datePickers.thirdOpened = true;
+				};
+
+				$scope.openSignature = function($event) {
+					$event.preventDefault();
+					$event.stopPropagation();
+
+					$scope.datePickers.signatureOpened = true;
+				};
+
+
+
+				$scope.dateOptions = {
+					formatYear: 'yy',
+					startingDay: 1
+				};
+
+				$scope.format = 'yyyy/MM/dd';
         
             },
             link : function($scope, element, attrs, controller) {
@@ -246,41 +299,7 @@ defineDynamicDirective(function() {
               $scope.mstep = 15;
               $scope.ismeridian = true;
 
-              //datepicker
-              $scope.startOfCare = new Date();
-              $scope.demographicsDoi =  new Date();
-              $scope.demographicsExamDate =  new Date();
-         
-              $scope.minDate = new Date();
-               $scope.openOne = function($event) {
-                  $event.preventDefault();
-                  $event.stopPropagation();
 
-                  $scope.firstOpened = true;
-                };
-
-                $scope.openTwo = function($event) {
-                  $event.preventDefault();
-                  $event.stopPropagation();
-
-                  $scope.secondOpened = true;
-                };
-
-                $scope.openThree = function($event) {
-                  $event.preventDefault();
-                  $event.stopPropagation();
-
-                  $scope.thirdOpened = true;
-                };
-
-
-
-                $scope.dateOptions = {
-                  formatYear: 'yy',
-                  startingDay: 1
-                };
-
-                $scope.format = 'yyyy/MM/dd';
 
 
               
