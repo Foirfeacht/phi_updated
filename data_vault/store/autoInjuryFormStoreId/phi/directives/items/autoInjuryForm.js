@@ -35,7 +35,7 @@ defineDynamicDirective(function() {
           					.then(function(){
           						$('.md-sidenav-backdrop').hide();
                     });
-  					 };
+  			 };
 
             $scope.classTwo = 'flipped';
             $scope.classOne = 'flipped';
@@ -124,17 +124,18 @@ defineDynamicDirective(function() {
               
               
 
-              $scope.$watch(narrativeEl, function () {
-                 return narrativeEl.innerHTML;
+              $scope.$watch(function () {
+                 return narrativeEl ? narrativeEl.innerHTML : undefined;
               }, function(val) {
                  $scope.updateNarrative();
-                 narrativeContainer.value = $scope.narrativeText;
-        
               });
 
 
               $scope.updateNarrative = function(){
-                $scope.narrative = narrativeEl.textContent;
+                $scope.narrative ? narrativeEl.textContent : '';
+				  if (narrativeContainer){
+					  narrativeContainer.value = $scope.narrativeText;
+				  }
               }
 
 

@@ -242,9 +242,13 @@
         visibility: hidden;
         opacity: 0;
     }
+
+    .bestpt h3{
+        font-weight: 400;
+    }
 </style>
 
-<div class="phiTab hidable bestpt" layout="row" flex>
+<div class="phiTab hidable bestpt" layout="row" flex ng-cloak>
 
     
  <div class="left-trigger trigger" id="left-trigger" ng-click="toggleLeft();leftState = !leftState;" ng-swipe-left="toggleLeft();leftState = !leftState;">
@@ -321,13 +325,13 @@
                 <div class="col-md-6">
                   <md-input-container>
                     <label>Referral Diagnosis: </label>
-                    <input type="text" ng-model="selectedBestPT.demographics.refDiagnosis">
+                    <input type="text" ng-model="selectedBestPT.demographicsRefDiagnosis">
                   </md-input-container>
                 </div>
                 <div class="col-md-6">
                   <md-input-container>
                     <label>Treatment Diagnosis:</label>
-                    <input type="text" ng-model="selectedBestPT.demographics.treatmentDiagnosis">
+                    <input type="text" ng-model="selectedBestPT.demographicsTreatmentDiagnosis">
                   </md-input-container>
                 </div>
               </div><!-- end row -->
@@ -336,13 +340,13 @@
                 <div class="col-md-6">
                   <md-input-container>
                     <label>Referral ICD Code: </label>
-                    <input type="text" ng-model="selectedBestPT.demographics.refICD">
+                    <input type="text" ng-model="selectedBestPT.demographicsRefICD">
                   </md-input-container>
                 </div>
                 <div class="col-md-6">
                   <md-input-container>
                     <label>Treatment ICD Code:</label>
-                    <input type="text" ng-model="selectedBestPT.demographics.treatmentICD">
+                    <input type="text" ng-model="selectedBestPT.demographicsTreatmentICD">
                   </md-input-container>
                 </div>
               </div><!-- end row -->
@@ -351,7 +355,7 @@
                 <div class="col-md-6">
                   <md-input-container>
                     <label>Injury: </label>
-                    <input type="text" ng-model="selectedBestPT.demographics.injury">
+                    <input type="text" ng-model="selectedBestPT.demographicsInjury">
                   </md-input-container>
                 </div>
                 <div class="col-md-6">
@@ -391,7 +395,482 @@
         <md-tab id="tab2">
           <md-tab-label>Subjective</md-tab-label>
           <md-tab-template>
-            View for Item #2 <br/>
+              <!--===== Sub tabs =====-->
+              <md-button class="md-primary md-raised" ng-click="subjectiveSelect('report')">Patient Report</md-button>
+              <md-button class="md-primary md-raised" ng-click="subjectiveSelect('precautions')">Precautions</md-button>
+              <md-button class="md-primary md-raised" ng-click="subjectiveSelect('questionnaires')">Subjective Questionnaires</md-button>
+
+              <div class="subtab" ng-if="subjectiveSelectedTab === 'report' ">
+                  <h2>Patient Report</h3>
+              </div><!--======================== end subtab ========================-->
+
+              <div class="subtab" ng-if="subjectiveSelectedTab === 'precautions' ">
+                  <h2>Precautions</h3>
+                  <p>Standard pecautions of handwashing technique performed.</p>
+              </div><!--======================== end subtab ========================-->
+
+              <div class="subtab" ng-if="subjectiveSelectedTab === 'questionnaires' ">
+                  <h2>Subjective Questionnaires</h3>
+
+                  <h3>DASH</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveDashScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveDash"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                   <h3>LEFS Lower Extremity Functional Scale</h3>
+
+                   <div class="row">
+                        <div class="col-md-6">
+                             <md-input-container>
+                                  <label>Score: </label>
+                                  <input type="text" ng-model="selectedBestPT.subjectiveLEFSScore">
+                             </md-input-container>
+                         </div>
+                   </div><!-- end row -->
+
+                 <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveLEFS"></textarea>
+                              </md-input-container>
+                      </div>
+                 </div><!-- end row -->
+
+                 <h3>Oswestry Low Back Pain Disability Index</h3>
+
+                 <div class="row">
+                     <div class="col-md-6">
+                         <md-input-container>
+                             <label>Score: </label>
+                             <input type="text" ng-model="selectedBestPT.subjectiveOswestryScore">
+                         </md-input-container>
+                     </div>
+                 </div><!-- end row -->
+
+                 <div class="row">
+                     <div class="col-md-12">
+                         <md-input-container>
+                             <textarea class="txa" ng-model="selectedBestPT.subjectiveOswestry"></textarea>
+                         </md-input-container>
+                     </div>
+                 </div><!-- end row -->
+
+                 <h3>Neck Index</h3>
+
+                 <div class="row">
+                     <div class="col-md-6">
+                         <md-input-container>
+                             <label>Score: </label>
+                             <input type="text" ng-model="selectedBestPT.subjectiveNeckScore">
+                         </md-input-container>
+                     </div>
+                 </div><!-- end row -->
+
+                 <div class="row">
+                     <div class="col-md-12">
+                         <md-input-container>
+                             <textarea class="txa" ng-model="selectedBestPT.subjectiveNeck"></textarea>
+                         </md-input-container>
+                     </div>
+                 </div><!-- end row -->
+
+                 <h3>Back Index</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveBackScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveBack"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>ABC - Activities Specific Balance Scale</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveABCScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveABC"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>PSFS - Patient-Specific Functional Scale</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectivePSFSScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectivePSFS"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>GROC - Global Rating of Change Scale</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveGROCScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveGROC"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>FABQ - Fear-Avoidance Beliefs Questionnaire</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveFABQScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveFABQ"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>OPTIMAL</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveOptimalScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveOptimal"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>SF-36</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveSF36Score">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveSF36"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>Lysholm Knee Scoring Test</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveLysholmScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveLysholm"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>WOMAC - Western Ontario and McMaster Universities Arthritis Index</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveWOMACScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveWOMAC"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>QBPDS - Quebec Back Pain Disability Scale</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveQBPDSScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveQBPDS"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>RMDQ - Roland Morris Disability Questionnaire</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveRMDQScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveRMDQ"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>NPRS - Numeric Pain Rating Scale</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveNPRSScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveNPRS"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>McGill Pain Questionnaire</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveMcGillScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveMcGill"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>WHYMPI - West Haven-Yale Multidisciplinary Pain Inventory</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveWHYMPIScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveWHYMPI"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>RAPS - Rheumatoid Arthritis Pain Scale</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveRAPSScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveRAPS"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>VAS - Visual Analog Scale</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveVASScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveVAS"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>Barthel Index of Activities of Daily Living</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveBarthelScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveBarthel"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+
+                  <h3>Katz ADLs</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveKatzScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveKatz"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>Geriatric Assessment Tool</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveGeriatricScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveGeriatric"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <h3>Instrumental Activities of Daily Living</h3>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <md-input-container>
+                              <label>Score: </label>
+                              <input type="text" ng-model="selectedBestPT.subjectiveInstrumentalScore">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <textarea class="txa" ng-model="selectedBestPT.subjectiveInstrumental"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->  
+
+              </div><!--======================== end subtab ========================-->
+
           </md-tab-template>
         </md-tab>
 
@@ -411,7 +890,139 @@
         <md-tab id="tab4">
           <md-tab-label>Assessment</md-tab-label>
           <md-tab-template>
-            View for Item #4 <br/>
+              <h3>Prior and Current Levels</h3>
+              <div class="row">
+                  <div class="col-md-12">
+                      <md-select placeholder="Function 1" ng-model="selectedBestPT.assessmentFunction1">
+                          <md-option value="Gait">Gait</md-option>
+                          <md-option value="Transfers">Transfers</md-option>
+                          <md-option value="Strength">Strength</md-option>
+                          <md-option value="Lifting">Lifting</md-option>
+                          <md-option value="Carrying">Carrying</md-option>
+                          <md-option value="Ascending Stairs">Ascending Stairs</md-option>
+                          <md-option value="Descending Stairs">Descending Stairs</md-option>
+                          <md-option value="Balance">Balance</md-option>
+                          <md-option value="Range of Motion">Range of Motion</md-option>
+                          <md-option value="Pain">Pain</md-option>
+                          <md-option value="Muscle Tone">Muscle Tone</md-option>
+                          <md-option value="Ascending Rump">Ascending Rump</md-option>
+                          <md-option value="Descending Rump">Descending Rump</md-option>
+                          <md-option value="Swimming">Swimming</md-option>
+                          <md-option value="Running">Running</md-option>
+                          <md-option value="Bed Mobility">Bed Mobility</md-option>
+                      </md-select>
+                  </div>
+              </div><!-- end row -->
+
+              <div class="row">
+                  <div class="col-md-6">
+                      <md-input-container>
+                          <label>Current:</label>
+                          <textarea class="txa" ng-model="selectedBestPT.assessmentCurrent1"></textarea>
+                      </md-input-container>
+                  </div>
+                  <div class="col-md-6">
+                      <md-input-container>
+                          <label>Goal:</label>
+                          <textarea class="txa" ng-model="selectedBestPT.assessmentGoal1"></textarea>
+                      </md-input-container>
+                  </div>
+              </div><!-- end row -->
+
+              <div class="row">
+                  <div class="col-md-12">
+                      <md-select placeholder="Function 2" ng-model="selectedBestPT.assessmentFunction2">
+                          <md-option value="Gait">Gait</md-option>
+                          <md-option value="Transfers">Transfers</md-option>
+                          <md-option value="Strength">Strength</md-option>
+                          <md-option value="Lifting">Lifting</md-option>
+                          <md-option value="Carrying">Carrying</md-option>
+                          <md-option value="Ascending Stairs">Ascending Stairs</md-option>
+                          <md-option value="Descending Stairs">Descending Stairs</md-option>
+                          <md-option value="Balance">Balance</md-option>
+                          <md-option value="Range of Motion">Range of Motion</md-option>
+                          <md-option value="Pain">Pain</md-option>
+                          <md-option value="Muscle Tone">Muscle Tone</md-option>
+                          <md-option value="Ascending Rump">Ascending Rump</md-option>
+                          <md-option value="Descending Rump">Descending Rump</md-option>
+                          <md-option value="Swimming">Swimming</md-option>
+                          <md-option value="Running">Running</md-option>
+                          <md-option value="Bed Mobility">Bed Mobility</md-option>
+                      </md-select>
+                  </div>
+              </div><!-- end row -->
+
+              <div class="row">
+                  <div class="col-md-6">
+                      <md-input-container>
+                          <label>Current:</label>
+                          <textarea class="txa" ng-model="selectedBestPT.assessmentCurrent2"></textarea>
+                      </md-input-container>
+                  </div>
+                  <div class="col-md-6">
+                      <md-input-container>
+                          <label>Goal:</label>
+                          <textarea class="txa" ng-model="selectedBestPT.assessmentGoal2"></textarea>
+                      </md-input-container>
+                  </div>
+              </div><!-- end row -->
+
+              <div class="row">
+                  <div class="col-md-12">
+                      <md-select placeholder="Function 3" ng-model="selectedBestPT.assessmentFunction3">
+                          <md-option value="Gait">Gait</md-option>
+                          <md-option value="Transfers">Transfers</md-option>
+                          <md-option value="Strength">Strength</md-option>
+                          <md-option value="Lifting">Lifting</md-option>
+                          <md-option value="Carrying">Carrying</md-option>
+                          <md-option value="Ascending Stairs">Ascending Stairs</md-option>
+                          <md-option value="Descending Stairs">Descending Stairs</md-option>
+                          <md-option value="Balance">Balance</md-option>
+                          <md-option value="Range of Motion">Range of Motion</md-option>
+                          <md-option value="Pain">Pain</md-option>
+                          <md-option value="Muscle Tone">Muscle Tone</md-option>
+                          <md-option value="Ascending Rump">Ascending Rump</md-option>
+                          <md-option value="Descending Rump">Descending Rump</md-option>
+                          <md-option value="Swimming">Swimming</md-option>
+                          <md-option value="Running">Running</md-option>
+                          <md-option value="Bed Mobility">Bed Mobility</md-option>
+                      </md-select>
+                  </div>
+              </div><!-- end row -->
+
+              <div class="row">
+                  <div class="col-md-6">
+                      <md-input-container>
+                          <label>Current:</label>
+                          <textarea class="txa" ng-model="selectedBestPT.assessmentCurrent3"></textarea>
+                      </md-input-container>
+                  </div>
+                  <div class="col-md-6">
+                      <md-input-container>
+                          <label>Goal:</label>
+                          <textarea class="txa" ng-model="selectedBestPT.assessmentGoal3"></textarea>
+                      </md-input-container>
+                  </div>
+              </div><!-- end row -->
+
+              <div class="row">
+                  <div class="col-md-12">
+                      <md-input-container>
+                          <label>Short Term Goals: </label>
+                          <textarea class="txa" ng-model="selectedBestPT.assessmentShortTerm"></textarea>
+                      </md-input-container>
+                  </div>
+              </div><!-- end row -->
+
+              <div class="row">
+                  <div class="col-md-12">
+                      <md-input-container>
+                          <label>Long Term Goals: </label>
+                          <textarea class="txa" ng-model="selectedBestPT.assessmentLongTerm"></textarea>
+                      </md-input-container>
+                  </div>
+              </div><!-- end row -->
+
           </md-tab-template>
         </md-tab>
 
@@ -430,7 +1041,7 @@
               <div class="subtab" ng-if="planSelectedTab === 'frequency' ">
                   <div class="row">
                       <div class="col-md-4 col-sm-4">
-                              <md-radio-group ng-model="selectedBestPT.plan.frequency.times">
+                              <md-radio-group ng-model="selectedBestPT.planFrequencyTimes">
                                   <label>Times</label>
                                   <md-radio-button value="1">1</md-radio-button>
                                   <md-radio-button value="2">2</md-radio-button>
@@ -442,7 +1053,7 @@
                               </md-radio-group>
                       </div>
                       <div class="col-md-4 col-sm-4">
-                          <md-radio-group ng-model="selectedBestPT.plan.frequency.weekMonth">
+                          <md-radio-group ng-model="selectedBestPT.planFrequencyWeekMonth">
                               <label>per:</label>
                               <md-radio-button value="week">week</md-radio-button>
                               <md-radio-button value="month">month</md-radio-button>
@@ -451,7 +1062,7 @@
                       <div class="col-md-4 col-sm-4">
                           <md-input-container>
                               <label>for: </label>
-                              <input type="text" ng-model="selectedBestPT.plan.frequency.for">
+                              <input type="text" ng-model="selectedBestPT.planFrequencyFor">
                           </md-input-container>
                       </div>
                   </div><!-- end row -->
@@ -460,7 +1071,7 @@
                     <div class="col-md-12">
                       <md-input-container>
                           <label>Plan Notes:</label>
-                          <textarea class="txa" ng-model="selectedBestPT.plan.frequency.notes"></textarea>
+                          <textarea class="txa" ng-model="selectedBestPT.planFrequencyNotes"></textarea>
                       </md-input-container>
                     </div>
                   </div><!-- end row -->
@@ -468,15 +1079,134 @@
 
               </div><!-- ========= end subtab =========-->
 
+
               <div class="subtab" ng-if="planSelectedTab === 'discharge' ">
-                content for subtab 2
+                  <div class="row">
+                      <div class="col-md-12">
+                          <label>Discharge Date: </label>
+                          <p class="input-group">
+                              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedBestPT.dischargeDate" is-open="datePickers.dischargeOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openDischarged($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                          </p>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-4 col-sm-4">
+                          <md-radio-group ng-model="selectedBestPT.dischargeStairs">
+                              <label>Stairs:</label>
+                              <md-radio-button value="yes">Yes</md-radio-button>
+                              <md-radio-button value="no">No</md-radio-button>
+                          </md-radio-group>
+                      </div>
+                      <div class="col-md-8 col-sm-8" ng-if="selectedBestPT.dischargeStairs === 'yes'">
+                          <md-input-container>
+                              <label>Number: </label>
+                              <input type="text" ng-model="selectedBestPT.dischargeStairsNumber">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-4 col-sm-4">
+                          <md-radio-group ng-model="selectedBestPT.dischargeLivingSituation">
+                              <label>Living Situation at Discharge:</label>
+                              <md-radio-button value="Live alone">Live alone</md-radio-button>
+                              <md-radio-button value="Live with family">Live with family</md-radio-button>
+                              <md-radio-button value="Live with friends">Live with friends</md-radio-button>
+                              <md-radio-button value="Assisted living facility">Assisted living facility</md-radio-button>
+                              <md-radio-button value="Nursing Home/LTC">Nursing Home/LTC</md-radio-button>
+                              <md-radio-button value="Other">Other</md-radio-button>
+                          </md-radio-group>
+                      </div>
+                      <div class="col-md-8 col-sm-8" ng-if="selectedBestPT.dischargeLivingSituation === 'Other'">
+                          <md-input-container>
+                              <label>Other: </label>
+                              <input type="text" ng-model="selectedBestPT.dischargeLivingSituationOther">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <label>Living Situation at Discharge Notes:</label>
+                              <textarea class="txa" ng-model="selectedBestPT.dischargeLivingSituationNotes"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-4 col-sm-4">
+                          <md-checkbox ng-model="selectedBestPT.dischargeNurse">nurse </md-checkbox>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                          <md-checkbox ng-model="selectedBestPT.dischargeCareGiver">care giver </md-checkbox>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                          <md-checkbox ng-model="selectedBestPT.dischargeOccTherapy">occupational therapy </md-checkbox>
+                      </div>
+                  </div><!-- end row -->
+                  <div class="row">
+                      <div class="col-md-4 col-sm-4">
+                          <md-checkbox ng-model="selectedBestPT.dischargeSpeechTherapy">speech therapy</md-checkbox>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                          <md-checkbox ng-model="selectedBestPT.dischargeSocial">social worker</md-checkbox>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                          <md-checkbox ng-model="selectedBestPT.dischargeHome">home health aide </md-checkbox>
+                      </div>
+                  </div><!-- end row -->
+                  <div class="row">
+                      <div class="col-md-4 col-sm-4">
+                          <md-checkbox ng-model="selectedBestPT.dischargeOther">other</md-checkbox>
+                      </div>
+                      <div class="col-md-8 col-sm-8" ng-if="selectedBestPT.dischargeOther">
+                          <md-input-container>
+                              <input type="text" ng-model="selectedBestPT.dischargeOtherNotes">
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <label>Skilled Services Comments: </label>
+                              <textarea class="txa" ng-model="selectedBestPT.dischargeSkilledServices"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <label>Durable Medical Equipment: </label>
+                              <textarea class="txa" ng-model="selectedBestPT.dischargeEquipment"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <md-input-container>
+                              <label>Potential Obstacles/Barriers:</label>
+                              <textarea class="txa" ng-model="selectedBestPT.dischargeObstacles"></textarea>
+                          </md-input-container>
+                      </div>
+                  </div><!-- end row -->
+
               </div><!-- ========= end subtab =========-->
+
+
               <div class="subtab" ng-if="planSelectedTab === 'signature' ">
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <md-input-container>
                             <label>Name: </label>
-                            <input type="text" ng-model="selectedBestPT.plan.signature.name">
+                            <input type="text" ng-model="selectedBestPT.planSignatureName">
 
                         </md-input-container>
                     </div>
@@ -494,7 +1224,7 @@
                       <div class="col-md-12">
                           <md-input-container>
                               <label>NPI #:</label>
-                              <textarea class="txa" ng-model="selectedBestPT.plan.signature.notes"></textarea>
+                              <textarea class="txa" ng-model="selectedBestPT.planSignatureNotes"></textarea>
                           </md-input-container>
                       </div>
                   </div><!-- end row -->
@@ -523,26 +1253,7 @@
             <i class="mdi mdi-printer"></i>
         </md-button>
       <div class="narrative-text" id="narrative-text">
-        <div>Injury form for</div>
-         <div>for person name: {{selectedInjuryForm.name || 'NOT SPECIFIED'}} </div>
-          <div ng-if="selectedInjuryForm.date">dated from {{selectedInjuryForm.date | date:'MM/dd/yyyy'}}</div> 
-          <div ng-if="selectedInjuryFormd.dateCollision.date && selectedInjuryFormd.time">for collision occuring at {{selectedInjuryForm.dateCollision.date | date:'MM/dd/yyyy'}} {{selectedInjuryForm.time}}</div>
 
-        <div ng-if="selectedInjuryForm.location && selectedInjuryForm.roadConditions">Injury occured at {{selectedInjuryForm.location}}. Road conditions were {{selectedInjuryForm.roadConditions}}</div>
-        <div ng-if="selectedInjuryForm.police">Police came to the accident scene? {{ selectedInjuryForm.police }}</div> 
-        <div ng-if="selectedInjuryForm.police && selectedInjuryForm.report">Is there a report? {{ selectedInjuryForm.report }}</div>
-        <div ng-if="selectedInjuryForm.police && selectedInjuryForm.reportRequest">Was report requested? {{ selectedInjuryForm.reportRequest }}</div> 
-        <div ng-if="selectedInjuryForm.hospital==='no'">Patient didn't go to the hospital</div>
-        <div ng-if="selectedInjuryForm.hospital==='yes'">Patient went to the hospital {{selectedInjuryForm.hospitalName}} {{selectedInjuryForm.hospitalTransportation}}. <br>{{selectedInjuryForm.hospitalXray}} were x-rayed. <br> {{selectedInjuryForm.hospitalInjuries}} <br>  Patient stayed in the hospital for {{selectedInjuryForm.hospitalDuration}}</div>
-        <div ng-if="selectedInjuryForm.cutbleed">{{selectedInjuryForm.cutbleed}}</div>
-        <div ng-if="selectedInjuryForm.bruises">{{selectedInjuryForm.bruises}}</div>
-        <div >{{selectedInjuryForm.seat}} {{selectedInjuryForm.collisionAwareness}} </div> 
-        <div>
-          <span ng-if="selectedInjuryForm.collisionConsciousness==='yes'">After the collision, patient lost consciousness for {{selectedInjuryForm.collisionBlackOutDuration}}. </span><span ng-if="selectedInjuryForm.collisionConsciousness==='no'">Patient remained counscious</span>
-        </div>
-        <div>
-          <span ng-if="selectedInjuryForm.collisionFlashOfLight==='yes'">Patient experienced flash of light in the moment of collision</span>
-        </div>
       </div>
       <textarea id="narrative-txa" class="invisible" ng-model="selectedInjuryForm.narrative"></textarea>
 
