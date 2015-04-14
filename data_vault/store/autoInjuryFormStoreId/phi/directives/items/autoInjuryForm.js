@@ -83,17 +83,12 @@ defineDynamicDirective(function() {
                   $scope.datePickers.secondOpened = true;
                 };
 
-                
-
                 $scope.dateOptions = {
                   formatYear: 'yy',
                   startingDay: 1
                 };
 
                 $scope.format = 'yyyy/MM/dd';
-
-
-              
              
             },
             link : function($scope, element, attrs, controller) {
@@ -102,43 +97,33 @@ defineDynamicDirective(function() {
             
               // Init data
               $scope.items = [];
-            
 
-              
-              
+				// narrative
+
+				$scope.$watch(function(){
+					var narrativeEl = document.getElementById('narrative-text');
+					if(narrativeEl){
+						$scope.narrativeText = narrativeEl.textContent;
+						return narrativeEl.innerHTML;
+					};
+				}, function(val) {
+					var narrativeContainer = document.getElementById('narrative-txa');
+					narrativeContainer.value = $scope.narrativeText;
+					$scope.narrative = $scope.narrativeText;
+				});
+
+
               $scope.printPdf = function(){
+				var narrativeContainer = document.getElementById('narrative-txa');
                 var $e = angular.element(narrativeContainer);
                 $e.triggerHandler('input');
+
                 var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
                 var data = dynPhiDataSyncService.initModel($scope, rootPath);
                 var subPath = "record/" + $scope.updatedInjuryFormId + "/narrative";
                 var path = rootPath + subPath;
-                vaultPdfPrint.printPdf('vaultQ', path);		
-              }
-
-              // narrative
-
-              $scope.narrative = '';
-              var narrativeEl = document.getElementById('narrative-text');
-              var narrativeContainer = document.getElementById('narrative-txa');
-              
-              
-
-              $scope.$watch(function () {
-                 return narrativeEl ? narrativeEl.innerHTML : undefined;
-              }, function(val) {
-                 $scope.updateNarrative();
-              });
-
-
-              $scope.updateNarrative = function(){
-                $scope.narrative ? narrativeEl.textContent : '';
-				  if (narrativeContainer){
-					  narrativeContainer.value = $scope.narrativeText;
-				  }
-              }
-
-
+                vaultPdfPrint.printPdf('vaultQ', path);
+              };
 
 
 
@@ -337,9 +322,6 @@ defineDynamicDirective(function() {
               $scope.hstep = 1;
               $scope.mstep = 15;
               $scope.ismeridian = true;
-
-              
-
 
             }
           };
