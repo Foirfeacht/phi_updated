@@ -107,25 +107,17 @@ defineDynamicDirective(function() {
 						return narrativeEl.innerHTML;
 					};
 				}, function(val) {
-					var narrativeContainer = document.getElementById('narrative-txa');
-					narrativeContainer.value = $scope.narrativeText;
-					$scope.narrative = $scope.narrativeText;
+					$scope.selectedInjuryForm.narrative = $scope.narrativeText;
 				});
 
 
               $scope.printPdf = function(){
-				var narrativeContainer = document.getElementById('narrative-txa');
-                var $e = angular.element(narrativeContainer);
-                $e.triggerHandler('input');
-
-                var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
-                var data = dynPhiDataSyncService.initModel($scope, rootPath);
-                var subPath = "record/" + $scope.updatedInjuryFormId + "/narrative";
-                var path = rootPath + subPath;
-                vaultPdfPrint.printPdf('vaultQ', path);
+					var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
+					var data = dynPhiDataSyncService.initModel($scope, rootPath);
+					var subPath = "record/" + $scope.updatedInjuryFormId + "/narrative";
+					var path = rootPath + subPath;
+					vaultPdfPrint.printPdf('vaultQ', path);
               };
-
-
 
               function equalIdsPredicate(injuryForm) {
                 return injuryForm.id === updatedInjuryFormId;
