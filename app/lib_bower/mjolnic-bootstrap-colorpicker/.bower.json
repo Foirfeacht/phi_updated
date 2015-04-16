@@ -20,6 +20,6 @@
     "commit": "3d94294a225450d02eaffa62a23ad70e365204f9"
   },
   "_source": "git://github.com/mjolnic/bootstrap-colorpicker.git",
-  "_target": "~2.0.1",
+  "_target": "2.0.x",
   "_originalSource": "mjolnic-bootstrap-colorpicker"
 }

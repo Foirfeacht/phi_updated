@@ -74,7 +74,8 @@ defineDynamicDirective(function() {
 
               $scope.dateOptions = {
                 formatYear : 'yy',
-                startingDay : 1
+                startingDay : 1,
+				showWeeks: false
               };
 
               $scope.format = 'yyyy/MM/dd';
@@ -92,7 +93,9 @@ defineDynamicDirective(function() {
               $scope.$watch(function() {
                 var narrativeEl = document.getElementById('narrative-text');
                 if (narrativeEl) {
-                  return narrativeEl.textContent;
+				  var narrContent = narrativeEl.textContent.replace(/^\s*$[\n\r]{1,}/gm, '');
+				  //var narrOutput = narrContent;
+                  return narrContent;
                 }
               }, function(val) {
                 if ($scope.selectedInjuryForm && val) {

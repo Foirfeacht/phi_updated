@@ -41,7 +41,6 @@
     "commit": "094a2a2dd21bcfee627a2fc8a5d58e46066eda2f"
   },
   "_source": "git://github.com/Templarian/MaterialDesign-Webfont.git",
-  "_target": "~0.9.72-alpha",
-  "_originalSource": "mdi",
-  "_direct": true
+  "_target": "0.9.x",
+  "_originalSource": "mdi"
 }

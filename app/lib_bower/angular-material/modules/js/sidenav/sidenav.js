@@ -158,12 +158,12 @@ function SidenavDirective($timeout, $animate, $parse, $mdMedia, $mdConstant, $co
         $media: $mdMedia
       });
     };
-  /*  var backdrop = $compile(
+    var backdrop = $compile(
       '<md-backdrop class="md-sidenav-backdrop md-opaque ng-enter">'
     )(scope);
 
     element.on('$destroy', sidenavCtrl.destroy);
-    $mdTheming.inherit(backdrop, element);*/
+    $mdTheming.inherit(backdrop, element);
 
     scope.$watch(isLocked, updateIsLocked);
     scope.$watch('isOpen', updateIsOpen);

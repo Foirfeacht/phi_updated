@@ -44,13 +44,12 @@
 
 
 
-    md-sidenav .md-fab {
-        position: fixed;
-        bottom: 25px;
-        right: 30px;
+    md-sidenav .print-button {
+        width: 30%;
+        margin-bottom: 10px;
     }
 
-    md-sidenav .md-fab i {
+    md-sidenav .print-button i {
         font-size: 2em;
     }
 
@@ -119,7 +118,7 @@
     }
 
     .autoInJuryForm .btn-danger {
-        padding: 10px;
+       padding: 10px;
     }
 
     .pull-right {
@@ -148,8 +147,6 @@
         -webkit-transform: scaleX(-1);
         transform: scaleX(-1);
     }
-
-    
 
     .right-trigger .not-flipped {
         -moz-transform: scaleX(1);
@@ -204,7 +201,7 @@
     }
 
     .autoInJuryForm .singleItemForm {
-      height: 100vh;
+      height: 97vh;
       overflow-y: scroll;
     }
 
@@ -294,7 +291,7 @@
             <label class="control-label">Today's Date</label> 
             <!--<input type="date" ng-model="selectedInjuryForm.date">-->
             <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedInjuryForm.date" is-open="datePickers.firstOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedInjuryForm.date" is-open="datePickers.firstOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" show-weeks="false" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openOne($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -1021,9 +1018,10 @@
   </phi-item-form>
 
   <md-sidenav md-component-id="right" class="md-sidenav-right" id="right" ng-if="selectedInjuryForm">
-        <md-button class="md-fab md-primary" aria-label="Print PDF" ng-click="printPdf()">
+        <md-button class="print-button" aria-label="Print PDF" ng-click="printPdf()">
             <i class="mdi mdi-printer"></i>
         </md-button>
+      <md-divider></md-divider>
       <div class="narrative-text" id="narrative-text">
         <div>Injury form for</div>
          <div>for person name: {{selectedInjuryForm.name || 'NOT SPECIFIED'}} </div>
