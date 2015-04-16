@@ -56,7 +56,7 @@ app.directive('briefSummaryPanel', [ '$timeout', '$parse', '$http', '$q', functi
         scope.panelState.isCollapsed = !scope.panelState.isCollapsed;
       };
 
-      element.find(".dashboardPanelColorBtn").colorpicker({
+      $(element.find(".dashboardPanelColorBtn")).colorpicker({
         color : scope.panelState.color
       }).on('changeColor', function(ev) {
         var color = ev.color.toHex();

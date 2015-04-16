@@ -47,7 +47,7 @@ this server is:
 
 Now browse to the app at
 
-	http://localhost:9090/app/index.html
+	http://localhost:8000/app/index.html
 
 You can kill the web server by pressing `CTRL-C`
 

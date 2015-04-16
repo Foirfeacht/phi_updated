@@ -1,122 +1,111 @@
 defineDynamicDirective(function() {
   return {
     name : 'autoInjuryForm',
-    directive : [
-        'phiContext',
-        'dynPhiDataSyncService',
-        'dashboardService',
-        'vault',
-        '$mdSidenav',
-        '$http',
-        'vaultPdfPrint',
+    directive : [ 'phiContext', 'dynPhiDataSyncService', 'dashboardService', 'vault', '$mdSidenav', '$http', 'vaultPdfPrint',
         function(phiContext, dynPhiDataSyncService, dashboardService, vault, $http, $mdSidenav, vaultPdfPrint) {
           return {
             restrict : 'E',
             scope : {
               'phiData' : '='
             },
-            //require: "^dyndirective",
+            // require: "^dyndirective",
             templateUrl : '../data_vault/store/autoInjuryFormStoreId/phi/directives/items/autoInjuryForm.html',
-            controller: function($scope, $mdSidenav, $http, vaultPdfPrint) {
+            controller : function($scope, $mdSidenav, $http, vaultPdfPrint) {
 
               // sidenavs and triggers
               var leftTrigger = document.getElementById('left-trigger');
               var rightTrigger = document.getElementById('right-trigger');
               $scope.toggleLeft = function() {
-                $mdSidenav('left').toggle()
-          					.then(function() {
-          						$('.md-sidenav-backdrop').hide();		
-      					});
+                $mdSidenav('left').toggle().then(function() {
+                  $('.md-sidenav-backdrop').hide();
+                });
               };
 
-
               $scope.toggleRight = function() {
-                $mdSidenav('right').toggle()
-          					.then(function(){
-          						$('.md-sidenav-backdrop').hide();
-                    });
-  			 };
+                $mdSidenav('right').toggle().then(function() {
+                  $('.md-sidenav-backdrop').hide();
+                });
+              };
 
-            $scope.classTwo = 'flipped';
-            $scope.classOne = 'flipped';
+              $scope.classTwo = 'flipped';
+              $scope.classOne = 'flipped';
 
-            $scope.rightState = false;
-            $scope.leftState = false;
+              $scope.rightState = false;
+              $scope.leftState = false;
 
-            $scope.toggleRightButton = function() {
-              if ($scope.classTwo === "flipped"){
-                $scope.classTwo = "notFlipped";
-              } else {
-                $scope.classTwo = "flipped";
-              }
-            };
-   
+              $scope.toggleRightButton = function() {
+                if ($scope.classTwo === "flipped") {
+                  $scope.classTwo = "notFlipped";
+                } else {
+                  $scope.classTwo = "flipped";
+                }
+              };
 
-            $scope.toggleLeftButton = function() {
-              if ($scope.classOne === "flipped"){
-                $scope.classOne = "notFlipped";
-              } else {
-                $scope.classOne = "flipped";
-              }
-            };
+              $scope.toggleLeftButton = function() {
+                if ($scope.classOne === "flipped") {
+                  $scope.classOne = "notFlipped";
+                } else {
+                  $scope.classOne = "flipped";
+                }
+              };
 
-            //datepicker
+              // datepicker
               $scope.date = new Date();
               $scope.dateCollision = new Date();
               $scope.minDate = new Date();
 
               $scope.datePickers = {
-                firstOpened: false,
-                secondOpened: false
+                firstOpened : false,
+                secondOpened : false
               };
 
-               $scope.openOne = function($event) {
-                  $event.preventDefault();
-                  $event.stopPropagation();
+              $scope.openOne = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
 
-                  $scope.datePickers.firstOpened = true;
-                };
-                $scope.openTwo = function($event) {
-                  $event.preventDefault();
-                  $event.stopPropagation();
+                $scope.datePickers.firstOpened = true;
+              };
+              $scope.openTwo = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
 
-                  $scope.datePickers.secondOpened = true;
-                };
+                $scope.datePickers.secondOpened = true;
+              };
 
-                $scope.dateOptions = {
-                  formatYear: 'yy',
-                  startingDay: 1
-                };
+              $scope.dateOptions = {
+                formatYear : 'yy',
+                startingDay : 1
+              };
 
-                $scope.format = 'yyyy/MM/dd';
-             
+              $scope.format = 'yyyy/MM/dd';
+
             },
             link : function($scope, element, attrs, controller) {
 
-               $scope.toggleLeft();
-            
+              $scope.toggleLeft();
+
               // Init data
               $scope.items = [];
 
-				// narrative
+              // narrative
 
-				$scope.$watch(function(){
-					var narrativeEl = document.getElementById('narrative-text');
-					if(narrativeEl){
-						$scope.narrativeText = narrativeEl.textContent;
-						return narrativeEl.innerHTML;
-					};
-				}, function(val) {
-					$scope.selectedInjuryForm.narrative = $scope.narrativeText;
-				});
+              $scope.$watch(function() {
+                var narrativeEl = document.getElementById('narrative-text');
+                if (narrativeEl) {
+                  return narrativeEl.textContent;
+                }
+              }, function(val) {
+                if ($scope.selectedInjuryForm && val) {
+                  $scope.selectedInjuryForm.narrative = val;
+                }
+              });
 
-
-              $scope.printPdf = function(){
-					var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
-					var data = dynPhiDataSyncService.initModel($scope, rootPath);
-					var subPath = "record/" + $scope.updatedInjuryFormId + "/narrative";
-					var path = rootPath + subPath;
-					vaultPdfPrint.printPdf('vaultQ', path);
+              $scope.printPdf = function() {
+                var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
+                var data = dynPhiDataSyncService.initModel($scope, rootPath);
+                var subPath = "record/" + $scope.updatedInjuryFormId + "/narrative";
+                var path = rootPath + subPath;
+                vaultPdfPrint.printPdf('vaultQ', path);
               };
 
               function equalIdsPredicate(injuryForm) {
@@ -128,7 +117,7 @@ defineDynamicDirective(function() {
                 for (var i = 0; i < updates.length; i++) {
                   var updatedInjuryForm = updates[i].obj;
                   var updatedInjuryFormId = updatedInjuryForm.id;
-					        $scope.updatedInjuryFormId = updatedInjuryFormId;
+                  $scope.updatedInjuryFormId = updatedInjuryFormId;
                   var updatedInjuryFormIsActive = updatedInjuryForm.active;
 
                   var currentInjuryFormWithSameId = _.find(currentValue, function equalIdsPredicate(injuryForm) {
@@ -145,8 +134,6 @@ defineDynamicDirective(function() {
                       currentValue.push(updatedInjuryForm);
                     }
                   }
-
-
 
                   if (updatedInjuryFormIsActive) {
                     // Register eager fields
@@ -201,7 +188,7 @@ defineDynamicDirective(function() {
                     data.field("record/" + updatedInjuryFormId + "/vehicleStopped").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/driverBrake").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/estimatedSpeed").setWatchable(true).register();
-                    data.field("record/" + updatedInjuryFormId + "/vehicleMoving").setWatchable(true).register(); 
+                    data.field("record/" + updatedInjuryFormId + "/vehicleMoving").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/bodyPartHitHead").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/bodyPartHitChest").setWatchable(true).register();
                     data.field("record/" + updatedInjuryFormId + "/bodyPartHitShoulder").setWatchable(true).register();
@@ -244,10 +231,9 @@ defineDynamicDirective(function() {
 
               var rootPath = '/provider/' + phiContext.providerId + '/patient/' + phiContext.patientId + '/injuryForms/';
               var data = dynPhiDataSyncService.initModel($scope, rootPath);
-              data.field("records").setStartValue([]).setApplyUpdatesToModelFn(applyUpdatesFn).setExtractUpdateFromChangedModelFn(
-                  extractUpdateFn).register();
+              data.field("records").setStartValue([]).setApplyUpdatesToModelFn(applyUpdatesFn).setExtractUpdateFromChangedModelFn(extractUpdateFn).register();
               data.pull();
-              //$scope.initDate();
+              // $scope.initDate();
 
               // For two-way binding onto form
               $scope.data = data.asClassicJsObject();
@@ -257,7 +243,6 @@ defineDynamicDirective(function() {
               });
 
               // END of Warm-up data sync service
-
 
               // List specific logic
               $scope.addNewItem = function() {
@@ -281,21 +266,27 @@ defineDynamicDirective(function() {
                 if (selectedInjuryForm) {
 
                   if (selectedInjuryForm.active) {
-                    //data.field("record/" + selectedInjuryForm.id + "/date").register();
-                    //moment(selectedInjuryForm.id.date, 'MMM Do YY').format();
-                    //data.field("record/" + selectedInjuryForm.id + "/dateCollision").register();
-                    //moment(selectedInjuryForm.id.dateCollision, 'MMM Do YY').format();
-                    //data.field("record/" + selectedInjuryForm.id + "/timeCollision").register();
-                    //moment(selectedInjuryForm.id.timeCollision, 'H a mm').format();
-                    //data.field(moment("record/" + selectedInjuryForm.id + "/dateCollision.date", 'MMM Do YY').format()).register();
-                    //data.field(moment("record/" + selectedInjuryForm.id + "/dateCollision.time", 'MMM Do YY').format()).register();
-                   
+                    // data.field("record/" + selectedInjuryForm.id +
+                    // "/date").register();
+                    // moment(selectedInjuryForm.id.date, 'MMM Do YY').format();
+                    // data.field("record/" + selectedInjuryForm.id +
+                    // "/dateCollision").register();
+                    // moment(selectedInjuryForm.id.dateCollision, 'MMM Do
+                    // YY').format();
+                    // data.field("record/" + selectedInjuryForm.id +
+                    // "/timeCollision").register();
+                    // moment(selectedInjuryForm.id.timeCollision, 'H a
+                    // mm').format();
+                    // data.field(moment("record/" + selectedInjuryForm.id +
+                    // "/dateCollision.date", 'MMM Do YY').format()).register();
+                    // data.field(moment("record/" + selectedInjuryForm.id +
+                    // "/dateCollision.time", 'MMM Do YY').format()).register();
+
                     data.pullNewlyRegisteredFields();
-                    
+
                   }
                   $scope.selectedInjuryForm = data.asClassicJsObject().record[selectedInjuryForm.id];
 
-                  
                 } else {
                   $scope.selectedInjuryForm = null;
                 }
@@ -308,7 +299,7 @@ defineDynamicDirective(function() {
 
               };
 
-              //timepicker
+              // timepicker
               $scope.timeCollision = new Date();
 
               $scope.hstep = 1;
@@ -320,12 +311,3 @@ defineDynamicDirective(function() {
         } ]
   };
 });
-
-
-
-
-
-
-
-
-

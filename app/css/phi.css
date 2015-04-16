@@ -19,6 +19,9 @@
 #phiTabsContent>div {
 	height: 100%;
 }
+.phiContainer .dropdown-menu{
+	top: inherit;
+}
 
 
 .dropdown-submenu {

@@ -7,7 +7,7 @@ app.directive('renderDynamicPanel', [ '$compile', function($compile) {
       var dynamicPanelDef = scope.dynamicPanel;
       scope.data = dynamicPanelDef.data;
       var renderTmpl = dynamicPanelDef.renderTmpl;
-      $compile(renderTmpl)(scope).appendTo(element);
+      $($compile(renderTmpl)(scope)).appendTo(element);
     }
   };
 } ]);
