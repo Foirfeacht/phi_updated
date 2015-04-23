@@ -95,7 +95,9 @@ defineDynamicDirective(function() {
 					secondOpened: false,
 					thirdOpened: false,
 					dischargeOpened: false,
-					signatureOpened: false
+					signatureOpened: false,
+					pRdateOfInjuryOpened: false,
+					pRdateOfSurgeryOpened: false
 				};
 
 				$scope.minDate = new Date();
@@ -132,6 +134,20 @@ defineDynamicDirective(function() {
 					$event.stopPropagation();
 
 					$scope.datePickers.signatureOpened = true;
+				};
+
+				$scope.openPRdateOfInjury = function($event) {
+					$event.preventDefault();
+					$event.stopPropagation();
+
+					$scope.datePickers.pRdateOfInjuryOpened = true;
+				};
+
+				$scope.openPRdateOfSurgery = function($event) {
+					$event.preventDefault();
+					$event.stopPropagation();
+
+					$scope.datePickers.pRdateOfSurgeryOpened = true;
 				};
 
 
@@ -233,6 +249,114 @@ defineDynamicDirective(function() {
                     data.field("record/" + updatedBestPTId + "/demographicsDoi").setStartValue(new Date()).setWatchable(true).register();
                     data.field("record/" + updatedBestPTId + "/demographicsExamDate").setStartValue(new Date()).setWatchable(true).register();
                     data.field("record/" + updatedBestPTId + "/demographicsExamTime").setStartValue(new Date()).setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportDateOfInjury").setStartValue(new Date()).setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportDateOfSurgery").setStartValue(new Date()).setWatchable(true).register();
+
+                    data.field("record/" + updatedBestPTId + "/patientReport.cSpine").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.tSpine").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.lSpine").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.shoulder.which").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.wristHand").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.wristHand.which").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.hip").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.hip.which").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.knee").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.knee.which").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.ankleFoot").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.ankleFoot.which").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.other").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.otherText").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.function1").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.function1Prior1").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.function1Current1").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.function2").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.function2Prior2").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.function2Current2").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.function3").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.function3Prior3").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReport.function3Current3").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportChiefComplaint").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSummaryPatient").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportImpairment").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportLimitation").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPriorLevelRadio").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPriorLevel").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportMedicalManagement").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportImagingResults").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportImagingResultsReported").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportAltTreatment").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportAltTreatmentReported").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportMedicalHistory").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPastPT").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPastPTReported").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSocialHistory").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSocialHistory.lives").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSocialHistory.housing").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSocialHistory.entry").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSocialHistory.accessibility").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSocialHistory.employment").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSocialHistory.employmentComment").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSocialHistory.workStatus").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSocialHistory.hand").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSocialHistory.comment").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPainLocation").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.now").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.worst").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.usual").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.best").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.radiates").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.radiatesTo").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.radiatesFrom").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.characteristic").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.timing").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.timingOther").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.activity").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportPain.time").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSleepDisruption").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportSleepOther").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/patientReportExpectations").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.general.none").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.general.falls").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.general.cardiac").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.general.siezures").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.general.diabetes").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.general.hypertension").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.general.other").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.general.otherText").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.weight.leftLowerExtremity").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.weight.leftLowerExtremityPercentage").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.weight.rightLowerExtremity").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.weight.rightLowerExtremityPercentage").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.weight.leftUpperExtremity").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.weight.leftUpperExtremityPercentage").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.weight.rightUpperExtremity").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.weight.rightUpperExtremityPercentage").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.functional.driving").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.functional.stair").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.functional.lifting").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.mobility").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.excercise.none").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.excercise.arom").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.excercise.prom").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.excercise.other").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.excercise.otherText").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.rom").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.sp.totalShoulder").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.sp.totalElbow").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.sp.totalHip").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.sp.totalKnee").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.sp.tendon").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.sp.spinalFusion").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.sp.rotator").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.sp.aclr").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.sp.other").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.sp.otherText").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.safety").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.safetyText").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.bracing").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.bracingMustWear").setWatchable(true).register();
+                    data.field("record/" + updatedBestPTId + "/precautions.limitations").setWatchable(true).register();
+
                     data.field("record/" + updatedBestPTId + "/subjectiveDashScore").setWatchable(true).register();
                     data.field("record/" + updatedBestPTId + "/subjectiveDash").setWatchable(true).register();
                     data.field("record/" + updatedBestPTId + "/subjectiveLEFSScore").setWatchable(true).register();

@@ -402,11 +402,879 @@
 
               <div class="subtab" ng-if="subjectiveSelectedTab === 'report' ">
                   <h2>Patient Report</h3>
+                      <div class="row">
+                          <div class="col-md-6">
+                              <label>Date of injury:</label>
+                              <p class="input-group">
+                                  <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedBestPT.patientReportDateOfInjury" is-open="datePickers.pRdateOfInjuryOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openPRdateOfInjury($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                              </p>
+                          </div>
+
+                          <div class="col-md-6">
+                              <label>Date of surgery:</label>
+                              <p class="input-group">
+                                  <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedBestPT.patientReportDateOfSurgery" is-open="datePickers.pRdateOfSurgeryOpened" min-date="minDate" max-date="'2040-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openPRdateOfSurgery($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                              </p>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-4 col-sm-4">
+                              <md-checkbox ng-model="selectedBestPT.patientReport.cSpine">Cervical Spine </md-checkbox>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <md-checkbox ng-model="selectedBestPT.patientReport.tSpine">Thoracic Spine </md-checkbox>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <md-checkbox ng-model="selectedBestPT.patientReport.lSpine">Lumbar Spine </md-checkbox>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.patientReport.shoulder">Shoulder</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReport.shoulder.which">
+                                  <md-radio-button value="left">Left</md-radio-button>
+                                  <md-radio-button value="right">Right</md-radio-button>
+                                  <md-radio-button value="bilateral">Bilateral</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.patientReport.wristHand">Wrist/Hand</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReport.wristHand.which">
+                                  <md-radio-button value="left">Left</md-radio-button>
+                                  <md-radio-button value="right">Right</md-radio-button>
+                                  <md-radio-button value="bilateral">Bilateral</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.patientReport.hip">Hip</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReport.hip.which">
+                                  <md-radio-button value="left">Left</md-radio-button>
+                                  <md-radio-button value="right">Right</md-radio-button>
+                                  <md-radio-button value="bilateral">Bilateral</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.patientReport.knee">Knee</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReport.knee.which">
+                                  <md-radio-button value="left">Left</md-radio-button>
+                                  <md-radio-button value="right">Right</md-radio-button>
+                                  <md-radio-button value="bilateral">Bilateral</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.patientReport.ankleFoot">Ankle/Foot</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReport.ankleFoot.which">
+                                  <md-radio-button value="left">Left</md-radio-button>
+                                  <md-radio-button value="right">Right</md-radio-button>
+                                  <md-radio-button value="bilateral">Bilateral</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.patientReport.other">Other</md-checkbox>
+                          </div>
+                          <div class="col-md-3" ng-if="selectedBestPT.patientReport.other">
+                              <md-input-container>
+                                  <input type="text" ng-model="selectedBestPT.otherText">
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <h3>Prior and Current Levels</h3>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-select placeholder="Function 1" ng-model="selectedBestPT.patientReport.function1">
+                                  <md-option value="Gait">Gait</md-option>
+                                  <md-option value="Transfers">Transfers</md-option>
+                                  <md-option value="Strength">Strength</md-option>
+                                  <md-option value="Lifting">Lifting</md-option>
+                                  <md-option value="Carrying">Carrying</md-option>
+                                  <md-option value="Ascending Stairs">Ascending Stairs</md-option>
+                                  <md-option value="Descending Stairs">Descending Stairs</md-option>
+                                  <md-option value="Balance">Balance</md-option>
+                                  <md-option value="Range of Motion">Range of Motion</md-option>
+                                  <md-option value="Pain">Pain</md-option>
+                                  <md-option value="Muscle Tone">Muscle Tone</md-option>
+                                  <md-option value="Ascending Rump">Ascending Rump</md-option>
+                                  <md-option value="Descending Rump">Descending Rump</md-option>
+                                  <md-option value="Swimming">Swimming</md-option>
+                                  <md-option value="Running">Running</md-option>
+                                  <md-option value="Bed Mobility">Bed Mobility</md-option>
+                              </md-select>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <label>Prior:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReport.function1Prior1"></textarea>
+                              </md-input-container>
+                          </div>
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <label>Current:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReport.function1Current1"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-select placeholder="Function 2" ng-model="selectedBestPT.patientReport.function2">
+                                  <md-option value="Gait">Gait</md-option>
+                                  <md-option value="Transfers">Transfers</md-option>
+                                  <md-option value="Strength">Strength</md-option>
+                                  <md-option value="Lifting">Lifting</md-option>
+                                  <md-option value="Carrying">Carrying</md-option>
+                                  <md-option value="Ascending Stairs">Ascending Stairs</md-option>
+                                  <md-option value="Descending Stairs">Descending Stairs</md-option>
+                                  <md-option value="Balance">Balance</md-option>
+                                  <md-option value="Range of Motion">Range of Motion</md-option>
+                                  <md-option value="Pain">Pain</md-option>
+                                  <md-option value="Muscle Tone">Muscle Tone</md-option>
+                                  <md-option value="Ascending Rump">Ascending Rump</md-option>
+                                  <md-option value="Descending Rump">Descending Rump</md-option>
+                                  <md-option value="Swimming">Swimming</md-option>
+                                  <md-option value="Running">Running</md-option>
+                                  <md-option value="Bed Mobility">Bed Mobility</md-option>
+                              </md-select>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <label>Prior:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReport.function2Prior2"></textarea>
+                              </md-input-container>
+                          </div>
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <label>Current:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReport.function2Current2"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-select placeholder="Function 3" ng-model="selectedBestPT.patientReport.function3">
+                                  <md-option value="Gait">Gait</md-option>
+                                  <md-option value="Transfers">Transfers</md-option>
+                                  <md-option value="Strength">Strength</md-option>
+                                  <md-option value="Lifting">Lifting</md-option>
+                                  <md-option value="Carrying">Carrying</md-option>
+                                  <md-option value="Ascending Stairs">Ascending Stairs</md-option>
+                                  <md-option value="Descending Stairs">Descending Stairs</md-option>
+                                  <md-option value="Balance">Balance</md-option>
+                                  <md-option value="Range of Motion">Range of Motion</md-option>
+                                  <md-option value="Pain">Pain</md-option>
+                                  <md-option value="Muscle Tone">Muscle Tone</md-option>
+                                  <md-option value="Ascending Rump">Ascending Rump</md-option>
+                                  <md-option value="Descending Rump">Descending Rump</md-option>
+                                  <md-option value="Swimming">Swimming</md-option>
+                                  <md-option value="Running">Running</md-option>
+                                  <md-option value="Bed Mobility">Bed Mobility</md-option>
+                              </md-select>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <label>Prior:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReport.function3Prior3"></textarea>
+                              </md-input-container>
+                          </div>
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <label>Current:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReport.function3Current3"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <h3>Chief Complaint</h3>
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportChiefComplaint"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <label>Summary of Patient's Condition and Situation as Reported by Patient:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportSummaryPatient"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <h3>Additional Patient Comments</h3>
+
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <label>Patient's Report of Impairment:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportImpairment"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <label>Patient's Report of Limitations:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportLimitation"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <h3>Prior Level of Function</h3>
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportPriorLevel"></textarea>
+                              </md-input-container>
+                          </div>
+
+                          <div class="col-md-12">
+                              <md-radio-group ng-model="selectedBestPT.patientReportPriorLevelRadio">
+                                  <md-radio-button value="Independent">Independent</md-radio-button>
+                                  <md-radio-button value="Needed Assistance">Needed Assistance</md-radio-button>
+                                  <md-radio-button value="Dependent">Dependent</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <h3>Medical Management</h3>
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportMedicalManagement"></textarea>
+                              </md-input-container>
+                          </div>
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <label>Imaging results:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportImagingResults"></textarea>
+                              </md-input-container>
+                          </div>
+                          <div class="col-md-12">
+                              <md-radio-group ng-model="selectedBestPT.patientReportImagingResultsReported">
+                                  <label>Patient Reported</label>
+                                  <md-radio-button value="Improvement">Improvement</md-radio-button>
+                                  <md-radio-button value="No Change">No Change</md-radio-button>
+                                  <md-radio-button value="Worsening">Worsening</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <h3>Alternative Treatments</h3>
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportAltTreatment"></textarea>
+                              </md-input-container>
+                          </div>
+                          <div class="col-md-12">
+                              <md-radio-group ng-model="selectedBestPT.patientReportAltTreatmentReported">
+                                  <label>Patient Reported</label>
+                                  <md-radio-button value="Improvement">Improvement</md-radio-button>
+                                  <md-radio-button value="No Change">No Change</md-radio-button>
+                                  <md-radio-button value="Worsening">Worsening</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <h3>Patient's Report on Medical History</h3>
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportMedicalHistory"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <h3>Past Physical Therapy</h3>
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportPastPT"></textarea>
+                              </md-input-container>
+                          </div>
+                          <div class="col-md-12">
+                              <md-radio-group ng-model="selectedBestPT.patientReportPastPTReported">
+                                  <label>Patient Reported</label>
+                                  <md-radio-button value="Improvement">Improvement</md-radio-button>
+                                  <md-radio-button value="No Change">No Change</md-radio-button>
+                                  <md-radio-button value="Worsening">Worsening</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <h3>Social History</h3>
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportSocialHistory"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReportSocialHistory.lives">
+                                  <label>Lives:</label>
+                                  <md-radio-button value="Alone">Alone</md-radio-button>
+                                  <md-radio-button value="With family">With family</md-radio-button>
+                                  <md-radio-button value="Assisted living">Assisted living</md-radio-button>
+                                  <md-radio-button value="LTCF">LTCF</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReportSocialHistory.housing">
+                                  <label>Housing:</label>
+                                  <md-radio-button value="One story">One story</md-radio-button>
+                                  <md-radio-button value="Multiple story">Multiple story</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReportSocialHistory.entry">
+                                  <label>Entry:</label>
+                                  <md-radio-button value="Level">Level</md-radio-button>
+                                  <md-radio-button value="One step">One step</md-radio-button>
+                                  <md-radio-button value="Multiple steps">Multiple steps</md-radio-button>
+                                  <md-radio-button value="Ramp">Ramp</md-radio-button>
+                                  <md-radio-button value="Elevator Access">Elevator Access</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div><!-- end row -->
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReportSocialHistory.accessibility">
+                                  <label>Accessibility:</label>
+                                  <md-radio-button value="All rooms accessible">All rooms accessible</md-radio-button>
+                                  <md-radio-button value="Bathroom not accessible">Bathroom not accessible</md-radio-button>
+                                  <md-radio-button value="Bedroom not accessible">Bedroom not accessible</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReportSocialHistory.employment">
+                                  <label>Employment:</label>
+                                  <md-radio-button value="Retired">Retired</md-radio-button>
+                                  <md-radio-button value="Unemployed">Unemployed</md-radio-button>
+                                  <md-radio-button value="Employed">Employed</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-3">
+                              <md-input-container>
+                                  <input type="text" ng-model="selectedBestPT.patientReportSocialHistory.employmentComment">
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReportSocialHistory.workStatus">
+                                  <label>Work status:</label>
+                                  <md-radio-button value="Full Duty">Full Duty</md-radio-button>
+                                  <md-radio-button value="Light Duty">Light Duty</md-radio-button>
+                                  <md-radio-button value="Unable to work">Unable to work</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-3">
+                              <md-radio-group ng-model="selectedBestPT.patientReportSocialHistory.hand">
+                                  <label>Hand dominance:</label>
+                                  <md-radio-button value="Left">Left</md-radio-button>
+                                  <md-radio-button value="Right">Right</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportSocialHistory.comment"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <h3>Pain</h3>
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <label>Location: </label>
+                                  <input type="text" ng-model="selectedBestPT.patientReportPainLocation">
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-3">
+                              <label>Pain Now</label>
+                              <md-select ng-model="selectedBestPT.patientReportPain.now">
+                                  <md-option value="0">0</md-option>
+                                  <md-option value="1">1</md-option>
+                                  <md-option value="2">2</md-option>
+                                  <md-option value="3">3</md-option>
+                                  <md-option value="4">4</md-option>
+                                  <md-option value="5">5</md-option>
+                                  <md-option value="6">6</md-option>
+                                  <md-option value="7">7</md-option>
+                                  <md-option value="8">8</md-option>
+                                  <md-option value="9">9</md-option>
+                                  <md-option value="10">10</md-option>
+                              </md-select>/10
+                          </div>
+                          <div class="col-md-3">
+                              <label>Pain Ususal</label>
+                              <md-select ng-model="selectedBestPT.patientReportPain.usual">
+                                  <md-option value="0">0</md-option>
+                                  <md-option value="1">1</md-option>
+                                  <md-option value="2">2</md-option>
+                                  <md-option value="3">3</md-option>
+                                  <md-option value="4">4</md-option>
+                                  <md-option value="5">5</md-option>
+                                  <md-option value="6">6</md-option>
+                                  <md-option value="7">7</md-option>
+                                  <md-option value="8">8</md-option>
+                                  <md-option value="9">9</md-option>
+                                  <md-option value="10">10</md-option>
+                              </md-select>/10
+                          </div>
+                          <div class="col-md-3">
+                              <label>Pain Worst</label>
+                              <md-select ng-model="selectedBestPT.patientReportPain.worst">
+                                  <md-option value="0">0</md-option>
+                                  <md-option value="1">1</md-option>
+                                  <md-option value="2">2</md-option>
+                                  <md-option value="3">3</md-option>
+                                  <md-option value="4">4</md-option>
+                                  <md-option value="5">5</md-option>
+                                  <md-option value="6">6</md-option>
+                                  <md-option value="7">7</md-option>
+                                  <md-option value="8">8</md-option>
+                                  <md-option value="9">9</md-option>
+                                  <md-option value="10">10</md-option>
+                              </md-select>/10
+                          </div>
+                          <div class="col-md-3">
+                              <label>Pain Best</label>
+                              <md-select ng-model="selectedBestPT.patientReportPain.best">
+                                  <md-option value="0">0</md-option>
+                                  <md-option value="1">1</md-option>
+                                  <md-option value="2">2</md-option>
+                                  <md-option value="3">3</md-option>
+                                  <md-option value="4">4</md-option>
+                                  <md-option value="5">5</md-option>
+                                  <md-option value="6">6</md-option>
+                                  <md-option value="7">7</md-option>
+                                  <md-option value="8">8</md-option>
+                                  <md-option value="9">9</md-option>
+                                  <md-option value="10">10</md-option>
+                              </md-select>/10
+                          </div>
+                      </div><!-- end row -->
+                      <div class="row">
+                          <div class="col-md-4 col-sm-4">
+                              <md-radio-group ng-model="selectedBestPT.patientReportPain.radiates">
+                                  <label>Radiates</label>
+                                  <md-radio-button value="yes">Yes</md-radio-button>
+                                  <md-radio-button value="no">No</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-4 col-sm-4" ng-if="selectedBestPT.patientReportPain.radiates === 'yes'">
+                              <md-input-container>
+                                  <label>From: </label>
+                                  <input type="text" ng-model="selectedBestPT.patientReportPain.radiatesFrom">
+                              </md-input-container>
+                          </div>
+                          <div class="col-md-4 col-sm-4" ng-if="selectedBestPT.patientReportPain.radiates === 'yes'">
+                              <md-input-container>
+                                  <label>To: </label>
+                                  <input type="text" ng-model="selectedBestPT.patientReportPain.radiatesTo">
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+                      <div class="row">
+                          <div class="col-md-4 col-sm-4">
+                              <md-radio-group ng-model="selectedBestPT.patientReportPain.characteristic">
+                                  <md-radio-button value="dull">dull</md-radio-button>
+                                  <md-radio-button value="sharp">sharp</md-radio-button>
+                                  <md-radio-button value="achy">achy</md-radio-button>
+                                  <md-radio-button value="numb">numb</md-radio-button>
+                                  <md-radio-button value="tingling">tingling</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <md-radio-group ng-model="selectedBestPT.patientReportPain.timing">
+                                  <label>Timing:</label>
+                                  <md-radio-button value="Constant">Constant</md-radio-button>
+                                  <md-radio-button value="Intermittent (mostly in the morning)">Intermittent (mostly in the morning)</md-radio-button>
+                                  <md-radio-button value="Intermittent (mostly lying down)">Intermittent (mostly lying down)</md-radio-button>
+                                  <md-radio-button value="Intermittent (mostly sitting)">Intermittent (mostly sitting)</md-radio-button>
+                                  <md-radio-button value="Intermittent (mostly standing)">Intermittent (mostly standing)</md-radio-button>
+                                  <md-radio-button value="Intermittent (mostly walking)">Intermittent (mostly walking)</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <md-input-container>
+                                  <label>Other timing: </label>
+                                  <input type="text" ng-model="selectedBestPT.patientReportPain.timingOther">
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="col-md-4 col-sm-4">
+                                  <md-input-container>
+                                      <label>Activity: </label>
+                                      <input type="text" ng-model="selectedBestPT.patientReportPain.activity">
+                                  </md-input-container>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="col-md-4 col-sm-4">
+                                  <md-input-container>
+                                      <label>Time: </label>
+                                      <input type="text" ng-model="selectedBestPT.patientReportPain.time">
+                                  </md-input-container>
+                              </div>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-radio-group ng-model="selectedBestPT.patientReportSleepDisruption">
+                                  <label>Sleep Disruption:</label>
+                                  <md-radio-button value="Not compromised">Not compromised</md-radio-button>
+                                  <md-radio-button value="Cannot sleep one quarter of the night">Cannot sleep one quarter of the night</md-radio-button>
+                                  <md-radio-button value="Cannot sleep half of the night">Cannot sleep half of the night</md-radio-button>
+                                  <md-radio-button value="Cannot sleep three quarters of the night">Cannot sleep three quarters of the night</md-radio-button>
+                                  <md-radio-button value="Cannot sleep at all">Cannot sleep at all</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <label>Other Sleep Disruption:</label>
+                                  <input type="text" ng-model="selectedBestPT.patientReportSleepOther">
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <label>Patient Expectations and Goals:</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.patientReportExpectations"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+
               </div><!--======================== end subtab ========================-->
 
               <div class="subtab" ng-if="subjectiveSelectedTab === 'precautions' ">
                   <h2>Precautions</h3>
                   <p>Standard pecautions of handwashing technique performed.</p>
+
+                      <h3>General Precautions</h3>
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.general.none">none</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.general.falls">falls</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.general.cardiac">cardiac</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.general.siezures">siezures</md-checkbox>
+                          </div>
+                      </div><!-- end row -->
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.general.diabetes">diabetes</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.general.hypertension">hypertension</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.general.other">other</md-checkbox>
+                          </div>
+                          <div class="col-md-3" ng-if="selectedBestPT.precautions.general.other">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.precautions.general.otherText"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <h3>Weight Bearing Precautions</h3>
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-radio-group ng-model="selectedBestPT.precautions.weight.leftLowerExtremity">
+                                  <label>Left Lower Extremity:</label>
+                                  <md-radio-button value="Non weight-bearing">Non weight-bearing</md-radio-button>
+                                  <md-radio-button value="Toe touch">Toe touch</md-radio-button>
+                                  <md-radio-button value="Partial">Partial</md-radio-button>
+                                  <md-radio-button value="Weight-bearing as tolerated">Weight-bearing as tolerated</md-radio-button>
+                                  <md-radio-button value="Full">Full</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <input type="text" ng-model="selectedBestPT.precautions.weight.leftLowerExtremityPercentage"> %
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-radio-group ng-model="selectedBestPT.precautions.weight.rightLowerExtremity">
+                                  <label>Right Lower Extremity:</label>
+                                  <md-radio-button value="Non weight-bearing">Non weight-bearing</md-radio-button>
+                                  <md-radio-button value="Toe touch">Toe touch</md-radio-button>
+                                  <md-radio-button value="Partial">Partial</md-radio-button>
+                                  <md-radio-button value="Weight-bearing as tolerated">Weight-bearing as tolerated</md-radio-button>
+                                  <md-radio-button value="Full">Full</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <input type="text" ng-model="selectedBestPT.precautions.weight.rightLowerExtremityPercentage"> %
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-radio-group ng-model="selectedBestPT.precautions.weight.leftUpperExtremity">
+                                  <label>Left Upper Extremity:</label>
+                                  <md-radio-button value="Non weight-bearing">Non weight-bearing</md-radio-button>
+                                  <md-radio-button value="Partial">Partial</md-radio-button>
+                                  <md-radio-button value="Weight-bearing as tolerated">Weight-bearing as tolerated</md-radio-button>
+                                  <md-radio-button value="Full">Full</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <input type="text" ng-model="selectedBestPT.precautions.weight.leftUpperExtremityPercentage"> %
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-radio-group ng-model="selectedBestPT.precautions.weight.rightUpperExtremity">
+                                  <label>Right Upper Extremity:</label>
+                                  <md-radio-button value="Non weight-bearing">Non weight-bearing</md-radio-button>
+                                  <md-radio-button value="Partial">Partial</md-radio-button>
+                                  <md-radio-button value="Weight-bearing as tolerated">Weight-bearing as tolerated</md-radio-button>
+                                  <md-radio-button value="Full">Full</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <input type="text" ng-model="selectedBestPT.precautions.weight.rightUpperExtremityPercentage"> %
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <h3>Functional Precautions</h3>
+                      <div class="row">
+                          <div class="col-md-4">
+                              <md-radio-group ng-model="selectedBestPT.precautions.functional.driving">
+                                  <label>Driving:</label>
+                                  <md-radio-button value="Yes">Yes</md-radio-button>
+                                  <md-radio-button value="No">No</md-radio-button>
+                                  <md-radio-button value="Yes (with limitations">Yes (with limitations)</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-4">
+                              <md-radio-group ng-model="selectedBestPT.precautions.functional.stair">
+                                  <label>Stair climbing:</label>
+                                  <md-radio-button value="Yes">Yes</md-radio-button>
+                                  <md-radio-button value="No">No</md-radio-button>
+                                  <md-radio-button value="Yes (with limitations">Yes (without weight bearing)</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-4">
+                              <md-radio-group ng-model="selectedBestPT.precautions.functional.lifting">
+                                  <label>Lifting up to (pounds):</label>
+                                  <md-radio-button value="5">5</md-radio-button>
+                                  <md-radio-button value="10">10</md-radio-button>
+                                  <md-radio-button value="20">20</md-radio-button>
+                                  <md-radio-button value="50">50</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div><!-- end row -->
+
+                      <h3>Mobility Assistance Required</h3>
+
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-radio-group ng-model="selectedBestPT.precautions.mobility">
+                                  <md-radio-button value="none">none</md-radio-button>
+                                  <md-radio-button value="hand hold assist">hand hold assist</md-radio-button>
+                                  <md-radio-button value="straight cane">straight cane</md-radio-button>
+                                  <md-radio-button value="quad cane">quad cane</md-radio-button>
+                                  <md-radio-button value="axillary crutches">axillary crutches</md-radio-button>
+                                  <md-radio-button value="forearm crutches">forearm crutches</md-radio-button>
+                                  <md-radio-button value="walker">walker</md-radio-button>
+                                  <md-radio-button value="manual wheelchair">manual wheelchair</md-radio-button>
+                                  <md-radio-button value="power wheelchair">power wheelchair</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div><!-- end row -->
+
+                      <h3>Exercise Precautions</h3>
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.excercise.none">No resistance</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.excercise.arom">No AROM</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.excercise.prom">No PROM</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.excercise.other">Other</md-checkbox>
+                          </div>
+                      </div><!-- end row -->
+                      <div class="row">
+                          <div class="col-md-12" ng-if="selectedBestPT.precautions.excercise.other">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.precautions.excercise.otherText"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div>
+
+                      <h3>ROM Precautions</h3>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.precautions.rom"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div>
+
+                      <h3>S/P Surgical Precautions</h3>
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.sp.totalShoulder">Total Shoulder Replacement</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.sp.totalElbow">Total Elbow Replacement</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.sp.totalHip">Total Hip Replacement</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.sp.totalKnee">Total Knee Replacement</md-checkbox>
+                          </div>
+                      </div><!-- end row -->
+                      <div class="row">
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.sp.tendon">Tendon Repair</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.sp.spinalFusion">Spinal Fusion</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.sp.rotator">Rotator Cuff Repair</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-checkbox ng-model="selectedBestPT.precautions.sp.aclr">Anterior Cruciate Ligament Repair</md-checkbox>
+                          </div>
+                      </div><!-- end row -->
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-checkbox ng-model="selectedBestPT.precautions.sp.other">Other</md-checkbox>
+                          </div>
+                          <div class="col-md-3">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.precautions.sp.otherText"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div><!-- end row -->
+
+                      <h3>Safety Precautions</h3>
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-radio-group ng-model="selectedBestPT.precautions.safety">
+                                  <md-radio-button value="Patient abides by safety precautions">Patient abides by safety precautions</md-radio-button>
+                                  <md-radio-button value="Patient disregards safety precautions">Patient disregards safety precautions</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <textarea class="txa" ng-model="selectedBestPT.precautions.safetyText"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div>
+
+                      <h3>Safety Precautions</h3>
+
+                      <div class="row">
+                          <div class="col-md-6">
+                              <md-input-container>
+                                  <label>Type: </label>
+                                  <input type="text" ng-model="selectedBestPT.precautions.bracing">
+                              </md-input-container>
+                          </div>
+                          <div class="col-md-6">
+                              <md-radio-group ng-model="selectedBestPT.precautions.bracingMustWear">
+                                  <label>Must wear:</label>
+                                  <md-radio-button value="24/7">24/7</md-radio-button>
+                                  <md-radio-button value="Daytime">Daytime</md-radio-button>
+                                  <md-radio-button value="Nighttime">Nighttime</md-radio-button>
+                                  <md-radio-button value="During excercise">During excercise</md-radio-button>
+                                  <md-radio-button value="At rest">At rest</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                      </div>
+
+
+                      <div class="row">
+                          <div class="col-md-12">
+                              <md-input-container>
+                                  <label>Limitations that may inhibit progress</label>
+                                  <textarea class="txa" ng-model="selectedBestPT.precautions.limitations"></textarea>
+                              </md-input-container>
+                          </div>
+                      </div>
+
               </div><!--======================== end subtab ========================-->
 
               <div class="subtab" ng-if="subjectiveSelectedTab === 'questionnaires' ">
